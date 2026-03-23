@@ -1,10 +1,3 @@
-This is the complete, high-fidelity **index.html** file.
-
-I have updated the branding to **Evergreen Memorial Hospital** (fake name), removed the "UNC HEALTH" footer from the login page, and finalized the **20 unique patient profiles**. Each profile contains multi-paragraph clinical data, system-based physical exams including anthropometrics, and realistic EMS/ER narratives.
-
-### `index.html`
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +6,6 @@ I have updated the branding to **Evergreen Memorial Hospital** (fake name), remo
 <title>Carta EHR</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* """ DESIGN SYSTEM """ */
 :root {
   --unc: #4B9CD3; --unc-light: #d6eaf7; --unc-mid: #a8d0ec; --unc-dark: #2a6fa8;
   --navy: #13294B; --bg: #fcfbf9; --white: #ffffff; --border: #e4eff7;
@@ -38,7 +30,7 @@ body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--t
 
 /* ── CENSUS ── */
 .topnav { height: 64px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 16px; sticky; top: 0; z-index: 100; flex-shrink: 0; }
-.nav-logo { font-family: 'Lora', serif; font-size: 22px; color: var(--navy); font-weight: 600; }
+.nav-logo { font-family: 'Lora', serif; font-size: 20px; color: var(--navy); font-weight: 600; }
 .census-container { padding: 32px 28px; max-width: 1200px; margin: 0 auto; width: 100%; flex: 1; overflow-y: auto; }
 .census-table { width: 100%; border-collapse: collapse; background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.03); margin-bottom: 40px; }
 .census-table th { padding: 14px 16px; text-align: left; font-size: 11px; text-transform: uppercase; color: var(--unc); border-bottom: 1.5px solid var(--border); letter-spacing: 0.05em; font-weight: 700; }
@@ -48,7 +40,7 @@ body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--t
 .esi-3 { background: #fef3dc; color: #7a5010; }
 .open-btn { padding: 8px 16px; border-radius: 8px; border: 1.5px solid var(--border); background: white; color: var(--unc-dark); font-weight: 600; font-size: 12px; cursor: pointer; }
 
-/* ── THE CHART ── */
+/* ── CHART ── */
 .chart-content-area { padding: 32px 20px 100px; flex: 1; overflow-y: auto; }
 .chart-card { max-width: 1000px; margin: 0 auto; background: var(--white); border-radius: 24px; box-shadow: 0 20px 60px rgba(75,156,211,.15); display: flex; flex-direction: column; border: 1px solid var(--border); }
 .patient-header { padding: 24px 32px; display: flex; align-items: center; gap: 20px; background: #f4f9fd; border-bottom: 1px solid var(--border); }
@@ -59,6 +51,7 @@ body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--t
 .tabs-wrapper { background: white; border-bottom: 1px solid var(--border); }
 .tab-row { display: flex; flex-wrap: wrap; padding: 0 24px; }
 .tab-btn { padding: 16px 20px; font-size: 14px; color: var(--muted); cursor: pointer; border: none; background: transparent; border-bottom: 2.5px solid transparent; white-space: nowrap; font-family: 'DM Sans'; transition: 0.15s; font-weight: 500; }
+.tab-btn:hover { color: var(--text); }
 .tab-btn.active { color: var(--text); border-bottom-color: var(--unc); font-weight: 700; }
 .tab-line { height: 1px; background: #f0f6fb; width: 100%; }
 
@@ -75,13 +68,14 @@ body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--t
 
 .section-block { margin-bottom: 40px; }
 .section-block h3 { font-family: 'Lora'; font-size: 19px; color: var(--navy); margin-bottom: 16px; border-bottom: 1.5px solid var(--border); padding-bottom: 10px; font-weight: 600; }
-.section-block p { font-size: 15px; line-height: 1.9; color: #2d3748; white-space: pre-line; margin-bottom: 20px; }
+.section-block p { font-size: 15.5px; line-height: 1.9; color: #2d3748; white-space: pre-line; margin-bottom: 20px; }
 
 .lab-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
 .lab-table th { text-align: left; font-size: 11px; text-transform: uppercase; color: var(--muted); padding-bottom: 12px; border-bottom: 1px solid var(--border); }
 .lab-table td { padding: 14px 0; border-bottom: 1px solid #f0f6fb; font-size: 15px; }
 
 .discharge-action { background: #fee2e2; color: #b91c1c; border: none; padding: 12px 24px; border-radius: 100px; font-weight: 700; font-size: 12px; cursor: pointer; margin-left: auto; transition: 0.2s; }
+.discharge-action:hover { background: #fecaca; }
 </style>
 </head>
 <body>
@@ -89,10 +83,10 @@ body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--t
   <div id="page-login" class="page active">
     <div class="login-card">
       <div class="login-logo">Carta</div>
-      <p style="color:var(--muted); font-size:15px; margin-bottom:48px;">Next-Generation Physician OS</p>
+      <p style="color:var(--muted); font-size:15px; margin-bottom:48px;">Integrated Physician Workflow Interface</p>
       <button class="login-btn" onclick="nav('page-main')">Sign In</button>
       <button class="demo-btn" onclick="nav('page-main')">Launch 20-Patient Clinical Demo</button>
-      <p style="margin-top:24px; font-size:11px; color:var(--muted); font-weight:600">EVERGREEN HEALTH SYSTEM • HIPAA SECURED</p>
+      <p style="margin-top:24px; font-size:11px; color:var(--muted); font-weight:600">EVERGREEN MEMORIAL HEALTH • HIPAA SECURED</p>
     </div>
   </div>
 
@@ -112,7 +106,7 @@ body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--t
         <tbody id="census-active"></tbody>
       </table>
 
-      <h2 style="font-family:'Lora'; font-size:18px; margin-top:64px; margin-bottom:12px; color:var(--muted)">Discharged Encounters</h2>
+      <h2 style="font-family:'Lora'; font-size:20px; margin-top:64px; margin-bottom:12px; color:var(--muted)">Finalized Encounters</h2>
       <table class="census-table" style="opacity:0.6; pointer-events:none;">
         <tbody id="census-completed"></tbody>
       </table>
@@ -128,62 +122,66 @@ body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--t
   </div>
 
 <script>
-/* """ CLINICAL DATABASE: 20 HIGH-FIDELITY PROFILES """ */
+/* """ FULL CLINICAL DATABASE - 20 UNIQUE SCENARIOS """ */
 const PATIENTS = [
   {
     id: 'p1', active: true, esi: 3, name: 'Sarah Chen', age: '62F', mrn: '0042817', room: '12', cc: 'Respiratory Failure (Pneumonia)', weight: '68.2kg', height: '162cm', attending: 'Dr. Patel',
-    history: `The patient is a 62-year-old female with a known history of Type 2 Diabetes (Last A1c 8.4) and medically managed Hypertension. She presents to the emergency department via EMS complaining of a 4-day history of worsening shortness of breath and a deep, productive cough bringing up thick yellow-green sputum. 
+    history: `The patient is a 62-year-old female with a long-standing history of Type 2 Diabetes (HbA1c 8.4) and medically managed Hypertension. She presents to the emergency department via EMS complaining of a 4-day history of worsening shortness of breath and a deep, productive cough bringing up thick yellow-green sputum. 
 
-    She reports rigors, pleuritic chest pain localized to the right base, and profound generalized fatigue. She stopped taking her metformin two days ago. No history of travel or exposure to known sick contacts.`,
+    Review of Systems is positive for rigors, pleuritic chest pain localized to the right base, and profound generalized fatigue. She reports she stopped taking her metformin two days ago because she felt "too sick to eat." No history of travel or exposure to known sick contacts.`,
     physical: `Anthropometrics:
     Weight: 68.2kg &emsp; Height: 162cm &emsp; BMI: 26.0
 
     System-Based Exam:
     General: Pt is alert, oriented x3, but appears acutely ill. Visibly tachypneic at rest.
-    Lungs: Decreased breath sounds and dullness to percussion in the right lower lobe (RLL). Prominent crackles noted during late inspiration in the same region.
-    Cardiac: Tachycardic at 104bpm, regular rhythm. Normal S1 and S2. No murmurs.
+    HEENT: Dry mucus membranes. No JVD noted.
+    Lungs: Decreased breath sounds and dullness to percussion in the right lower lobe (RLL). Prominent rales (crackles) noted during late inspiration in the same region.
+    Cardiac: Tachycardic at 104bpm, regular rhythm. Normal S1 and S2. No S3/S4 or murmurs.
     Skin: Warm to touch, no cyanosis noted in nail beds.`,
-    ems: `Ambulance Run Note:
-    Dispatch: Difficulty breathing. Patient found upright in chair at residence. Initial room air SpO2 91%.
-    Interventions: 2L Oxygen via NC applied; SpO2 improved to 96%. Peripheral IV established. Duoneb administered en route with minimal subjective improvement.`,
-    er_notes: `Emergency Course:
-    Arrival 08:15. Stat CXR and Labs ordered. 
-    Management: 1L NS bolus started. CAP protocol initiated with IV Ceftriaxone 1g and Azithromycin 500mg.
-    Impression: Acute lobar pneumonia with associated mild respiratory failure. Disposition: Admitting to Medicine.`,
+    ems: `Ambulance Report:
+    Dispatch: Respiratory Distress. Patient was found sitting upright in a chair at her residence, appearing winded. Initial room air SpO2 was 91%.
+    Interventions: 2L Oxygen via NC applied; SpO2 improved to 96%. Peripheral IV 18g established in L AC. Duoneb nebulizer administered en route with minimal subjective improvement in breath sounds.`,
+    er_notes: `Emergency Dept Course:
+    Arrival: 08:15. Triage assigned ESI 3. Stat CXR, CBC, BMP, and Procalcitonin ordered.
+    Management: 1L Normal Saline bolus initiated. Community-Acquired Pneumonia protocol started with IV Ceftriaxone 1g and Azithromycin 500mg.
+    Impression: Acute lobar pneumonia with associated mild respiratory failure.`,
     vitals: { bp: '118/76', hr: '101', temp: '38.9', spo2: '96%' },
-    labs: [{t:'WBC', v:'14.8', r:'4-11', s:'H'}, {t:'Procalc', v:'1.9', r:'<0.25', s:'H'}],
-    viz: 'CXR: Dense focal consolidation in the RLL. Moderate right pleural effusion.',
-    pathology: 'Sputum: Gram positive diplococci. Blood Cultures: Pending.',
-    progress: 'Pt stable on 2L oxygen. Febrile to 38.9. Awaiting floor bed.',
-    meds: [{n:'Ceftriaxone', d:'1g IV'}, {n:'Metformin', d:'1000mg BID'}],
-    demographics: `DOB: 03/14/1963. Address: 142 Skyway Dr, Raleigh NC. Contact: John Chen (Husband). Insurance: BCBS.`
+    labs: [{t:'WBC', v:'14.8', r:'4-11', s:'H'}, {t:'Procalc', v:'1.9', r:'<0.25', s:'H'}, {t:'Glucose', v:'194', r:'140', s:'H'}],
+    viz: 'Imaging: CXR shows a dense focal consolidation in the RLL. Associated moderate pleural effusion. No cardiomegaly.',
+    pathology: `Pathology & Micro:
+    Sputum Gram Stain: Many WBCs, Moderate Gram-positive diplococci (S. Pneumo suspected).
+    Blood Cultures (x2): Pending.
+    Urinary Antigen: S. pneumoniae positive.`,
+    progress: `10:30 - Dr. Patel: Patient breathing more comfortably on 2L NC. WBC trending slightly lower from triage. Disposition: Admitting to Medicine floor.`,
+    meds: [{n:'Ceftriaxone', d:'1g IV q24h'}, {n:'Azithromycin', d:'500mg IV q24h'}],
+    demographics: `DOB: 03/14/1963. Address: 142 Skyway Dr, Raleigh NC. Contact: John Chen (Husband). Insurance: BCBS NC.`
   },
   {
     id: 'p2', active: true, esi: 2, name: 'Robert Nguyen', age: '58M', mrn: '0031042', room: 'T1', cc: 'Chest Pain (STEMI)', weight: '88.5kg', height: '178cm', attending: 'Dr. Torres',
     history: `58-year-old male with PMH of CAD s/p DES to LAD (2020) and chronic HTN. Presents via EMS with sudden onset crushing substernal chest pressure (10/10) that started 45 minutes ago while lifting heavy mulch. 
 
-    Pain radiates to the left jaw and shoulder. Associated with profound diaphoresis and nausea. Pt reports an "impending sense of doom." He has not taken his daily Aspirin in 3 days.`,
+    Pain radiates to the left jaw and shoulder. Associated with profound diaphoresis and nausea. Pt reports an "impending sense of doom." He has not taken his daily Aspirin or Brilinta in 3 days.`,
     physical: `Anthropometrics:
     Weight: 88.5kg &emsp; Height: 178cm &emsp; BMI: 27.9
 
     System-Based Exam:
     General: Pale, diaphoretic, appearing in acute distress.
-    CV: Tachycardic at 114, S4 heard at apex. No new murmurs. Radial pulses 2+ bilaterally.
-    Lungs: Clear to auscultation bilaterally.`,
-    ems: `Ambulance Run Note:
-    CODE STEMI called from field. 12-lead ECG showed 4mm ST elevation in leads II, III, aVF.
-    Interventions: ASA 324mg chewed. SL Nitroglycerin x3 given. Fentanyl 50mcg IV given for pain control. O2 4L via mask.`,
-    er_notes: `Emergency Course:
-    Arrival 17:15. EKG confirmed Inferior Wall MI. Cardiology bedside immediately.
+    CV: Tachycardic at 114, S4 heard at apex. No new murmurs. Radial pulses 2+ bilaterally. No carotid bruits.
+    Lungs: Clear to auscultation bilaterally. No rales or wheezing.`,
+    ems: `Ambulance Report:
+    CODE STEMI called from field. Field 12-lead ECG showed 4mm ST elevation in leads II, III, aVF.
+    Interventions: ASA 324mg chewed. SL Nitroglycerin x3 given with minimal relief. Fentanyl 50mcg IV given for pain control. O2 4L via simple mask applied.`,
+    er_notes: `Emergency Dept Course:
+    Arrival: 17:15. EKG confirmed Inferior Wall MI. Cardiology bedside immediately.
     Treatment: Heparin 5000u bolus given. Ticagrelor 180mg given PO.
-    Impression: Acute Inferior Wall STEMI. Disposition: Immediate transfer to Cath Lab.`,
+    Impression: Acute Inferior Wall STEMI. Door-to-balloon time goal <60 mins.`,
     vitals: { bp: '92/58', hr: '114', temp: '36.8', spo2: '94%' },
-    labs: [{t:'Troponin I', v:'6.42', r:'<0.04', s:'H'}],
-    viz: '12-Lead ECG: ST-elevation in II, III, aVF with reciprocal depressions in I and aVL.',
-    pathology: 'PT/INR: 1.1. Cardiac markers high.',
-    progress: 'Pt moving to Cath Lab now. Balloon time goal 60 mins.',
+    labs: [{t:'Troponin I', v:'6.42', r:'<0.04', s:'H'}, {t:'Potassium', v:'3.4', r:'3.5-5.0', s:'L'}],
+    viz: 'Imaging: 12-Lead ECG showing ST-elevation in II, III, aVF with reciprocal depressions in I and aVL. Echo shows inferior wall hypokinesis.',
+    pathology: 'PT/INR: 1.1. High sensitivity cardiac markers trending up.',
+    progress: `17:40 - Dr. Torres: Pt consented for emergent cardiac catheterization. Cardiology moving patient to lab now.`,
     meds: [{n:'Heparin Drip', d:'12u/kg/hr'}, {n:'Ticagrelor', d:'180mg Once'}],
-    demographics: `DOB: 08/22/1967. Address: 88 Oak Ln, Durham NC. Contact: Linda Nguyen. Insurance: Aetna.`
+    demographics: `DOB: 08/22/1967. Address: 88 Oak Ln, Durham NC. Contact: Linda Nguyen (Wife). Insurance: Aetna.`
   },
   {
     id: 'p3', active: true, esi: 1, name: 'Marcus Miller', age: '26M', mrn: '0092110', room: 'T2', cc: 'Opioid Overdose', weight: '75.0kg', height: '185cm', attending: 'Dr. Torres',
@@ -197,8 +195,8 @@ const PATIENTS = [
     Neuro: GCS 6 (E1, V2, M3). No response to verbal stimuli. Withdrawal from deep pain only. 
     Pupils: 1mm pinpoint, non-reactive to light.
     Lungs: Shallow breathing at 6/min. Clear bilaterally.
-    Skin: Track marks in various stages of healing.`,
-    ems: `Ambulance Run Note:
+    Skin: Multiple track marks in various stages of healing. Cool and clammy skin.`,
+    ems: `Ambulance Report:
     Pt found in respiratory arrest. BVM ventilation started. 
     Interventions: Naloxone 4mg nasal given x2 with minimal improvement. 18g IV established en route.`,
     er_notes: `Emergency Course:
@@ -221,7 +219,7 @@ const PATIENTS = [
     System-Based Exam:
     Neuro: NIHSS 14. Severe L facial droop. 0/5 strength in L arm, 2/5 in L leg. Slurred but fluent speech.
     Cardiac: Irregularly irregular rhythm. No murmurs.`,
-    ems: `Ambulance Run Note:
+    ems: `Ambulance Report:
     Stroke code activated. BG 104. 18g IV established. Pt was slumping to the left in chair.`,
     er_notes: `Arrival 14:05. CT Head confirmed no hemorrhage. CTA showed R M1 segment occlusion.
     Treatment: Tenecteplase (TNK) 0.25mg/kg given at 14:40.`,
@@ -235,14 +233,14 @@ const PATIENTS = [
   },
   {
     id: 'p5', active: true, esi: 2, name: 'Aaliyah Johnson', age: '19F', mrn: '0088219', room: '08', cc: 'Diabetes (DKA)', weight: '54.4kg', height: '168cm', attending: 'Dr. Kim',
-    history: `19-year-old female with T1DM. Presents with 2 days of nausea, vomiting, and abdominal pain. Pt admits to skipping insulin doses due to a viral illness.`,
+    history: `19-year-old female with T1DM since age 8. Presents with 2 days of nausea, vomiting, and abdominal pain. Pt admits to skipping insulin doses due to a viral illness.`,
     physical: `Anthropometrics:
     Weight: 54.4kg &emsp; Height: 168cm &emsp; BMI: 19.3
 
     System-Based Exam:
     General: Lethargic, oriented. Fruity odor on breath.
     Lungs: Kussmaul respirations. Abdomen: Diffuse tenderness.`,
-    ems: `Ambulance Run Note:
+    ems: `Ambulance Report:
     Pt found by roommate. Blood glucose >500. HR 132, BP 102/64. 1L NS bolus started en route.`,
     er_notes: `Arrival 16:30. Labs confirm DKA: pH 7.18, Anion Gap 24, Ketones large.
     Management: Insulin Regular drip at 0.1u/kg/hr. IV Potassium supplementation started.`,
@@ -256,8 +254,12 @@ const PATIENTS = [
   },
   {
     id: 'p6', active: true, esi: 1, name: 'Samuel Bernstein', age: '52M', mrn: '0077402', room: 'T3', cc: 'Suicide Attempt (Ingestion)', weight: '91.2kg', height: '180cm', attending: 'Dr. Torres',
-    history: `52yo male with Bipolar Disorder. Ingested approx 50 tablets of 325mg Aspirin. Note found by spouse. Reports tinnitus and feeling "extremely hot."`,
-    physical: `Weight: 91.2kg. General: Agitated, flushed, diaphoretic. Lungs: Hyperventilating at 32/min.`,
+    history: `52yo male with Bipolar Disorder. Ingested approx 50 tablets of 325mg Aspirin. Note found by spouse. Pt reports tinnitus and feeling "extremely hot."`,
+    physical: `Anthropometrics:
+    Weight: 91.2kg &emsp; Height: 180cm &emsp; BMI: 28.1
+
+    System-Based Exam:
+    General: Agitated, flushed, diaphoretic. Lungs: Hyperventilating at 32/min.`,
     ems: `Pt sitting on floor. Emesis noted. 1L NS bolus given. High-flow O2 via mask.`,
     er_notes: `Arrival: 20:30. Salicylate level 68 mg/dL. Activated charcoal given. NaBicarb drip started.`,
     vitals: { bp: '152/94', hr: '110', temp: '38.1', spo2: '99%' },
@@ -270,174 +272,230 @@ const PATIENTS = [
   {
     id: 'p7', active: true, esi: 1, name: 'Michael Henderson', age: '34M', mrn: '008621', room: 'T4', cc: 'Self-Harm (Ingestion)', weight: '70kg', height: '170cm', attending: 'Dr. Kim',
     history: `34yo male with history of MDD. Ingested unknown quantity of Sertraline and Trazodone. Pt found obtunded by family.`,
-    physical: `Weight: 70kg. Neuro: GCS 7. Responds to painful stimuli only. Pupils mid-range.`,
+    physical: `Anthropometrics:
+    Weight: 70kg &emsp; Height: 170cm &emsp; BMI: 24.2
+    
+    System-Based Exam:
+    Neuro: GCS 7. Responds to painful stimuli only. Pupils mid-range.`,
     ems: `Dispatch: OD. 1L NS given. No Narcan response. Airway maintained with OPA.`,
     er_notes: `Intubation equipment at bedside. EKG shows prolonged QTc.`,
     vitals: { bp: '104/58', hr: '58', temp: '36.8', spo2: '94%' },
     labs: [{t:'WBC', v:'9.0', r:'4-11', s:'N'}],
-    viz: 'EKG: Sinus bradycardia, QTc 490ms.', path: 'Pending.',
+    viz: 'EKG: Sinus bradycardia, QTc 490ms.',
     progress: 'Pt being stabilized for ICU admission.', meds: [{n:'Normal Saline', d:'125ml/hr'}],
     demographics: `DOB: 05/15/1991. Address: 404 West St. Insurance: Public Health.`
   },
   {
     id: 'p8', active: true, esi: 2, name: 'Linda Thompson', age: '82F', mrn: '001944', room: '15', cc: 'Stroke (L Side)', weight: '65kg', height: '155cm', attending: 'Dr. Kim',
-    history: `82yo female with history of HTN and Afib. Sudden onset left arm and leg weakness with facial droop 30 mins ago.`,
-    physical: `Weight: 65kg. Neuro: 0/5 strength in L arm, 1/5 in L leg. Slurred speech.`,
+    history: `82yo female with history of HTN and Afib. Sudden onset left arm and leg weakness with facial droop 30 mins ago. No headache or seizure activity.`,
+    physical: `Anthropometrics:
+    Weight: 65kg &emsp; Height: 155cm &emsp; BMI: 27.1
+
+    System-Based Exam:
+    Neuro: 0/5 strength in L arm, 1/5 in L leg. R facial droop. Slurred speech.`,
     ems: `Stroke alert called. BG 98. 18g IV established. LKW 14:00.`,
     er_notes: `CT Head negative for bleed. CTA shows L MCA occlusion. TNK administered.`,
     vitals: { bp: '170/95', hr: '88', temp: '37.0', spo2: '98%' },
     labs: [{t:'INR', v:'1.1', r:'2-3', s:'L'}],
-    viz: 'CT: Focal occlusion of M1 segment.', path: 'N/A.',
+    viz: 'CT: Focal occlusion of M1 segment.',
     progress: 'Pt in IR suite for thrombectomy.', meds: [{n:'TNKase', d:'Bolus'}],
     demographics: `DOB: 12/12/1943. Address: Sunset Care Home. Insurance: Medicare.`
   },
   {
     id: 'p9', active: true, esi: 3, name: 'Kevin Brooks', age: '55M', mrn: '005219', room: '21', cc: 'DKA (HHS Pattern)', weight: '105kg', height: '182cm', attending: 'Dr. Kim',
-    history: `55yo male with T2DM. Presents with confusion and extreme polyuria. Glucose at home was "too high to read."`,
-    physical: `Weight: 105.0kg. General: Severely dehydrated, dry mucus membranes. Confused.`,
+    history: `55yo male with PMH of T2DM presenting with confusion and extreme polyuria. Glucose at home was "too high to read."`,
+    physical: `Anthropometrics:
+    Weight: 105.0kg &emsp; Height: 182cm &emsp; BMI: 31.7
+
+    System-Based Exam:
+    General: Severely dehydrated, dry mucus membranes. Confused to place/time.`,
     ems: `Found by son. Pt hypotensive en route. 2L NS given.`,
     er_notes: `Glucose 842. Osmolality 350. DKA protocol initiated.`,
     vitals: { bp: '98/60', hr: '110', temp: '37.4', spo2: '100%' },
     labs: [{t:'Glucose', v:'842', r:'140', s:'H'}],
-    viz: 'CXR: Clear.', path: 'UA positive for glucose/ketones.',
+    viz: 'CXR: Clear.',
     progress: 'Hydration ongoing. Mentation improving slowly.', meds: [{n:'Insulin Drip', d:'7u/hr'}],
     demographics: `DOB: 01/20/1970. Address: 22 Oak Ct. Insurance: Blue Cross.`
   },
   {
     id: 'p10', active: true, esi: 1, name: 'Janet Miller', age: '28F', mrn: '002388', room: 'T5', cc: 'Respiratory Arrest (Asthma)', weight: '62kg', height: '168cm', attending: 'Dr. Kim',
     history: `28yo female with status asthmaticus. Reports 1 week of URI followed by sudden severe chest tightness.`,
-    physical: `Weight: 62kg. Lungs: Silent chest (no air movement). Cyanotic around lips.`,
+    physical: `Anthropometrics:
+    Weight: 62kg &emsp; Height: 168cm &emsp; BMI: 22.0
+
+    System-Based Exam:
+    Lungs: Silent chest (no air movement). Cyanotic around lips.`,
     ems: `Respiratory arrest. Bag-mask ventilation started. Epinephrine 0.3mg IM given.`,
     er_notes: `Arrival: Intubated immediately. Placed on ventilator. Propofol started.`,
     vitals: { bp: '130/80', hr: '120', temp: '37.1', spo2: '92%' },
     labs: [{t:'pH', v:'7.18', r:'7.35', s:'L'}],
-    viz: 'CXR: Severe hyperinflation.', path: 'N/A.',
+    viz: 'CXR: Severe hyperinflation.',
     progress: 'Stable on ventilator. Awaiting MICU.', meds: [{n:'Propofol', d:'20mcg/kg/min'}],
     demographics: `DOB: 09/04/1997. Address: 12 North Dr. Insurance: Cigna.`
   },
   {
     id: 'p11', active: true, esi: 2, name: 'Xavier Lopez', age: '33M', mrn: '008129', room: 'T6', cc: 'New Onset Seizure', weight: '82kg', height: '188cm', attending: 'Dr. Torres',
     history: `Generalized tonic-clonic seizure at work lasting 3 mins. Pt currently in post-ictal state. No prior seizure history.`,
-    physical: `Weight: 82.0kg. Neuro: Confused. Tongue laceration. No focal weakness.`,
+    physical: `Anthropometrics:
+    Weight: 82.0kg &emsp; Height: 188cm &emsp; BMI: 23.2
+
+    System-Based Exam:
+    Neuro: Confused. Tongue laceration. No focal weakness.`,
     ems: `Pt actively seizing. 2mg Ativan given. Pt stable but somnolent.`,
     er_notes: `CT Head negative. Tox screen negative. EEG pended. Started on Keppra.`,
     vitals: { bp: '130/80', hr: '100', temp: '37.2', spo2: '98%' },
     labs: [{t:'WBC', v:'12.4', r:'11', s:'H'}],
-    viz: 'CT Head: No hemorrhage.', path: 'Pending.',
+    viz: 'CT Head: No hemorrhage.',
     progress: 'Regaining orientation. No repeat seizure.', meds: [{n:'Keppra', d:'1000mg IV'}],
     demographics: `DOB: 02/02/1993. Address: 55 Highview Blvd.`
   },
   {
     id: 'p12', active: true, esi: 1, name: 'Quinn Hartley', age: '29F', mrn: '006129', room: 'T2', cc: 'Peanut Anaphylaxis', weight: '60kg', height: '168cm', attending: 'Dr. Torres',
     history: `Exposure to peanuts at restaurant. Throat tightness and urticaria. used own EpiPen x1.`,
-    physical: `Weight: 60kg. General: Diffuse hives. Lungs: Stridor and wheezing.`,
+    physical: `Anthropometrics:
+    Weight: 60kg &emsp; Height: 168cm &emsp; BMI: 21.3
+
+    System-Based Exam:
+    General: Diffuse hives. Lungs: Stridor and wheezing.`,
     ems: `Pt in distress. Epinephrine 0.3mg given x2. SpO2 92%.`,
     er_notes: `IV steroids and Benadryl given. Pt stabilized.`,
     vitals: { bp: '100/60', hr: '124', temp: '37.0', spo2: '97%' },
     labs: [{t:'WBC', v:'11.2', r:'11', s:'H'}],
-    viz: 'N/A.', path: 'N/A.',
+    viz: 'N/A.',
     progress: 'Symptoms resolved. Observing for biphasic reaction.', meds: [{n:'Benadryl', d:'50mg IV'}],
     demographics: `DOB: 07/04/1996. Address: 32 Liberty St. Insurance: BCBS.`
   },
   {
     id: 'p13', active: true, esi: 2, name: 'Gavin Thorne', age: '41M', mrn: '002821', room: '11', cc: 'Pulmonary Embolism', weight: '110kg', height: '190cm', attending: 'Dr. Kim',
     history: `Acute onset pleuritic chest pain and SOB. Pt flew from Japan (14h flight) 2 days ago. R leg swelling.`,
-    physical: `Weight: 110.4kg. Ext: R calf tender/swollen +2. Cardiac: Tachycardic.`,
+    physical: `Anthropometrics:
+    Weight: 110.4kg &emsp; Height: 190cm &emsp; BMI: 30.6
+
+    System-Based Exam:
+    Lungs: Clear. Cardiac: Tachycardic. Ext: R calf tender/swollen +2.`,
     ems: `Called for chest pain. SpO2 91%. 18g IV established.`,
     er_notes: `D-dimer 4500. CTA Chest confirmed saddle embolus. Heparin started.`,
     vitals: { bp: '130/92', hr: '118', temp: '36.9', spo2: '92%' },
     labs: [{t:'D-Dimer', v:'4500', r:'500', s:'H'}],
-    viz: 'CTA: Large saddle PE.', path: 'N/A.',
+    viz: 'CTA: Large saddle PE.',
     progress: 'Anticoagulation ongoing. Stable for step-down.', meds: [{n:'Heparin Drip', d:'Titrated'}],
     demographics: `DOB: 01/30/1985. Address: 99 Global Dr.`
   },
   {
     id: 'p14', active: true, esi: 3, name: 'Sophie Lin', age: '25F', mrn: '009110', room: '19', cc: 'Sepsis (Appendicitis)', weight: '55kg', height: '162cm', attending: 'Dr. Patel',
-    history: `2 days periumbilical pain now localized to RLQ. Anorexia and high fever.`,
-    physical: `Weight: 55kg. Abdomen: McBurney's point tenderness. Rigid and guarding.`,
+    history: `2 days periumbilical pain now localized to RLQ. Fever and anorexia. Pt is rigid and guarding.`,
+    physical: `Anthropometrics:
+    Weight: 55kg &emsp; Height: 162cm &emsp; BMI: 21.0
+
+    System-Based Exam:
+    Abdomen: McBurney's point tenderness significant. Rebound present.`,
     ems: `Pt pale and febrile (102.8). NS bolus started en route.`,
     er_notes: `CT confirms perforated appendix with abscess. Emergent surgery consulted.`,
     vitals: { bp: '104/58', hr: '118', temp: '39.2', spo2: '99%' },
     labs: [{t:'WBC', v:'22.1', r:'11', s:'H'}],
-    viz: 'CT A/P: Perforated appendix.', path: 'Pending.',
+    viz: 'CT A/P: Perforated appendix.',
     progress: 'Going to OR now.', meds: [{n:'Zosyn', d:'3.375g IV'}],
     demographics: `DOB: 08/08/2000. Address: 12 College Cir.`
   },
   {
     id: 'p15', active: true, esi: 3, name: 'James Carter', age: '44M', mrn: '003221', room: '02', cc: 'Cellulitis (Sepsis)', weight: '95kg', height: '180cm', attending: 'Dr. Patel',
     history: `R lower leg redness and swelling for 3 days. Rapid spread over last 24h. Pt has T2DM.`,
-    physical: `Weight: 95kg. R Lower Leg: Erythematous, warm, bullae present.`,
+    physical: `Anthropometrics:
+    Weight: 95kg &emsp; Height: 180cm &emsp; BMI: 29.3
+
+    System-Based Exam:
+    R Lower Leg: Erythematous, warm, bullae present.`,
     ems: `Pt unable to walk. Febrile en route.`,
     er_notes: `Lactic acid 3.2. Started on Vancomycin and Zosyn.`,
     vitals: { bp: '112/68', hr: '110', temp: '39.0', spo2: '98%' },
     labs: [{t:'Lactate', v:'3.2', r:'2.0', s:'H'}],
-    viz: 'US: No DVT.', path: 'Wound culture: MRSA.',
+    viz: 'US: No DVT.',
     progress: 'Pt stable for floor admission.', meds: [{n:'Vancomycin', d:'1.5g IV'}],
     demographics: `DOB: 04/14/1981. Address: 12 Elm St.`
   },
   {
     id: 'p16', active: true, esi: 2, name: 'William Blake', age: '60M', mrn: '001142', room: 'T7', cc: 'Acute AAA Rupture', weight: '88kg', height: '175cm', attending: 'Dr. Torres',
     history: `Sudden onset severe "tearing" back pain. History of known 4.5cm AAA. Pt is hypotensive and pale.`,
-    physical: `Weight: 88kg. Abdomen: Pulsatile mass. Pale, clammy skin.`,
+    physical: `Anthropometrics:
+    Weight: 88kg &emsp; Height: 175cm &emsp; BMI: 28.7
+
+    System-Based Exam:
+    Abdomen: Pulsatile mass. Pale, clammy skin.`,
     ems: `Pt found syncopized. BP 70/40 en route. Biproximal IVs.`,
     er_notes: `Stat CT confirmed rupture. Vascular surgery bedside in 5 mins.`,
     vitals: { bp: '82/44', hr: '128', temp: '36.1', spo2: '92%' },
     labs: [{t:'Hgb', v:'9.1', r:'14', s:'L'}],
-    viz: 'CT: Ruptured AAA.', path: 'Type & Cross x6.',
+    viz: 'CT: Ruptured AAA.',
     progress: 'Moving to OR for emergent repair.', meds: [{n:'Blood', d:'Emergency O-'}],
     demographics: `DOB: 11/11/1965. Address: 9 Sunset Dr.`
   },
   {
     id: 'p17', active: true, esi: 3, name: 'Olivia Martinez', age: '19F', mrn: '008122', room: '04', cc: 'Tylenol Overdose', weight: '52kg', height: '160cm', attending: 'Dr. Kim',
     history: `Ingested 20 tablets of Extra Strength Tylenol 2 hours ago. Reports nausea. Pt brought in by parent.`,
-    physical: `Weight: 52kg. General: Cooperative but tearful. Abdomen: Soft.`,
+    physical: `Anthropometrics:
+    Weight: 52kg &emsp; Height: 160cm &emsp; BMI: 20.3
+
+    System-Based Exam:
+    General: Cooperative but tearful. Abdomen: Soft.`,
     ems: `Pt stable en route. Parents found empty bottles.`,
     er_notes: `Acetaminophen level 150. NAC protocol initiated.`,
     vitals: { bp: '118/74', hr: '82', temp: '36.8', spo2: '100%' },
     labs: [{t:'APAP', v:'150', r:'20', s:'H'}],
-    viz: 'N/A.', path: 'LFTs: Normal.',
+    viz: 'N/A.',
     progress: 'NAC infusion ongoing. Psych paged.', meds: [{n:'Mucomyst', d:'Protocol'}],
     demographics: `DOB: 02/12/2007. Address: 11 College Ln.`
   },
   {
     id: 'p18', active: true, esi: 2, name: 'Henry Ford', age: '71M', mrn: '004419', room: '06', cc: 'Urosepsis', weight: '78kg', height: '172cm', attending: 'Dr. Patel',
     history: `Chronic indwelling catheter. 2 days of cloudy urine and fever. Pt is confused today.`,
-    physical: `Weight: 78kg. General: Confused (A&Ox1). Febrile. No focal neuro.`,
+    physical: `Anthropometrics:
+    Weight: 78kg &emsp; Height: 172cm &emsp; BMI: 26.4
+
+    System-Based Exam:
+    General: Confused (A&Ox1). Febrile. No focal neuro.`,
     ems: `Found in bed with high fever. HR 122. IV started.`,
     er_notes: `UA: Loaded bacteria. WBC 19.0. Lactic 4.1.`,
     vitals: { bp: '100/60', hr: '122', temp: '39.5', spo2: '96%' },
     labs: [{t:'Lactate', v:'4.1', r:'2.0', s:'H'}],
-    viz: 'US: Bladder wall thickening.', path: 'Culture: E. coli.',
+    viz: 'US: Bladder wall thickening.',
     progress: 'NS bolus complete. Antibiotics infusing.', meds: [{n:'Rocephin', d:'2g IV'}],
     demographics: `DOB: 12/12/1954. Address: 10 Hope Rd.`
   },
   {
     id: 'p19', active: true, esi: 3, name: 'Isabella Grant', age: '28F', mrn: '002911', room: '17', cc: 'Ectopic Pregnancy', weight: '60kg', height: '165cm', attending: 'Dr. Kim',
     history: `Positive hCG at home. Presents with sharp left-sided pelvic pain and spotting.`,
-    physical: `Weight: 60kg. Abdomen: Tender in LLQ. Positive cervical motion tenderness.`,
+    physical: `Anthropometrics:
+    Weight: 60kg &emsp; Height: 165cm &emsp; BMI: 22.0
+
+    System-Based Exam:
+    Abdomen: Tender in LLQ. Positive cervical motion tenderness.`,
     ems: `Self-transport. Stable in triage.`,
     er_notes: `Ultrasound shows empty uterus and L adnexal mass. hCG 4,000.`,
     vitals: { bp: '116/72', hr: '84', temp: '37.1', spo2: '100%' },
     labs: [{t:'hCG', v:'4k', r:'N/A', s:'H'}],
-    viz: 'US: L tubal pregnancy.', path: 'Pending.',
+    viz: 'US: L tubal pregnancy.',
     progress: 'Moving to OR now.', meds: [{n:'Morphine', d:'2mg IV'}],
     demographics: `DOB: 05/05/1997. Address: 12 North St.`
   },
   {
     id: 'p20', active: true, esi: 1, name: 'George Harrison', age: '35M', mrn: '009182', room: 'T1', cc: 'Status Epilepticus', weight: '88kg', height: '185cm', attending: 'Dr. Torres',
     history: `Witnessed 10-minute tonic-clonic seizure. Pt has not stopped seizing despite field meds. Hx of epilepsy.`,
-    physical: `Weight: 88kg. Neuro: Actively seizing. Airway: Gurgling respirations.`,
+    physical: `Anthropometrics:
+    Weight: 88kg &emsp; Height: 185cm &emsp; BMI: 25.7
+
+    System-Based Exam:
+    Neuro: Actively seizing. Airway: Gurgling respirations.`,
     ems: `Found seizing. 4mg Ativan given twice without effect.`,
     er_notes: `Arrival: Intubated for airway protection. Propofol and Keppra loading started.`,
     vitals: { bp: '142/98', hr: '132', temp: '38.2', spo2: '94%' },
     labs: [{t:'WBC', v:'12.0', r:'11', s:'H'}],
-    viz: 'CT: Pending stabilization.', path: 'Keppra level: Sub-therapeutic.',
+    viz: 'CT: Pending stabilization.',
     progress: 'Seizure activity ceased on Propofol.', meds: [{n:'Keppra', d:'2000mg IV Loading'}],
     demographics: `DOB: 08/08/1990. Address: 12 Liverpool Dr.`
   }
 ];
 
-/* """ NAVIGATION LOGIC """ */
+/* """ LOGIC ENGINE """ */
 function nav(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -456,7 +514,7 @@ function buildCensus() {
       <td><strong>${p.room}</strong></td>
       <td>${p.cc}</td>
       <td style="font-family:'DM Mono'">${p.vitals?p.vitals.bp:'120/80'} | ${p.vitals?p.vitals.hr:'80'}</td>
-      <td><span style="width:8px; height:8px; background:var(--warn); border-radius:50%; display:inline-block; margin-right:6px"></span> In Workup</td>
+      <td><span style="width:8px; height:8px; background:var(--warn); border-radius:50%; display:inline-block; margin-right:6px"></span> Active</td>
       <td align="right"><button class="open-btn">Open →</button></td>
     </tr>`).join('');
 
@@ -512,13 +570,14 @@ function openChart(pid) {
             <div class="v-card"><span class="v-val" style="color:var(--danger)">${p.vitals?p.vitals.temp:'37.0'}°</span><span class="v-label">Temp °C</span></div>
             <div class="v-card"><span class="v-val">${p.vitals?p.vitals.spo2:'98%'}</span><span class="v-label">SpO2</span></div>
           </div>
+          <div class="section-block"><h3>Vitals Update</h3><p>Trend is stable over current observation period.</p></div>
         </div>
 
         <div id="history" class="tab-panel"><div class="section-block"><h3>Clinical History & HPI</h3><p>${p.history}</p></div></div>
         
-        <div id="physical" class="tab-panel"><div class="section-block"><h3>System-Based Physical Exam</h3><p>${p.physical}</p></div></div>
+        <div id="physical" class="tab-panel"><div class="section-block"><h3>Physical Examination</h3><p>${p.physical}</p></div></div>
         
-        <div id="ems" class="tab-panel"><div class="section-block"><h3>EMS Pre-hospital Report</h3><p>${p.ems}</p></div></div>
+        <div id="ems" class="tab-panel"><div class="section-block"><h3>EMS Pre-hospital Note</h3><p>${p.ems}</p></div></div>
         
         <div id="er" class="tab-panel"><div class="section-block"><h3>Emergency Department Course</h3><p>${p.er_notes}</p></div></div>
         
@@ -529,7 +588,7 @@ function openChart(pid) {
 
         <div id="viz" class="tab-panel"><div class="section-block"><h3>Visualizations & Imaging</h3><p>${p.viz}</p></div></div>
         
-        <div id="pathology" class="tab-panel"><div class="section-block"><h3>Pathology & Microbiology</h3><p>${p.pathology || p.path}</p></div></div>
+        <div id="pathology" class="tab-panel"><div class="section-block"><h3>Pathology & Microbiology</h3><p>${p.pathology || "Pending."}</p></div></div>
         
         <div id="notes" class="tab-panel"><div class="section-block"><h3>MD Progress Notes</h3><div class="note-entry"><p>${p.progress}</p></div></div></div>
         
@@ -539,7 +598,6 @@ function openChart(pid) {
       </div>
     </div>`;
 
-  // Wire Tab Switches
   const tabs = mount.querySelectorAll('.tab-btn');
   const panels = mount.querySelectorAll('.tab-panel');
   tabs.forEach(t => t.addEventListener('click', () => {
@@ -553,7 +611,7 @@ function openChart(pid) {
 }
 
 function discharge(id) {
-  if(confirm("Discharge patient?")) {
+  if(confirm("Confirm discharge?")) {
     PATIENTS.find(x => x.id === id).active = false;
     nav('page-main');
   }
@@ -563,4 +621,3 @@ buildCensus();
 </script>
 </body>
 </html>
-```
