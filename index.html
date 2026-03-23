@@ -26,7 +26,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--text); min-height: 100vh; }
 
-/* ── ROUTING ── */
+/* ── ROUTER ── */
 .page { display: none; min-height: 100vh; flex-direction: column; width: 100%; }
 .page.active { display: flex; }
 
@@ -65,7 +65,6 @@ body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--t
 .tab-panel { display: none; }
 .tab-panel.active { display: block; padding-bottom: 40px; }
 
-/* Components */
 .vitals-grid { display: flex; gap: 12px; flex-wrap: wrap; padding: 26px 28px; }
 .vital-card { flex: 1; min-width: 100px; background: #f4f9fd; border: 1px solid var(--border); border-radius: 14px; padding: 16px 12px; text-align: center; }
 .vital-val { font-size: 26px; font-family: 'Lora', serif; }
@@ -101,7 +100,7 @@ body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--t
   <nav class="topnav">
     <span class="nav-logo">Carta</span>
     <div style="width:1px; height:20px; background:var(--border); margin:0 10px;"></div>
-    <span style="font-size:12px; font-weight:600; color:var(--unc-dark); background:var(--unc-light); padding:4px 11px; border-radius:100px;">ER</span>
+    <span style="font-size:12px; font-weight:600; color:var(--unc-dark); background:var(--unc-light); padding:4px 11px; border-radius:100px;">ER DASHBOARD</span>
     <div style="flex:1"></div>
     <div style="width:32px; height:32px; background:var(--unc); border-radius:10px; color:white; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; cursor:pointer;" onclick="navTo('page-login')">DR</div>
   </nav>
@@ -119,97 +118,84 @@ body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--t
 <div id="page-chart" class="page">
   <nav class="topnav">
     <button class="open-btn" onclick="navTo('page-main')">← Back to Census</button>
-    <span class="nav-logo" style="margin-left:20px">Carta</span>
+    <span class="nav-logo" style="margin-left:20px" id="chart-logo-name">Carta</span>
   </nav>
   <div id="chart-content"></div>
 </div>
 
 <script>
-/* """ 10 PATIENT DATABASE """ */
+/* """ THE 5 PATIENT DATABASE """ */
 const PATIENTS = [
   {
     id: 'p1', esi: 3, name: 'Sarah Chen', age: '62F', mrn: '0042817', room: '12', cc: 'Cough / Fever — CAP',
-    attending: 'Dr. S. Patel', admitted: '3/20/26', flags: ['PCN allergy', 'DNR', 'CAP'],
+    attending: 'Dr. Patel', admitted: '3/20/26', flags: ['PCN allergy', 'DNR', 'CAP'],
     vitals: { bp: '118/76', hr: '101', temp: '38.9', spo2: '96%', rr: '18' },
     history: 'T2DM, HTN, HLD. Prior cholecystectomy (2018). Non-smoker.',
-    physical: 'General: Ill-appearing. Lungs: Crackles RLL. Heart: Tachycardic, no murmurs.',
+    physical: 'Lungs: Crackles RLL. Heart: Tachycardic, no murmurs.',
     ems: 'Arrived via ambulance. SpO2 91% on RA. 2L NC applied.',
     er: 'ESI 3. CXR shows RLL opacity. Started on IV Ceftriaxone.',
-    labs: [
-      { test: 'WBC', val: '14.2', ref: '4.5-11', status: 'H' },
-      { test: 'Glucose', val: '182', ref: '70-140', status: 'H' },
-      { test: 'Potassium', val: '3.2', ref: '3.5-5.0', status: 'L' }
-    ],
-    pathology: 'Blood Cultures (x2): Pending. Sputum: Gram positive cocci.',
-    notes: 'Patient stable on 2L. Fever persists at 38.9. Will re-evaluate labs.',
-    meds: [
-      { name: 'Ceftriaxone 1g IV', dose: 'Daily', color: 'var(--unc)' },
-      { name: 'Metformin 1000mg', dose: 'BID', color: 'var(--ok)' }
-    ]
+    labs: [{test:'WBC', val:'14.2', ref:'4-11', status:'H'}, {test:'Glucose', val:'182', ref:'70-140', status:'H'}],
+    viz: 'Chest X-Ray: Right lower lobe consolidation confirmed.',
+    pathology: 'Sputum Gram Stain: Gram positive cocci in pairs.',
+    notes: 'Patient stable on 2L. Fever persists. Will monitor WBC trend.',
+    meds: [{name:'Ceftriaxone 1g IV', dose:'Daily', color:'var(--unc)'}, {name:'Metformin 1000mg', dose:'BID', color:'var(--ok)'}]
   },
   {
     id: 'p2', esi: 2, name: 'Robert Nguyen', age: '58M', mrn: '0031042', room: 'T1', cc: 'Chest Pain — STEMI',
-    attending: 'Dr. J. Torres', admitted: '3/23/26', flags: ['DNR'],
+    attending: 'Dr. Torres', admitted: '3/23/26', flags: ['DNR', 'Cardiac'],
     vitals: { bp: '92/58', hr: '114', temp: '36.8', spo2: '94%', rr: '22' },
-    history: 'CAD s/p stent (2020), Tobacco use 30pk/yr.',
-    physical: 'General: Diaphoretic, clutching chest. Heart: S1/S2 present, rapid.',
-    ems: 'ECG shows ST elevation in II, III, aVF. ASA 324mg given.',
+    history: 'CAD s/p stent (2020), HTN, Tobacco use 30pk/yr.',
+    physical: 'General: Diaphoretic, clutching chest. Heart: Rapid, regular.',
+    ems: 'ECG shows 4mm ST elevation in II, III, aVF. ASA 324mg given.',
     er: 'ESI 2. Cath lab activated. Heparin bolus administered.',
-    labs: [
-      { test: 'Troponin', val: '4.82', ref: '<0.04', status: 'H' },
-      { test: 'Hgb', val: '14.1', ref: '13-17', status: 'N' }
-    ],
-    pathology: 'N/A for acute cardiac.',
-    notes: 'Cath lab arrival imminent. Consented for PCI.',
-    meds: [
-      { name: 'Heparin Gtt', dose: '12u/kg/hr', color: 'var(--danger)' },
-      { name: 'Ticagrelor 180mg', dose: 'Once', color: 'var(--unc)' }
-    ]
+    labs: [{test:'Troponin I', val:'4.82', ref:'<0.04', status:'H'}, {test:'Hgb', val:'14.1', ref:'13-17', status:'N'}],
+    viz: '12-Lead ECG: Acute Inferior Wall MI. Echo shows inferior hypokinesis.',
+    pathology: 'N/A for acute cardiac protocol.',
+    notes: 'Transport to Cath Lab via cardiology team imminent.',
+    meds: [{name:'Heparin Gtt', dose:'12u/kg/hr', color:'var(--danger)'}, {name:'Ticagrelor 180mg', dose:'Once', color:'var(--unc)'}]
   },
   {
-    id: 'p3', esi: 1, name: 'James Whitfield', age: '44M', mrn: '0038891', room: 'T2', cc: 'Respiratory Distress',
-    attending: 'Dr. J. Torres', admitted: '3/23/26', flags: ['Fall risk', 'Isolation'],
-    vitals: { bp: '142/92', hr: '108', temp: '37.4', spo2: '82%', rr: '28' },
-    history: 'Severe COPD, Obesity (BMI 42).',
-    physical: 'General: Tripod position. Lung: Diffuse wheezing, absent bases.',
-    ems: 'Found in respiratory failure. BiPAP 12/5 applied en route.',
-    er: 'ESI 1. Intubation tray at bedside. ABG: pH 7.21, pCO2 78.',
-    labs: [
-      { test: 'pCO2', val: '78', ref: '35-45', status: 'H' },
-      { test: 'pH', val: '7.21', ref: '7.35-7.45', status: 'L' }
-    ],
-    pathology: 'Viral Panel: Influenza A Positive.',
-    notes: 'BiPAP settings increased. Preparing for ICU transfer.',
-    meds: [
-      { name: 'Methylprednisolone 125mg', dose: 'IV Push', color: 'var(--unc)' },
-      { name: 'Albuterol Neb', dose: 'q2h', color: 'var(--warn)' }
-    ]
+    id: 'p3', esi: 1, name: 'Marcus Miller', age: '26M', mrn: '0092110', room: 'T2', cc: 'Overdose — Unresponsive',
+    attending: 'Dr. Torres', admitted: '3/23/26', flags: ['Fall Risk', 'Critical'],
+    vitals: { bp: '104/62', hr: '58', temp: '36.1', spo2: '88%', rr: '6' },
+    history: 'Opioid Use Disorder, Depression.',
+    physical: 'Pupils: Pinpoint. Skin: Cool, pale. Neuro: GCS 6.',
+    ems: 'Found unresponsive with drug paraphernalia. Narcan 4mg nasal x2 given.',
+    er: 'ESI 1. Bag-valve-mask ventilation. Narcan drip initiated.',
+    labs: [{test:'UDS', val:'+Opioids', ref:'Neg', status:'H'}, {test:'pH', val:'7.28', ref:'7.35', status:'L'}],
+    viz: 'CXR: Clear. No signs of aspiration.',
+    pathology: 'Toxicology: Fentanyl positive.',
+    notes: 'Breathing improved after Narcan. GCS now 12. Monitoring for withdrawal.',
+    meds: [{name:'Naloxone Drip', dose:'0.4mg/hr', color:'var(--danger)'}, {name:'IV Fluids', dose:'125ml/hr', color:'var(--unc)'}]
   },
   {
-    id: 'p4', esi: 4, name: 'Priya Nair', age: '23F', mrn: '0082310', room: '24', cc: 'Abdominal Pain',
-    attending: 'Dr. S. Patel', admitted: '3/23/26', flags: ['None'],
-    vitals: { bp: '116/72', hr: '78', temp: '37.1', spo2: '100%', rr: '14' },
-    history: 'Anxiety, otherwise healthy.',
-    physical: 'Abdomen: Soft, non-tender. Bowel sounds present.',
-    ems: 'Walk-in triage.',
-    er: 'ESI 4. Lower quadrant pain. hCG negative.',
-    labs: [
-      { test: 'WBC', val: '7.1', ref: '4-11', status: 'N' },
-      { test: 'hCG', val: 'Neg', ref: 'Neg', status: 'N' }
-    ],
-    pathology: 'Urine Culture: Pending.',
-    notes: 'Symptoms improving. Likely viral GE.',
-    meds: [
-      { name: 'Zofran 4mg', dose: 'IV PRN', color: 'var(--warn)' }
-    ]
+    id: 'p4', esi: 3, name: 'Elena Rodriguez', age: '42F', mrn: '0061345', room: '24', cc: 'Broken Arm — Deformity',
+    attending: 'Dr. Kim', admitted: '3/23/26', flags: ['None'],
+    vitals: { bp: '152/94', hr: '108', temp: '37.1', spo2: '100%', rr: '20' },
+    history: 'Asthma, otherwise healthy.',
+    physical: 'R Upper Extremity: Obvious deformity, skin intact. Pulses: 2+ Radial.',
+    ems: 'Fall from ladder. Splint applied en route. Fentanyl 50mcg given.',
+    er: 'ESI 3. Orthopedics consulted for distal radius fracture.',
+    labs: [{test:'WBC', val:'9.1', ref:'4-11', status:'N'}, {test:'Hgb', val:'13.8', ref:'12-16', status:'N'}],
+    viz: 'X-Ray R Wrist: Comminuted distal radius fracture with dorsal displacement.',
+    pathology: 'N/A.',
+    notes: 'Hematoma block performed. Reduction successful. Post-reduction film pending.',
+    meds: [{name:'Morphine 4mg IV', dose:'q4h PRN', color:'var(--warn)'}, {name:'Cefazolin 1g IV', dose:'Once', color:'var(--unc)'}]
   },
-  // Adding more patients for the census...
-  { id:'p5', name:'Maria Gutierrez', age:'71F', esi:2, room:'T3', cc:'AMS / Sepsis', mrn:'0044218', attending:'Dr. Patel', admitted:'3/23', flags:['ISO'], vitals:{bp:'96/60',hr:'124',temp:'38.9',spo2:'94%',rr:'24'}, history:'Dementia', physical:'Somnolent.', ems:'Found by family.', er:'Sepsis protocol.', labs:[], pathology:[], notes:'', meds:[] },
-  { id:'p6', name:'Thomas Reid', age:'55M', esi:3, room:'14', cc:'R/O Appendicitis', mrn:'0055102', attending:'Dr. Torres', admitted:'3/23', flags:[], vitals:{bp:'128/82',hr:'94',temp:'37.8',spo2:'99%',rr:'16'}, history:'None.', physical:'Tender RLQ.', ems:'N/A', er:'CT Pending.', labs:[], pathology:[], notes:'', meds:[] },
-  { id:'p7', name:'Aisha Johnson', age:'29F', esi:3, room:'16', cc:'Migraine', mrn:'0061345', attending:'Dr. Kim', admitted:'3/23', flags:[], vitals:{bp:'148/96',hr:'82',temp:'36.9',spo2:'99%',rr:'16'}, history:'Migraines.', physical:'Photophobia.', ems:'N/A', er:'Dark room.', labs:[], pathology:[], notes:'', meds:[] },
-  { id:'p8', name:'Franklin Osei', age:'68M', esi:3, room:'18', cc:'Syncope', mrn:'0038820', attending:'Dr. Patel', admitted:'3/23', flags:['Fall risk'], vitals:{bp:'110/70',hr:'58',temp:'36.8',spo2:'98%',rr:'16'}, history:'HTN.', physical:'Normal.', ems:'Syncope at home.', er:'Tele applied.', labs:[], pathology:[], notes:'', meds:[] },
-  { id:'p9', name:'Linda Park', age:'47F', esi:3, room:'20', cc:'DKA', mrn:'0044901', attending:'Dr. Torres', admitted:'3/23', flags:['PCN allergy'], vitals:{bp:'108/68',hr:'112',temp:'37.2',spo2:'98%',rr:'20'}, history:'T1DM.', physical:'Dry mucus membranes.', ems:'AMS.', er:'Insulin started.', labs:[], pathology:[], notes:'', meds:[] },
-  { id:'p10', name:'Brian Calloway', age:'34M', esi:4, room:'22', cc:'Laceration', mrn:'0071204', attending:'Dr. Kim', admitted:'3/23', flags:[], vitals:{bp:'128/78',hr:'76',temp:'36.9',spo2:'99%',rr:'14'}, history:'Healthy.', physical:'R hand lac.', ems:'N/A', er:'Sutures ready.', labs:[], pathology:[], notes:'', meds:[] }
+  {
+    id: 'p5', esi: 2, name: 'David Walsh', age: '74M', mrn: '0028817', room: '14', cc: 'Stroke — L Side Weakness',
+    attending: 'Dr. Patel', admitted: '3/23/26', flags: ['Fall Risk', 'NPO'],
+    vitals: { bp: '188/104', hr: '82', temp: '36.9', spo2: '98%', rr: '16' },
+    history: 'Afib (non-compliant with Eliquis), HLD, PVD.',
+    physical: 'Neuro: Left facial droop, L arm 0/5 strength. NIHSS: 14.',
+    ems: 'LKW 14:00. Stroke code called en route.',
+    er: 'ESI 2. CT Head negative for bleed. CTA shows R MCA occlusion.',
+    labs: [{test:'INR', val:'1.1', ref:'2-3', status:'L'}, {test:'Glucose', val:'104', ref:'70-140', status:'N'}],
+    viz: 'CT Head: No acute hemorrhage. CTA: Abrupt cutoff at R M1 segment.',
+    pathology: 'N/A.',
+    notes: 'Interventional Neuroradiology moving patient for thrombectomy.',
+    meds: [{name:'TNKase (Tenecteplase)', dose:'Once', color:'var(--danger)'}, {name:'Labetalol 10mg IV', dose:'PRN BP', color:'var(--warn)'}]
+  }
 ];
 
 /* """ LOGIC: ROUTING """ */
@@ -229,7 +215,7 @@ function buildCensus() {
       <td><strong>${p.room}</strong></td>
       <td>${p.cc}</td>
       <td style="font-family:'DM Mono'">${p.vitals.bp} | ${p.vitals.hr}</td>
-      <td><span class="dot" style="background:${p.esi <= 2 ? 'var(--danger)' : 'var(--warn)'}; display:inline-block"></span> Admit Pending</td>
+      <td><span class="dot" style="background:${p.esi <= 2 ? 'var(--danger)' : 'var(--warn)'}; display:inline-block"></span> ${p.esi <= 2 ? 'Stabilizing' : 'Admit Pending'}</td>
       <td><button class="open-btn">Open →</button></td>
     </tr>
   `).join('');
@@ -246,11 +232,11 @@ function openChart(pid) {
         <div class="avatar">${p.name.split(' ').map(n=>n[0]).join('')}</div>
         <div class="patient-info">
           <div class="patient-name">${p.name}</div>
-          <div class="patient-meta">${p.age} · DOB 03/14/1963 · MRN ${p.mrn} · Admitted ${p.admitted}</div>
+          <div class="patient-meta">${p.age} · MRN ${p.mrn} · Admitted ${p.admitted}</div>
           <div class="patient-meta">Attending: ${p.attending} · ${p.cc}</div>
         </div>
         <div class="badges">
-          ${p.flags.map(f => `<span class="badge ${f.includes('PCN')?'badge-pcn':f.includes('DNR')?'badge-dnr':'badge-cap'}">${f}</span>`).join('')}
+          ${p.flags.map(f => `<span class="badge ${f === 'Critical'?'badge-red':'badge-cap'}">${f}</span>`).join('')}
         </div>
       </div>
 
@@ -278,13 +264,11 @@ function openChart(pid) {
         <div class="trends-section">
           <div class="trend-card">
             <div style="font-size:10px; font-weight:600; color:var(--unc); margin-bottom:12px; text-transform:uppercase">BP Trend</div>
-            <div style="font-size:12px; display:flex; align-items:center; margin-bottom:8px">3/22 <div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div> 118/76</div>
-            <div style="font-size:12px; display:flex; align-items:center">3/23 <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div> 122/80</div>
+            <div style="font-size:12px; display:flex; align-items:center; margin-bottom:8px">Arrival <div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div> ${p.vitals.bp}</div>
           </div>
           <div class="trend-card">
              <div style="font-size:10px; font-weight:600; color:var(--unc); margin-bottom:12px; text-transform:uppercase">Temp Trend</div>
-             <div style="font-size:12px; display:flex; align-items:center; margin-bottom:8px">3/22 <div class="bar-bg"><div class="bar-fill" style="width:70%; background:var(--warn)"></div></div> 38.4°</div>
-             <div style="font-size:12px; display:flex; align-items:center">3/23 <div class="bar-bg"><div class="bar-fill" style="width:90%; background:var(--danger)"></div></div> 38.9°</div>
+             <div style="font-size:12px; display:flex; align-items:center">Arrival <div class="bar-bg"><div class="bar-fill" style="width:70%; background:var(--warn)"></div></div> ${p.vitals.temp}°</div>
           </div>
         </div>
       </div>
@@ -293,23 +277,18 @@ function openChart(pid) {
       <div id="physical" class="tab-panel"><div class="content-section"><h3>Recent Physical Exam</h3><p>${p.physical}</p></div></div>
       <div id="ems" class="tab-panel"><div class="content-section"><h3>EMS Run Notes</h3><p>${p.ems}</p></div></div>
       <div id="er" class="tab-panel"><div class="content-section"><h3>Emergency Department Evaluation</h3><p>${p.er}</p></div></div>
-      
       <div id="labs" class="tab-panel">
         <div class="content-section">
           <h3>Laboratory Results</h3>
           <table class="data-table">
             <thead><tr><th>Test</th><th>Result</th><th>Reference</th><th></th></tr></thead>
-            <tbody>
-              ${p.labs.map(l => `<tr><td>${l.test}</td><td><strong style="color:${l.status==='N'?'var(--text)':l.status==='H'?'var(--danger)':'var(--warn)'}">${l.val}</strong></td><td>${l.ref}</td><td>${l.status}</td></tr>`).join('')}
-            </tbody>
+            <tbody>${p.labs.map(l => `<tr><td>${l.test}</td><td><strong style="color:${l.status==='N'?'var(--text)':l.status==='H'?'var(--danger)':'var(--warn)'}">${l.val}</strong></td><td>${l.ref}</td><td>${l.status}</td></tr>`).join('')}</tbody>
           </table>
         </div>
       </div>
-
-      <div id="viz" class="tab-panel"><div class="content-section"><h3>Visualizations</h3><p style="color:var(--muted)">Radiology imaging and trend graphs loading...</p></div></div>
-      <div id="path" class="tab-panel"><div class="content-section"><h3>Pathology & Microbiology</h3><p>${p.pathology}</p></div></div>
+      <div id="viz" class="tab-panel"><div class="content-section"><h3>Visualizations & Imaging</h3><p>${p.viz}</p></div></div>
+      <div id="path" class="tab-panel"><div class="content-section"><h3>Pathology & Micro</h3><p>${p.pathology}</p></div></div>
       <div id="notes" class="tab-panel"><div class="content-section"><h3>Progress Notes</h3><div class="note-entry">${p.notes}</div></div></div>
-      
       <div id="meds" class="tab-panel">
         <div class="content-section">
           <h3>Active Medications</h3>
@@ -319,7 +298,7 @@ function openChart(pid) {
     </div>
   `;
 
-  // Re-wire tabs for the new chart
+  // WIRE TABS
   const tabs = host.querySelectorAll('.tab-btn');
   const panels = host.querySelectorAll('.tab-panel');
   tabs.forEach(t => t.addEventListener('click', () => {
