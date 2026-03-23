@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carta EHR</title>
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* """ GLOBAL STYLING """ */
+/* """ GLOBAL DESIGN SYSTEM """ */
 :root {
   --unc: #4B9CD3;
   --unc-light: #d6eaf7;
@@ -24,19 +24,13 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--text); min-height: 100vh; }
 
-body {
-  background: var(--bg);
-  font-family: 'DM Sans', sans-serif;
-  color: var(--text);
-  min-height: 100vh;
-}
-
-/* ── ROUTER ── */
-.page { display: none; min-height: 100vh; flex-direction: column; }
+/* ── ROUTING ── */
+.page { display: none; min-height: 100vh; flex-direction: column; width: 100%; }
 .page.active { display: flex; }
 
-/* ── LOGIN PAGE ── */
+/* ── LOGIN ── */
 #page-login { align-items: center; justify-content: center; background: linear-gradient(160deg, #e8f4fc 0%, #f9fbfd 50%, #d6eaf7 100%); }
 .login-card { background: var(--white); border-radius: 24px; box-shadow: 0 32px 80px rgba(75,156,211,.14); padding: 48px 44px; width: 420px; max-width: 90%; text-align: center; animation: fadeUp .5s ease; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -45,76 +39,49 @@ body {
 .form-label { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
 .form-input { width: 100%; padding: 12px; border-radius: 10px; border: 1.5px solid var(--border); background: #f8fbfe; outline: none; }
 .login-btn { width: 100%; padding: 14px; border-radius: 10px; border: none; background: var(--navy); color: white; font-weight: 600; cursor: pointer; margin-top: 10px; }
-.demo-btn { width: 100%; padding: 14px; border-radius: 10px; border: 1.5px solid var(--unc); background: white; color: var(--unc-dark); font-weight: 600; cursor: pointer; margin-top: 12px; }
+.demo-btn { width: 100%; padding: 14px; border-radius: 10px; border: 1.5px solid var(--unc); background: white; color: var(--unc-dark); font-weight: 600; cursor: pointer; margin-top: 12px; transition: background 0.2s; }
 
-/* ── CENSUS PAGE ── */
-.topnav { height: 56px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 16px; sticky; top: 0; z-index: 100; }
+/* ── CENSUS ── */
+.topnav { height: 56px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 16px; position: sticky; top: 0; z-index: 100; }
+.nav-logo { font-family: 'Lora', serif; font-size: 20px; color: var(--text); }
 .census-header { padding: 24px 28px; display: flex; justify-content: space-between; align-items: flex-end; }
-.census-table { width: 100%; border-collapse: collapse; min-width: 760px; margin-top: 10px; }
+.census-table { width: 100%; border-collapse: collapse; min-width: 760px; margin-bottom: 40px; }
 .census-table th { padding: 12px; text-align: left; font-size: 10px; text-transform: uppercase; color: var(--unc); border-bottom: 1px solid var(--border); }
 .census-table td { padding: 16px 12px; border-bottom: 1px solid #eef5fb; font-size: 13.5px; }
-.acuity { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; background: #fef3dc; color: #7a5010; }
+.acuity-box { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'DM Mono'; }
+.esi-1, .esi-2 { background: #fde8e8; color: #c0392b; }
+.esi-3 { background: #fef3dc; color: #7a5010; }
+.esi-4, .esi-5 { background: #e1f5eb; color: #1a5c38; }
 .open-btn { padding: 6px 12px; border-radius: 8px; border: 1.5px solid var(--border); background: white; color: var(--unc-dark); font-weight: 600; font-size: 11px; cursor: pointer; }
 
-/* ── CHART UI ── */
-.card { max-width: 860px; margin: 32px auto; background: var(--white); border-radius: var(--radius); box-shadow: 0 20px 60px rgba(75,156,211,.10); overflow: hidden; }
+/* ── CHART ── */
+.chart-card { max-width: 860px; margin: 32px auto; background: var(--white); border-radius: var(--radius); box-shadow: 0 20px 60px rgba(75,156,211,.10); overflow: hidden; }
 .patient-row { padding: 20px 28px; display: flex; align-items: flex-start; gap: 16px; background: #f4f9fd; border-bottom: 1px solid var(--border); }
-.avatar { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, var(--unc-mid), var(--unc)); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: white; flex-shrink: 0; }
-.patient-name { font-size: 18px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; font-family: 'Lora', serif; }
-.patient-meta { font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.7; }
-.badges { display: flex; gap: 7px; flex-wrap: wrap; align-items: flex-start; justify-content: flex-end; }
-.badge-pcn { background: #fde8e8; color: #9b3535; font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 100px; white-space: nowrap; }
-.badge-dnr { background: #fef3dc; color: #7a5010; font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 100px; }
-.badge-cap { background: #e1f5eb; color: #1a5c38; font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 100px; }
-
-.tabs-bar { display: flex; flex-wrap: wrap; background: var(--white); padding: 0 20px; border-bottom: 1px solid var(--border); position: relative; }
+.avatar { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, var(--unc-mid), var(--unc)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; }
+.tabs-bar { display: flex; flex-wrap: wrap; background: var(--white); padding: 0 20px; border-bottom: 1px solid var(--border); }
 .tab-break { width: 100%; height: 0; border-top: 1px solid var(--border); }
-.tab-btn { padding: 11px 15px; font-size: 13px; font-weight: 400; color: var(--muted); cursor: pointer; white-space: nowrap; border: none; background: transparent; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; margin-bottom: -1px; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
+.tab-btn { padding: 11px 15px; font-size: 13px; color: var(--muted); cursor: pointer; border: none; background: transparent; border-bottom: 2px solid transparent; transition: all 0.15s; }
 .tab-btn.active { color: var(--text); border-bottom-color: var(--unc); font-weight: 600; }
-
 .tab-panel { display: none; }
-.tab-panel.active { display: block; }
+.tab-panel.active { display: block; padding-bottom: 40px; }
 
-.vitals-section { padding: 26px 28px 22px; }
-.vitals-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+/* Components */
+.vitals-grid { display: flex; gap: 12px; flex-wrap: wrap; padding: 26px 28px; }
 .vital-card { flex: 1; min-width: 100px; background: #f4f9fd; border: 1px solid var(--border); border-radius: 14px; padding: 16px 12px; text-align: center; }
-.vital-val { font-size: 26px; font-weight: 400; color: var(--text); font-family: 'Lora', serif; letter-spacing: -0.03em; line-height: 1; }
-.vital-val.warn { color: var(--warn); }
-.vital-val.danger { color: var(--danger); }
-.vital-label { font-size: 10.5px; color: var(--muted); margin-top: 7px; text-transform: uppercase; letter-spacing: 0.07em; }
-
-.trends-section { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 0 28px 28px; }
-.trend-card { background: #f4f9fd; border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px 20px; }
-.trend-title { font-size: 10px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; color: var(--unc); margin-bottom: 16px; }
-.trend-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.vital-val { font-size: 26px; font-family: 'Lora', serif; }
+.trends-section { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 0 28px; }
+.trend-card { background: #f4f9fd; border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
 .bar-bg { flex: 1; height: 7px; background: #deedf7; border-radius: 100px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 100px; transition: width 0.6s cubic-bezier(.4,0,.2,1); }
-.fill-blue { background: var(--unc); }
-.fill-gold { background: #c9820a; }
-.fill-red { background: #c0392b; }
-.fill-amber { background: #d97706; }
-.trend-val { font-size: 12px; font-weight: 600; color: #333; width: 54px; text-align: right; font-family: 'DM Sans', sans-serif; }
+.bar-fill { height: 100%; background: var(--unc); border-radius: 100px; }
 
-.placeholder-panel { padding: 60px 28px; text-align: center; }
-.placeholder-icon { width: 52px; height: 52px; background: var(--unc-light); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 22px; }
-.placeholder-title { font-size: 16px; font-weight: 600; color: var(--text); font-family: 'Lora', serif; margin-bottom: 6px; }
-.placeholder-sub { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 320px; margin: 0 auto; }
-
-.labs-section, .meds-section, .notes-section { padding: 24px 28px 32px; }
-.labs-table { width: 100%; border-collapse: collapse; }
-.labs-table th { text-align: left; font-size: 10.5px; font-weight: 600; color: var(--unc); padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-.labs-table td { padding: 12px; font-size: 13px; border-bottom: 1px solid #f0f6fb; }
-.val-high { color: var(--danger); font-weight: 600; }
-.val-low { color: var(--warn); font-weight: 600; }
-.lab-flag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 100px; margin-left: 6px; }
-.flag-h { background: #fde8e8; color: #9b3535; }
-.flag-l { background: #fef3dc; color: #7a5010; }
-.flag-n { background: #e1f5eb; color: #1a5c38; }
-
-.med-card { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-radius: 12px; background: #f4f9fd; border: 1px solid var(--border); margin-bottom: 10px; }
-.med-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 4px; }
-.note-entry { border-left: 3px solid var(--unc-light); padding: 12px 16px; margin-bottom: 14px; border-radius: 0 10px 10px 0; background: #f8fbfe; }
-.note-entry.today { border-left-color: var(--unc); }
+.content-section { padding: 24px 28px; }
+.content-section h3 { font-family: 'Lora'; font-weight: 400; margin-bottom: 16px; font-size: 17px; }
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { text-align: left; font-size: 10px; text-transform: uppercase; color: var(--unc); padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.data-table td { padding: 12px 0; font-size: 13.5px; border-bottom: 1px solid #f0f6fb; }
+.note-entry { border-left: 3px solid var(--unc-light); padding: 12px 16px; margin-bottom: 14px; background: #f8fbfe; border-radius: 0 10px 10px 0; }
+.med-pill { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding: 12px; background: #f4f9fd; border-radius: 12px; border: 1px solid var(--border); }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
 </style>
 </head>
 <body>
@@ -139,22 +106,12 @@ body {
     <div style="width:32px; height:32px; background:var(--unc); border-radius:10px; color:white; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; cursor:pointer;" onclick="navTo('page-login')">DR</div>
   </nav>
   <div class="census-header">
-    <div><h2 style="font-family:'Lora';">Emergency Department Census</h2><p style="font-size:12px; color:var(--muted)">Monday, March 23, 2026 · 34 patients on board</p></div>
+    <div><h2 style="font-family:'Lora';">Emergency Census</h2><p style="font-size:12px; color:var(--muted)">Monday, March 23, 2026</p></div>
   </div>
   <div style="padding: 0 28px;">
     <table class="census-table">
-      <thead><tr><th>ESI</th><th>Patient</th><th>Room</th><th>Chief Complaint</th><th>Vitals</th><th>Status</th><th></th></tr></thead>
-      <tbody>
-        <tr onclick="navTo('page-chart')">
-          <td><div class="acuity">3</div></td>
-          <td><strong>Sarah Chen</strong><br><small>62F · MRN 0042817</small></td>
-          <td><strong>12</strong></td>
-          <td>Cough / Fever — CAP</td>
-          <td>118/76 | 101</td>
-          <td>Admit Pending</td>
-          <td><button class="open-btn">Open Chart →</button></td>
-        </tr>
-      </tbody>
+      <thead><tr><th>ESI</th><th>Patient</th><th>Room</th><th>Complaint</th><th>Vitals</th><th>Status</th><th></th></tr></thead>
+      <tbody id="census-body"></tbody>
     </table>
   </div>
 </div>
@@ -164,165 +121,218 @@ body {
     <button class="open-btn" onclick="navTo('page-main')">← Back to Census</button>
     <span class="nav-logo" style="margin-left:20px">Carta</span>
   </nav>
-
-  <div class="card">
-    <div class="patient-row">
-      <div class="avatar">SC</div>
-      <div class="patient-info">
-        <div class="patient-name">Sarah Chen</div>
-        <div class="patient-meta">62F · DOB 03/14/1963 · MRN 0042817 · Admitted 3/20/26</div>
-        <div class="patient-meta">Attending: Dr. S. Patel · T2DM · HTN</div>
-      </div>
-      <div class="badges">
-        <span class="badge-pcn">PCN allergy</span>
-        <span class="badge-dnr">DNR</span>
-        <span class="badge-cap">CAP</span>
-      </div>
-    </div>
-
-    <div class="tabs-bar">
-      <button class="tab-btn active" data-tab="vitals">Vitals</button>
-      <button class="tab-btn" data-tab="history">History</button>
-      <button class="tab-btn" data-tab="physical">Physical</button>
-      <button class="tab-btn" data-tab="ems">EMS Notes</button>
-      <button class="tab-btn" data-tab="er">ER Notes</button>
-      <div class="tab-break"></div>
-      <button class="tab-btn" data-tab="labs">Labs</button>
-      <button class="tab-btn" data-tab="viz">Visualizations</button>
-      <button class="tab-btn" data-tab="path">Pathology</button>
-      <button class="tab-btn" data-tab="progress">Progress Notes</button>
-      <button class="tab-btn" data-tab="meds">Medications</button>
-    </div>
-
-    <div class="tab-panel active" id="tab-vitals">
-      <div class="vitals-section">
-        <div class="vitals-grid">
-          <div class="vital-card"><div class="vital-val">118/76</div><div class="vital-label">BP mmHg</div></div>
-          <div class="vital-card"><div class="vital-val warn">101</div><div class="vital-label">HR bpm</div></div>
-          <div class="vital-card"><div class="vital-val danger">38.9°</div><div class="vital-label">Temp °C</div></div>
-          <div class="vital-card"><div class="vital-val">96%</div><div class="vital-label">SpO₂</div></div>
-          <div class="vital-card"><div class="vital-val">18</div><div class="vital-label">RR /min</div></div>
-        </div>
-      </div>
-      <div class="trends-section">
-        <div class="trend-card">
-          <div class="trend-title">BP Trend</div>
-          <div class="trend-row"><span class="trend-date">3/22</span><div class="bar-bg"><div class="bar-fill fill-blue" style="width:80%"></div></div><span class="trend-val">118/76</span></div>
-          <div class="trend-row"><span class="trend-date">3/23</span><div class="bar-bg"><div class="bar-fill fill-blue" style="width:82%"></div></div><span class="trend-val">120/78</span></div>
-        </div>
-        <div class="trend-card">
-          <div class="trend-title">Temp Trend</div>
-          <div class="trend-row"><span class="trend-date">3/22</span><div class="bar-bg"><div class="bar-fill fill-amber" style="width:76%"></div></div><span class="trend-val">38.4°</span></div>
-          <div class="trend-row"><span class="trend-date">3/23</span><div class="bar-bg"><div class="bar-fill fill-red" style="width:90%"></div></div><span class="trend-val">38.9°</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="tab-history">
-      <div class="placeholder-panel">
-        <div class="placeholder-icon">📋</div>
-        <div class="placeholder-title">Medical History</div>
-        <div class="placeholder-sub">Past diagnoses, surgeries, family history, and social history appear here.</div>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="tab-physical">
-      <div class="placeholder-panel">
-        <div class="placeholder-icon">🩺</div>
-        <div class="placeholder-title">Physical Exam</div>
-        <div class="placeholder-sub">Findings from the most recent physical examination appear here.</div>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="tab-ems">
-      <div class="placeholder-panel">
-        <div class="placeholder-icon">🚑</div>
-        <div class="placeholder-title">EMS Notes</div>
-        <div class="placeholder-sub">Pre-hospital care documentation from EMS appear here.</div>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="tab-er">
-      <div class="placeholder-panel">
-        <div class="placeholder-icon">🏥</div>
-        <div class="placeholder-title">ER Notes</div>
-        <div class="placeholder-sub">Emergency department evaluation and triage notes appear here.</div>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="tab-labs">
-      <div class="labs-section">
-        <h3>Laboratory Results — 3/22/26</h3>
-        <table class="labs-table">
-          <thead><tr><th>Test</th><th>Result</th><th>Reference</th><th>Status</th></tr></thead>
-          <tbody>
-            <tr><td>WBC</td><td class="val-high">14.2 K/µL <span class="lab-flag flag-h">H</span></td><td>4.5 – 11.0</td><td>Elevated</td></tr>
-            <tr><td>Sodium</td><td>138 mEq/L <span class="lab-flag flag-n">N</span></td><td>136 – 145</td><td>Normal</td></tr>
-            <tr><td>Potassium</td><td class="val-low">3.2 mEq/L <span class="lab-flag flag-l">L</span></td><td>3.5 – 5.0</td><td>Low</td></tr>
-            <tr><td>Glucose</td><td class="val-high">182 mg/dL <span class="lab-flag flag-h">H</span></td><td>70 – 140</td><td>Elevated</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="tab-viz">
-      <div class="placeholder-panel">
-        <div class="placeholder-icon">📊</div>
-        <div class="placeholder-title">Visualizations</div>
-        <div class="placeholder-sub">Charts, imaging results, and graphical data appear here.</div>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="tab-path">
-      <div class="placeholder-panel">
-        <div class="placeholder-icon">🔬</div>
-        <div class="placeholder-title">Pathology</div>
-        <div class="placeholder-sub">Biopsy, culture, and pathology reports appear here.</div>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="tab-progress">
-      <div class="notes-section">
-        <h3>Progress Notes</h3>
-        <div class="note-entry today">
-          <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">3/22/26 · 08:14 · Dr. S. Patel · Attending</div>
-          <p style="font-size:13.5px; line-height:1.7;">Patient is a 62F with T2DM and HTN presenting with CAP. WBC and CRP remain elevated. Continuing IV ceftriaxone.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="tab-meds">
-      <div class="meds-section">
-        <h3>Active Medications</h3>
-        <div class="med-card"><div class="med-dot" style="background:#4B9CD3"></div><div><div style="font-weight:600; font-size:14px;">Ceftriaxone 1g IV</div><div style="font-size:12px; color:var(--muted)">Every 24h · Started 3/20/26</div></div></div>
-        <div class="med-card"><div class="med-dot" style="background:#2e8b57"></div><div><div style="font-weight:600; font-size:14px;">Metformin 1000mg PO</div><div style="font-size:12px; color:var(--muted)">Twice daily · Chronic — T2DM</div></div></div>
-      </div>
-    </div>
-
-  </div></div>
+  <div id="chart-content"></div>
+</div>
 
 <script>
-/* """ LOGIC: ROUTING & TABS """ */
-function navTo(id) {
+/* """ 10 PATIENT DATABASE """ */
+const PATIENTS = [
+  {
+    id: 'p1', esi: 3, name: 'Sarah Chen', age: '62F', mrn: '0042817', room: '12', cc: 'Cough / Fever — CAP',
+    attending: 'Dr. S. Patel', admitted: '3/20/26', flags: ['PCN allergy', 'DNR', 'CAP'],
+    vitals: { bp: '118/76', hr: '101', temp: '38.9', spo2: '96%', rr: '18' },
+    history: 'T2DM, HTN, HLD. Prior cholecystectomy (2018). Non-smoker.',
+    physical: 'General: Ill-appearing. Lungs: Crackles RLL. Heart: Tachycardic, no murmurs.',
+    ems: 'Arrived via ambulance. SpO2 91% on RA. 2L NC applied.',
+    er: 'ESI 3. CXR shows RLL opacity. Started on IV Ceftriaxone.',
+    labs: [
+      { test: 'WBC', val: '14.2', ref: '4.5-11', status: 'H' },
+      { test: 'Glucose', val: '182', ref: '70-140', status: 'H' },
+      { test: 'Potassium', val: '3.2', ref: '3.5-5.0', status: 'L' }
+    ],
+    pathology: 'Blood Cultures (x2): Pending. Sputum: Gram positive cocci.',
+    notes: 'Patient stable on 2L. Fever persists at 38.9. Will re-evaluate labs.',
+    meds: [
+      { name: 'Ceftriaxone 1g IV', dose: 'Daily', color: 'var(--unc)' },
+      { name: 'Metformin 1000mg', dose: 'BID', color: 'var(--ok)' }
+    ]
+  },
+  {
+    id: 'p2', esi: 2, name: 'Robert Nguyen', age: '58M', mrn: '0031042', room: 'T1', cc: 'Chest Pain — STEMI',
+    attending: 'Dr. J. Torres', admitted: '3/23/26', flags: ['DNR'],
+    vitals: { bp: '92/58', hr: '114', temp: '36.8', spo2: '94%', rr: '22' },
+    history: 'CAD s/p stent (2020), Tobacco use 30pk/yr.',
+    physical: 'General: Diaphoretic, clutching chest. Heart: S1/S2 present, rapid.',
+    ems: 'ECG shows ST elevation in II, III, aVF. ASA 324mg given.',
+    er: 'ESI 2. Cath lab activated. Heparin bolus administered.',
+    labs: [
+      { test: 'Troponin', val: '4.82', ref: '<0.04', status: 'H' },
+      { test: 'Hgb', val: '14.1', ref: '13-17', status: 'N' }
+    ],
+    pathology: 'N/A for acute cardiac.',
+    notes: 'Cath lab arrival imminent. Consented for PCI.',
+    meds: [
+      { name: 'Heparin Gtt', dose: '12u/kg/hr', color: 'var(--danger)' },
+      { name: 'Ticagrelor 180mg', dose: 'Once', color: 'var(--unc)' }
+    ]
+  },
+  {
+    id: 'p3', esi: 1, name: 'James Whitfield', age: '44M', mrn: '0038891', room: 'T2', cc: 'Respiratory Distress',
+    attending: 'Dr. J. Torres', admitted: '3/23/26', flags: ['Fall risk', 'Isolation'],
+    vitals: { bp: '142/92', hr: '108', temp: '37.4', spo2: '82%', rr: '28' },
+    history: 'Severe COPD, Obesity (BMI 42).',
+    physical: 'General: Tripod position. Lung: Diffuse wheezing, absent bases.',
+    ems: 'Found in respiratory failure. BiPAP 12/5 applied en route.',
+    er: 'ESI 1. Intubation tray at bedside. ABG: pH 7.21, pCO2 78.',
+    labs: [
+      { test: 'pCO2', val: '78', ref: '35-45', status: 'H' },
+      { test: 'pH', val: '7.21', ref: '7.35-7.45', status: 'L' }
+    ],
+    pathology: 'Viral Panel: Influenza A Positive.',
+    notes: 'BiPAP settings increased. Preparing for ICU transfer.',
+    meds: [
+      { name: 'Methylprednisolone 125mg', dose: 'IV Push', color: 'var(--unc)' },
+      { name: 'Albuterol Neb', dose: 'q2h', color: 'var(--warn)' }
+    ]
+  },
+  {
+    id: 'p4', esi: 4, name: 'Priya Nair', age: '23F', mrn: '0082310', room: '24', cc: 'Abdominal Pain',
+    attending: 'Dr. S. Patel', admitted: '3/23/26', flags: ['None'],
+    vitals: { bp: '116/72', hr: '78', temp: '37.1', spo2: '100%', rr: '14' },
+    history: 'Anxiety, otherwise healthy.',
+    physical: 'Abdomen: Soft, non-tender. Bowel sounds present.',
+    ems: 'Walk-in triage.',
+    er: 'ESI 4. Lower quadrant pain. hCG negative.',
+    labs: [
+      { test: 'WBC', val: '7.1', ref: '4-11', status: 'N' },
+      { test: 'hCG', val: 'Neg', ref: 'Neg', status: 'N' }
+    ],
+    pathology: 'Urine Culture: Pending.',
+    notes: 'Symptoms improving. Likely viral GE.',
+    meds: [
+      { name: 'Zofran 4mg', dose: 'IV PRN', color: 'var(--warn)' }
+    ]
+  },
+  // Adding more patients for the census...
+  { id:'p5', name:'Maria Gutierrez', age:'71F', esi:2, room:'T3', cc:'AMS / Sepsis', mrn:'0044218', attending:'Dr. Patel', admitted:'3/23', flags:['ISO'], vitals:{bp:'96/60',hr:'124',temp:'38.9',spo2:'94%',rr:'24'}, history:'Dementia', physical:'Somnolent.', ems:'Found by family.', er:'Sepsis protocol.', labs:[], pathology:[], notes:'', meds:[] },
+  { id:'p6', name:'Thomas Reid', age:'55M', esi:3, room:'14', cc:'R/O Appendicitis', mrn:'0055102', attending:'Dr. Torres', admitted:'3/23', flags:[], vitals:{bp:'128/82',hr:'94',temp:'37.8',spo2:'99%',rr:'16'}, history:'None.', physical:'Tender RLQ.', ems:'N/A', er:'CT Pending.', labs:[], pathology:[], notes:'', meds:[] },
+  { id:'p7', name:'Aisha Johnson', age:'29F', esi:3, room:'16', cc:'Migraine', mrn:'0061345', attending:'Dr. Kim', admitted:'3/23', flags:[], vitals:{bp:'148/96',hr:'82',temp:'36.9',spo2:'99%',rr:'16'}, history:'Migraines.', physical:'Photophobia.', ems:'N/A', er:'Dark room.', labs:[], pathology:[], notes:'', meds:[] },
+  { id:'p8', name:'Franklin Osei', age:'68M', esi:3, room:'18', cc:'Syncope', mrn:'0038820', attending:'Dr. Patel', admitted:'3/23', flags:['Fall risk'], vitals:{bp:'110/70',hr:'58',temp:'36.8',spo2:'98%',rr:'16'}, history:'HTN.', physical:'Normal.', ems:'Syncope at home.', er:'Tele applied.', labs:[], pathology:[], notes:'', meds:[] },
+  { id:'p9', name:'Linda Park', age:'47F', esi:3, room:'20', cc:'DKA', mrn:'0044901', attending:'Dr. Torres', admitted:'3/23', flags:['PCN allergy'], vitals:{bp:'108/68',hr:'112',temp:'37.2',spo2:'98%',rr:'20'}, history:'T1DM.', physical:'Dry mucus membranes.', ems:'AMS.', er:'Insulin started.', labs:[], pathology:[], notes:'', meds:[] },
+  { id:'p10', name:'Brian Calloway', age:'34M', esi:4, room:'22', cc:'Laceration', mrn:'0071204', attending:'Dr. Kim', admitted:'3/23', flags:[], vitals:{bp:'128/78',hr:'76',temp:'36.9',spo2:'99%',rr:'14'}, history:'Healthy.', physical:'R hand lac.', ems:'N/A', er:'Sutures ready.', labs:[], pathology:[], notes:'', meds:[] }
+];
+
+/* """ LOGIC: ROUTING """ */
+function navTo(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0, 0);
+  document.getElementById(pageId).classList.add('active');
+  window.scrollTo(0,0);
 }
 
-const tabs = document.querySelectorAll('.tab-btn');
-const panels = document.querySelectorAll('.tab-panel');
+/* """ LOGIC: CENSUS """ */
+function buildCensus() {
+  const body = document.getElementById('census-body');
+  body.innerHTML = PATIENTS.map(p => `
+    <tr onclick="openChart('${p.id}')">
+      <td><div class="acuity-box esi-${p.esi}">${p.esi}</div></td>
+      <td><strong>${p.name}</strong><br><small>${p.age} · ${p.mrn}</small></td>
+      <td><strong>${p.room}</strong></td>
+      <td>${p.cc}</td>
+      <td style="font-family:'DM Mono'">${p.vitals.bp} | ${p.vitals.hr}</td>
+      <td><span class="dot" style="background:${p.esi <= 2 ? 'var(--danger)' : 'var(--warn)'}; display:inline-block"></span> Admit Pending</td>
+      <td><button class="open-btn">Open →</button></td>
+    </tr>
+  `).join('');
+}
 
-tabs.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const target = btn.dataset.tab;
-    if(!target) return;
-    tabs.forEach(t => t.classList.remove('active'));
-    panels.forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('tab-' + target).classList.add('active');
-  });
-});
+/* """ LOGIC: CHART BUILDER """ */
+function openChart(pid) {
+  const p = PATIENTS.find(x => x.id === pid);
+  const host = document.getElementById('chart-content');
+  
+  host.innerHTML = `
+    <div class="chart-card">
+      <div class="patient-row">
+        <div class="avatar">${p.name.split(' ').map(n=>n[0]).join('')}</div>
+        <div class="patient-info">
+          <div class="patient-name">${p.name}</div>
+          <div class="patient-meta">${p.age} · DOB 03/14/1963 · MRN ${p.mrn} · Admitted ${p.admitted}</div>
+          <div class="patient-meta">Attending: ${p.attending} · ${p.cc}</div>
+        </div>
+        <div class="badges">
+          ${p.flags.map(f => `<span class="badge ${f.includes('PCN')?'badge-pcn':f.includes('DNR')?'badge-dnr':'badge-cap'}">${f}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="tabs-bar">
+        <button class="tab-btn active" data-tab="vitals">Vitals</button>
+        <button class="tab-btn" data-tab="history">History</button>
+        <button class="tab-btn" data-tab="physical">Physical</button>
+        <button class="tab-btn" data-tab="ems">EMS Notes</button>
+        <button class="tab-btn" data-tab="er">ER Notes</button>
+        <div class="tab-break"></div>
+        <button class="tab-btn" data-tab="labs">Labs</button>
+        <button class="tab-btn" data-tab="viz">Visualizations</button>
+        <button class="tab-btn" data-tab="path">Pathology</button>
+        <button class="tab-btn" data-tab="notes">Progress Notes</button>
+        <button class="tab-btn" data-tab="meds">Medications</button>
+      </div>
+
+      <div id="vitals" class="tab-panel active">
+        <div class="vitals-grid">
+          <div class="vital-card"><div class="vital-val">${p.vitals.bp}</div><div style="font-size:10px; color:var(--muted)">BP MMHG</div></div>
+          <div class="vital-card"><div class="vital-val" style="color:${parseInt(p.vitals.hr)>100?'var(--danger)':'var(--text)'}">${p.vitals.hr}</div><div style="font-size:10px; color:var(--muted)">HR BPM</div></div>
+          <div class="vital-card"><div class="vital-val" style="color:${parseFloat(p.vitals.temp)>38?'var(--danger)':'var(--text)'}">${p.vitals.temp}°</div><div style="font-size:10px; color:var(--muted)">TEMP °C</div></div>
+          <div class="vital-card"><div class="vital-val">${p.vitals.spo2}</div><div style="font-size:10px; color:var(--muted)">SPO2</div></div>
+        </div>
+        <div class="trends-section">
+          <div class="trend-card">
+            <div style="font-size:10px; font-weight:600; color:var(--unc); margin-bottom:12px; text-transform:uppercase">BP Trend</div>
+            <div style="font-size:12px; display:flex; align-items:center; margin-bottom:8px">3/22 <div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div> 118/76</div>
+            <div style="font-size:12px; display:flex; align-items:center">3/23 <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div> 122/80</div>
+          </div>
+          <div class="trend-card">
+             <div style="font-size:10px; font-weight:600; color:var(--unc); margin-bottom:12px; text-transform:uppercase">Temp Trend</div>
+             <div style="font-size:12px; display:flex; align-items:center; margin-bottom:8px">3/22 <div class="bar-bg"><div class="bar-fill" style="width:70%; background:var(--warn)"></div></div> 38.4°</div>
+             <div style="font-size:12px; display:flex; align-items:center">3/23 <div class="bar-bg"><div class="bar-fill" style="width:90%; background:var(--danger)"></div></div> 38.9°</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="history" class="tab-panel"><div class="content-section"><h3>Medical History</h3><p>${p.history}</p></div></div>
+      <div id="physical" class="tab-panel"><div class="content-section"><h3>Recent Physical Exam</h3><p>${p.physical}</p></div></div>
+      <div id="ems" class="tab-panel"><div class="content-section"><h3>EMS Run Notes</h3><p>${p.ems}</p></div></div>
+      <div id="er" class="tab-panel"><div class="content-section"><h3>Emergency Department Evaluation</h3><p>${p.er}</p></div></div>
+      
+      <div id="labs" class="tab-panel">
+        <div class="content-section">
+          <h3>Laboratory Results</h3>
+          <table class="data-table">
+            <thead><tr><th>Test</th><th>Result</th><th>Reference</th><th></th></tr></thead>
+            <tbody>
+              ${p.labs.map(l => `<tr><td>${l.test}</td><td><strong style="color:${l.status==='N'?'var(--text)':l.status==='H'?'var(--danger)':'var(--warn)'}">${l.val}</strong></td><td>${l.ref}</td><td>${l.status}</td></tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="viz" class="tab-panel"><div class="content-section"><h3>Visualizations</h3><p style="color:var(--muted)">Radiology imaging and trend graphs loading...</p></div></div>
+      <div id="path" class="tab-panel"><div class="content-section"><h3>Pathology & Microbiology</h3><p>${p.pathology}</p></div></div>
+      <div id="notes" class="tab-panel"><div class="content-section"><h3>Progress Notes</h3><div class="note-entry">${p.notes}</div></div></div>
+      
+      <div id="meds" class="tab-panel">
+        <div class="content-section">
+          <h3>Active Medications</h3>
+          ${p.meds.map(m => `<div class="med-pill"><div class="dot" style="background:${m.color}"></div><div><strong>${m.name}</strong><br><small>${m.dose}</small></div></div>`).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Re-wire tabs for the new chart
+  const tabs = host.querySelectorAll('.tab-btn');
+  const panels = host.querySelectorAll('.tab-panel');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    panels.forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    host.querySelector('#' + t.dataset.tab).classList.add('active');
+  }));
+
+  navTo('page-chart');
+}
+
+buildCensus();
 </script>
-
 </body>
 </html>
