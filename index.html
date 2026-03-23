@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --unc: #4B9CD3;
+      --unc-light: #d6eaf7;
+      --unc-mid: #a8d0ec;
+      --unc-dark: #2a6fa8;
+      --bg: #f9fbfd;
+      --white: #ffffff;
+      --border: #e4eff7;
+      --text: #1a1a1a;
+      --muted: #8a9aaa;
+      --warn: #c67c00;
+      --danger: #c0392b;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── CARD WRAPPER ── */
+    .card {
+      max-width: 860px;
+      margin: 32px auto;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px rgba(75,156,211,.08), 0 20px 60px rgba(75,156,211,.10);
+      overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      padding: 20px 28px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Lora', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    /* ── PATIENT INFO ── */
+    .patient-row {
+      padding: 20px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: #f4f9fd;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .avatar {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--unc-mid), var(--unc));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 600; color: white;
+      flex-shrink: 0;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .patient-info { flex: 1; }
+
+    .patient-name {
+      font-size: 18px; font-weight: 600; color: var(--text);
+      letter-spacing: -0.02em; font-family: 'Lora', serif;
+    }
+
+    .patient-meta {
+      font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.7;
+    }
+
+    .badges { display: flex; gap: 7px; flex-wrap: wrap; align-items: flex-start; justify-content: flex-end; }
+    .badge-pcn { background: #fde8e8; color: #9b3535; font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 100px; white-space: nowrap; }
+    .badge-dnr { background: #fef3dc; color: #7a5010; font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 100px; }
+    .badge-cap { background: #e1f5eb; color: #1a5c38; font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 100px; }
+
+    /* ── TABS ── */
+    .tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      background: var(--white);
+      padding: 0 20px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    /* invisible spacer that forces a line break after the 5th tab */
+    .tab-break {
+      width: 100%;
+      height: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      padding: 11px 15px;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      border: none;
+      background: transparent;
+      border-bottom: 2px solid transparent;
+      font-family: 'DM Sans', sans-serif;
+      transition: color 0.15s, border-color 0.15s;
+      margin-bottom: -1px;
+      flex-shrink: 0;
+    }
+
+    .tab-btn:hover:not(.active) { color: #444; }
+    .tab-btn.active {
+      color: var(--text);
+      border-bottom-color: var(--unc);
+      font-weight: 600;
+    }
+
+    /* ── TAB CONTENT ── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── VITALS ── */
+    .vitals-section { padding: 26px 28px 22px; }
+    .vitals-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+    
+    .vital-card {
+      flex: 1; min-width: 100px;
+      background: #f4f9fd;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 12px;
+      text-align: center;
+      transition: box-shadow 0.15s;
+    }
+    
+    .vital-card:hover { box-shadow: 0 4px 16px rgba(75,156,211,.12); }
+    
+    .vital-val {
+      font-size: 26px; font-weight: 400; color: var(--text);
+      font-family: 'Lora', serif; letter-spacing: -0.03em; line-height: 1;
+    }
+    
+    .vital-val.warn { color: var(--warn); }
+    .vital-val.danger { color: var(--danger); }
+    
+    .vital-label {
+      font-size: 10.5px; color: var(--muted); margin-top: 7px;
+      text-transform: uppercase; letter-spacing: 0.07em;
+    }
+
+    /* ── TRENDS ── */
+    .trends-section {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      padding: 0 28px 28px;
+    }
+    
+    .trend-card {
+      background: #f4f9fd;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px 20px;
+    }
+    
+    .trend-title {
+      font-size: 10px; font-weight: 600; letter-spacing: .13em; 
+      text-transform: uppercase; color: var(--unc); margin-bottom: 16px;
+    }
+    
+    .trend-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .trend-row:last-child { margin-bottom: 0; }
+    
+    .trend-date { font-size: 11.5px; color: var(--muted); width: 56px; flex-shrink: 0; }
+    
+    .bar-bg { flex: 1; height: 7px; background: #deedf7; border-radius: 100px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 100px; transition: width 0.6s cubic-bezier(.4,0,.2,1); }
+    .fill-blue   { background: var(--unc); }
+    .fill-gold   { background: #c9820a; }
+    .fill-red    { background: #c0392b; }
+    .fill-amber  { background: #d97706; }
+    
+    .trend-val { font-size: 12px; font-weight: 600; color: #333; width: 54px; text-align: right; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
+
+    /* ── PLACEHOLDER PANELS ── */
+    .placeholder-panel { padding: 60px 28px; text-align: center; }
+    .placeholder-icon {
+      width: 52px; height: 52px; background: var(--unc-light);
+      border-radius: 16px; display: flex; align-items: center; 
+      justify-content: center; margin: 0 auto 16px; font-size: 22px;
+    }
+    .placeholder-title {
+      font-size: 16px; font-weight: 600; color: var(--text);
+      font-family: 'Lora', serif; margin-bottom: 6px;
+    }
+    .placeholder-sub {
+      font-size: 13px; color: var(--muted); line-height: 1.6;
+      max-width: 320px; margin: 0 auto;
+    }
+
+    /* ── LABS TABLE ── */
+    .labs-section { padding: 24px 28px 32px; }
+    .labs-section h3 { font-family: 'Lora', serif; font-weight: 400; font-size: 16px; color: var(--text); margin-bottom: 18px; }
+    
+    .labs-table { width: 100%; border-collapse: collapse; }
+    .labs-table th {
+      text-align: left; font-size: 10.5px; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--unc);
+      padding: 0 12px 10px; border-bottom: 1px solid var(--border);
+    }
+    .labs-table td {
+      padding: 12px; font-size: 13px; color: var(--text);
+      border-bottom: 1px solid #f0f6fb;
+    }
+    .labs-table tr:last-child td { border-bottom: none; }
+    .labs-table tr:hover td { background: #f4f9fd; }
+    .labs-table .val-high { color: var(--danger); font-weight: 600; }
+    .labs-table .val-low { color: var(--warn); font-weight: 600; }
+    .labs-table .val-normal { color: #2e8b57; font-weight: 600; }
+    
+    .lab-flag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 100px; margin-left: 6px; }
+    .flag-h { background: #fde8e8; color: #9b3535; }
+    .flag-l { background: #fef3dc; color: #7a5010; }
+    .flag-n { background: #e1f5eb; color: #1a5c38; }
+
+    /* ── MEDS ── */
+    .meds-section { padding: 24px 28px 32px; }
+    .meds-section h3 { font-family: 'Lora', serif; font-weight: 400; font-size: 16px; color: var(--text); margin-bottom: 18px; }
+    
+    .med-card {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 16px; border-radius: 12px;
+      background: #f4f9fd; border: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+    
+    .med-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+    .med-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .med-detail { font-size: 12px; color: var(--muted); }
+
+    /* ── PROGRESS NOTES ── */
+    .notes-section { padding: 24px 28px 32px; }
+    .notes-section h3 { font-family: 'Lora', serif; font-weight: 400; font-size: 16px; color: var(--text); margin-bottom: 18px; }
+    
+    .note-entry {
+      border-left: 3px solid var(--unc-light); padding: 12px 16px;
+      margin-bottom: 14px; border-radius: 0 10px 10px 0; background: #f8fbfe;
+    }
+    .note-entry.today { border-left-color: var(--unc); }
+    .note-meta { font-size: 11px; color: var(--muted); margin-bottom: 6px; font-weight: 500; letter-spacing: .03em; }
+    .note-text { font-size: 13.5px; color: var(--text); line-height: 1.7; }
+
+    @media (max-width: 600px) {
+      .trends-section { grid-template-columns: 1fr; }
+      .vitals-grid .vital-card { min-width: 80px; }
+      .patient-row { flex-wrap: wrap; }
+      .badges { justify-content: flex-start; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <span class="logo">Carta</span>
+  </div>
+
+  <div class="patient-row">
+    <div class="avatar">SC</div>
+    <div class="patient-info">
+      <div class="patient-name">Sarah Chen</div>
+      <div class="patient-meta">62F · DOB 03/14/1963 · MRN 0042817 · Admitted 3/20/26</div>
+      <div class="patient-meta">Attending: Dr. S. Patel · T2DM · HTN</div>
+    </div>
+    <div class="badges">
+      <span class="badge-pcn">PCN allergy</span>
+      <span class="badge-dnr">DNR</span>
+      <span class="badge-cap">CAP</span>
+    </div>
+  </div>
+
+  <div class="tabs-bar">
+    <button class="tab-btn active" data-tab="vitals">Vitals</button>
+    <button class="tab-btn" data-tab="history">History</button>
+    <button class="tab-btn" data-tab="physical">Physical</button>
+    <button class="tab-btn" data-tab="ems">EMS Notes</button>
+    <button class="tab-btn" data-tab="er">ER Notes</button>
+    <div class="tab-break"></div>
+    <button class="tab-btn" data-tab="labs">Labs</button>
+    <button class="tab-btn" data-tab="viz">Visualizations</button>
+    <button class="tab-btn" data-tab="path">Pathology</button>
+    <button class="tab-btn" data-tab="progress">Progress Notes</button>
+    <button class="tab-btn" data-tab="meds">Medications</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-vitals">
+    <div class="vitals-section">
+      <div class="vitals-grid">
+        <div class="vital-card">
+          <div class="vital-val">118/76</div>
+          <div class="vital-label">BP mmHg</div>
+        </div>
+        <div class="vital-card">
+          <div class="vital-val warn">101</div>
+          <div class="vital-label">HR bpm</div>
+        </div>
+        <div class="vital-card">
+          <div class="vital-val danger">38.9°</div>
+          <div class="vital-label">Temp °C</div>
+        </div>
+        <div class="vital-card">
+          <div class="vital-val">96%</div>
+          <div class="vital-label">SpO₂</div>
+        </div>
+        <div class="vital-card">
+          <div class="vital-val">18</div>
+          <div class="vital-label">RR /min</div>
+        </div>
+      </div>
+    </div>
+    <div class="trends-section">
+      <div class="trend-card">
+        <div class="trend-title">BP Trend</div>
+        <div class="trend-row">
+          <span class="trend-date">3/16</span>
+          <div class="bar-bg"><div class="bar-fill fill-blue" style="width:82%"></div></div>
+          <span class="trend-val">122/78</span>
+        </div>
+        <div class="trend-row">
+          <span class="trend-date">3/18</span>
+          <div class="bar-bg"><div class="bar-fill fill-blue" style="width:80%"></div></div>
+          <span class="trend-val">118/74</span>
+        </div>
+        <div class="trend-row">
+          <span class="trend-date">3/20</span>
+          <div class="bar-bg"><div class="bar-fill fill-blue" style="width:81%"></div></div>
+          <span class="trend-val">120/76</span>
+        </div>
+        <div class="trend-row">
+          <span class="trend-date">3/21</span>
+          <div class="bar-bg"><div class="bar-fill fill-gold" style="width:78%"></div></div>
+          <span class="trend-val">116/80</span>
+        </div>
+        <div class="trend-row">
+          <span class="trend-date">3/22</span>
+          <div class="bar-bg"><div class="bar-fill fill-blue" style="width:80%"></div></div>
+          <span class="trend-val">118/76</span>
+        </div>
+      </div>
+      <div class="trend-card">
+        <div class="trend-title">Temp Trend</div>
+        <div class="trend-row">
+          <span class="trend-date">3/20 AM</span>
+          <div class="bar-bg"><div class="bar-fill fill-red" style="width:90%"></div></div>
+          <span class="trend-val">39.2°</span>
+        </div>
+        <div class="trend-row">
+          <span class="trend-date">3/20 PM</span>
+          <div class="bar-bg"><div class="bar-fill fill-gold" style="width:82%"></div></div>
+          <span class="trend-val">38.7°</span>
+        </div>
+        <div class="trend-row">
+          <span class="trend-date">3/21 AM</span>
+          <div class="bar-bg"><div class="bar-fill fill-amber" style="width:76%"></div></div>
+          <span class="trend-val">38.4°</span>
+        </div>
+        <div class="trend-row">
+          <span class="trend-date">3/22</span>
+          <div class="bar-bg"><div class="bar-fill fill-gold" style="width:83%"></div></div>
+          <span class="trend-val">38.9°</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-history">
+    <div class="placeholder-panel">
+      <div class="placeholder-icon">📋</div>
+      <div class="placeholder-title">Medical History</div>
+      <div class="placeholder-sub">Past diagnoses, surgeries, family history, and social history will appear here.</div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-physical">
+    <div class="placeholder-panel">
+      <div class="placeholder-icon">🩺</div>
+      <div class="placeholder-title">Physical Exam</div>
+      <div class="placeholder-sub">Findings from the most recent physical examination will appear here.</div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-ems">
+    <div class="placeholder-panel">
+      <div class="placeholder-icon">🚑</div>
+      <div class="placeholder-title">EMS Notes</div>
+      <div class="placeholder-sub">Pre-hospital care documentation from EMS will appear here.</div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-er">
+    <div class="placeholder-panel">
+      <div class="placeholder-icon">🏥</div>
+      <div class="placeholder-title">ER Notes</div>
+      <div class="placeholder-sub">Emergency department evaluation and triage notes will appear here.</div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-labs">
+    <div class="labs-section">
+      <h3>Laboratory Results — 3/22/26</h3>
+      <table class="labs-table">
+        <thead>
+          <tr>
+            <th>Test</th>
+            <th>Result</th>
+            <th>Reference</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>WBC</td>
+            <td class="val-high">14.2 K/µL <span class="lab-flag flag-h">H</span></td>
+            <td>4.5 – 11.0</td>
+            <td>Elevated</td>
+          </tr>
+          <tr>
+            <td>Hemoglobin</td>
+            <td class="val-normal">12.8 g/dL <span class="lab-flag flag-n">N</span></td>
+            <td>12.0 – 16.0</td>
+            <td>Normal</td>
+          </tr>
+          <tr>
+            <td>Platelets</td>
+            <td class="val-normal">228 K/µL <span class="lab-flag flag-n">N</span></td>
+            <td>150 – 400</td>
+            <td>Normal</td>
+          </tr>
+          <tr>
+            <td>Sodium</td>
+            <td class="val-normal">138 mEq/L <span class="lab-flag flag-n">N</span></td>
+            <td>136 – 145</td>
+            <td>Normal</td>
+          </tr>
+          <tr>
+            <td>Potassium</td>
+            <td class="val-low">3.2 mEq/L <span class="lab-flag flag-l">L</span></td>
+            <td>3.5 – 5.0</td>
+            <td>Low</td>
+          </tr>
+          <tr>
+            <td>Creatinine</td>
+            <td class="val-normal">0.9 mg/dL <span class="lab-flag flag-n">N</span></td>
+            <td>0.6 – 1.2</td>
+            <td>Normal</td>
+          </tr>
+          <tr>
+            <td>Glucose</td>
+            <td class="val-high">182 mg/dL <span class="lab-flag flag-h">H</span></td>
+            <td>70 – 140</td>
+            <td>Elevated</td>
+          </tr>
+          <tr>
+            <td>CRP</td>
+            <td class="val-high">84 mg/L <span class="lab-flag flag-h">H</span></td>
+            <td>< 10.0</td>
+            <td>Elevated</td>
+          </tr>
+          <tr>
+            <td>Procalcitonin</td>
+            <td class="val-high">1.8 ng/mL <span class="lab-flag flag-h">H</span></td>
+            <td>< 0.25</td>
+            <td>Elevated</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-viz">
+    <div class="placeholder-panel">
+      <div class="placeholder-icon">📊</div>
+      <div class="placeholder-title">Visualizations</div>
+      <div class="placeholder-sub">Charts, imaging results, and graphical data will appear here.</div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-path">
+    <div class="placeholder-panel">
+      <div class="placeholder-icon">🔬</div>
+      <div class="placeholder-title">Pathology</div>
+      <div class="placeholder-sub">Biopsy, culture, and pathology reports will appear here.</div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-progress">
+    <div class="notes-section">
+      <h3>Progress Notes</h3>
+      <div class="note-entry today">
+        <div class="note-meta">3/22/26 · 08:14 · Dr. S. Patel · Attending</div>
+        <div class="note-text">Patient is a 62F with T2DM and HTN presenting with CAP. Persistent low-grade fever at 38.9°C overnight. WBC and CRP remain elevated, consistent with ongoing infection. Continuing IV ceftriaxone (PCN allergy — no beta-lactam cross-reactivity concern at this class). Patient tolerating PO intake. Will recheck chest X-ray today.</div>
+      </div>
+      <div class="note-entry">
+        <div class="note-meta">3/21/26 · 07:55 · Dr. S. Patel · Attending</div>
+        <div class="note-text">Fever trending down slightly to 38.4°C AM. SpO₂ stable on 2L NC. Patient ambulated in hallway without desaturation. Will continue current antibiotic regimen and monitor closely.</div>
+      </div>
+      <div class="note-entry">
+        <div class="note-meta">3/20/26 · 18:40 · Dr. A. Kim · Resident</div>
+        <div class="note-text">Admission note. Patient arrived from ED with productive cough x 5 days, fever, and hypoxia to 91% on RA. CXR confirms right lower lobe consolidation. Started on azithromycin + ceftriaxone. IV fluids initiated. Blood cultures x2 drawn prior to antibiotics.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-meds">
+    <div class="meds-section">
+      <h3>Active Medications</h3>
+      <div class="med-card">
+        <div class="med-dot" style="background:#4B9CD3"></div>
+        <div>
+          <div class="med-name">Ceftriaxone 1g IV</div>
+          <div class="med-detail">Every 24h · Started 3/20/26 · Infectious — CAP coverage</div>
+        </div>
+      </div>
+      <div class="med-card">
+        <div class="med-dot" style="background:#4B9CD3"></div>
+        <div>
+          <div class="med-name">Azithromycin 500mg IV</div>
+          <div class="med-detail">Every 24h · Started 3/20/26 · Atypical coverage</div>
+        </div>
+      </div>
+      <div class="med-card">
+        <div class="med-dot" style="background:#c9820a"></div>
+        <div>
+          <div class="med-name">Acetaminophen 650mg PO</div>
+          <div class="med-detail">Every 6h PRN fever > 38.3°C · Last given 3/22 04:30</div>
+        </div>
+      </div>
+      <div class="med-card">
+        <div class="med-dot" style="background:#2e8b57"></div>
+        <div>
+          <div class="med-name">Metformin 1000mg PO</div>
+          <div class="med-detail">Twice daily with meals · Chronic — T2DM</div>
+        </div>
+      </div>
+      <div class="med-card">
+        <div class="med-dot" style="background:#2e8b57"></div>
+        <div>
+          <div class="med-name">Lisinopril 10mg PO</div>
+          <div class="med-detail">Once daily · Chronic — HTN</div>
+        </div>
+      </div>
+      <div class="med-card">
+        <div class="med-dot" style="background:#888"></div>
+        <div>
+          <div class="med-name">Enoxaparin 40mg SC</div>
+          <div class="med-detail">Once daily · DVT prophylaxis</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><script>
+  /* """
+  Handles UI interaction and state logic.
+  Switches between active tab panels and auto-scrolls into view.
+  """ */
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      document.getElementById('tab-' + target).classList.add('active');
+
+      // Scroll active tab into view
+      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    });
+  });
+</script>
+
+</body>
+</html>
