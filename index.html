@@ -1,319 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carta EHR</title>
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-/* """ GLOBAL DESIGN TOKENS """ */
-:root {
-  --unc: #4B9CD3;
-  --unc-light: #d6eaf7;
-  --unc-mid: #a8d0ec;
-  --unc-dark: #2a6fa8;
-  --navy: #13294B;
-  --bg: #f9fbfd;
-  --white: #ffffff;
-  --border: #e4eff7;
-  --text: #1a1a1a;
-  --muted: #8a9aaa;
-  --warn: #c67c00;
-  --danger: #c0392b;
-  --ok: #1a5c38;
-  --radius: 18px;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carta EHR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* """ DESIGN TOKENS """ */
+    :root {
+      --unc: #4B9CD3;
+      --unc-light: #d6eaf7;
+      --unc-mid: #a8d0ec;
+      --unc-dark: #2a6fa8;
+      --navy: #13294B;
+      --bg: #fcfbf9;
+      --white: #ffffff;
+      --border: #e4eff7;
+      --text: #111827;
+      --muted: #6b7280;
+      --danger: #c0392b;
+      --danger-bg: #fde8e8;
+      --warn: #c67c00;
+      --warn-bg: #fef3dc;
+      --ok: #1a5c38;
+      --radius: 18px;
+    }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--text); min-height: 100vh; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); font-family: 'DM Sans', sans-serif; color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-/* ── ROUTER ── */
-.page { display: none; min-height: 100vh; flex-direction: column; width: 100%; }
-.page.active { display: flex; }
+    /* ── ROUTING ── */
+    .page { display: none; min-height: 100vh; flex-direction: column; width: 100%; }
+    .page.active { display: flex; }
 
-/* ── LOGIN ── */
-#page-login { align-items: center; justify-content: center; background: linear-gradient(160deg, #e8f4fc 0%, #f9fbfd 50%, #d6eaf7 100%); }
-.login-card { background: var(--white); border-radius: 24px; box-shadow: 0 32px 80px rgba(75,156,211,.14); padding: 48px 44px; width: 420px; max-width: 90%; text-align: center; animation: fadeUp .5s ease; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.login-logo { font-family: 'Lora', serif; font-size: 28px; margin-bottom: 4px; font-weight: 600; }
-.login-btn { width: 100%; padding: 14px; border-radius: 10px; border: none; background: var(--navy); color: white; font-weight: 600; cursor: pointer; margin-top: 10px; font-family: 'DM Sans'; }
-.demo-btn { width: 100%; padding: 14px; border-radius: 10px; border: 1.5px solid var(--unc); background: white; color: var(--unc-dark); font-weight: 600; cursor: pointer; margin-top: 12px; transition: 0.2s; font-family: 'DM Sans'; }
-.demo-btn:hover { background: var(--unc-light); }
+    /* ── PAGE 1: LOGIN ── */
+    #page-login { align-items: center; justify-content: center; background: linear-gradient(160deg, #e8f4fc 0%, #fcfbf9 50%, #d6eaf7 100%); }
+    .login-card { background: var(--white); border-radius: 24px; box-shadow: 0 32px 80px rgba(75,156,211,.14); padding: 48px 44px; width: 420px; max-width: 90%; text-align: center; animation: fadeUp .5s ease; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .login-logo { font-family: 'Lora', serif; font-size: 28px; margin-bottom: 4px; font-weight: 600; color: var(--navy); }
+    .login-btn { width: 100%; padding: 14px; border-radius: 10px; border: none; background: var(--navy); color: white; font-weight: 600; cursor: pointer; margin-top: 10px; }
+    .demo-btn { width: 100%; padding: 14px; border-radius: 10px; border: 1.5px solid var(--unc); background: white; color: var(--unc-dark); font-weight: 600; cursor: pointer; margin-top: 12px; transition: 0.2s; }
+    .demo-btn:hover { background: var(--unc-light); }
 
-/* ── CENSUS ── */
-.topnav { height: 56px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 16px; sticky; top: 0; z-index: 100; }
-.nav-logo { font-family: 'Lora', serif; font-size: 20px; color: var(--text); font-weight: 600; }
-.census-header { padding: 24px 28px; }
-.census-table { width: 100%; border-collapse: collapse; min-width: 760px; margin-bottom: 30px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
-.census-table th { padding: 12px; text-align: left; font-size: 10px; text-transform: uppercase; color: var(--unc); border-bottom: 1px solid var(--border); font-weight: 600; }
-.census-table td { padding: 14px 12px; border-bottom: 1px solid #eef5fb; font-size: 13px; }
-.acuity-box { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'DM Mono'; }
-.esi-1, .esi-2 { background: #fde8e8; color: #c0392b; }
-.esi-3 { background: #fef3dc; color: #7a5010; }
+    /* ── PAGE 2: CENSUS ── */
+    .topnav { height: 56px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 16px; sticky; top: 0; z-index: 100; flex-shrink: 0; }
+    .nav-logo { font-family: 'Lora', serif; font-size: 20px; color: var(--navy); font-weight: 600; }
+    .census-container { padding: 24px 28px; flex: 1; overflow-y: auto; }
+    .census-table { width: 100%; border-collapse: collapse; min-width: 800px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+    .census-table th { padding: 12px 16px; text-align: left; font-size: 10px; text-transform: uppercase; color: var(--unc); border-bottom: 1px solid var(--border); letter-spacing: 0.05em; }
+    .census-table td { padding: 16px; border-bottom: 1px solid #f0f6fb; font-size: 13.5px; vertical-align: middle; }
+    .acuity-box { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'DM Mono'; }
+    .esi-1, .esi-2 { background: #fde8e8; color: #c0392b; }
+    .esi-3 { background: #fef3dc; color: #7a5010; }
+    .open-btn { padding: 8px 14px; border-radius: 8px; border: 1.5px solid var(--border); background: white; color: var(--unc-dark); font-weight: 600; font-size: 11px; cursor: pointer; }
 
-/* ── CHART ── */
-.chart-card { max-width: 860px; margin: 24px auto 60px; background: var(--white); border-radius: var(--radius); box-shadow: 0 20px 60px rgba(75,156,211,.10); overflow: hidden; }
-.patient-row { padding: 20px 28px; display: flex; align-items: flex-start; gap: 16px; background: #f4f9fd; border-bottom: 1px solid var(--border); }
-.avatar { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, var(--unc-mid), var(--unc)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px; }
-.tabs-bar { display: flex; flex-wrap: wrap; background: var(--white); padding: 0 20px; border-bottom: 1px solid var(--border); }
-.tab-break { width: 100%; height: 0; border-top: 1px solid var(--border); }
-.tab-btn { padding: 11px 15px; font-size: 13px; color: var(--muted); cursor: pointer; border: none; background: transparent; border-bottom: 2px solid transparent; transition: 0.15s; font-family: 'DM Sans'; }
-.tab-btn.active { color: var(--text); border-bottom-color: var(--unc); font-weight: 600; }
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
+    /* ── PAGE 3: CHART ── */
+    .chart-layout { flex: 1; overflow-y: auto; padding: 24px 16px 60px; }
+    .chart-card { max-width: 900px; margin: 0 auto; background: var(--white); border-radius: var(--radius); box-shadow: 0 20px 60px rgba(75,156,211,.10); overflow: hidden; display: flex; flex-direction: column; }
+    .patient-header { padding: 20px 28px; display: flex; align-items: flex-start; gap: 16px; background: #f4f9fd; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .avatar-circle { width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(135deg, var(--unc-mid), var(--unc)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 16px; }
+    .header-info h2 { font-family: 'Lora'; font-size: 22px; font-weight: 600; color: var(--navy); }
+    .badge-pill { font-size: 10px; font-weight: 700; padding: 4px 12px; border-radius: 100px; margin-left: 6px; text-transform: uppercase; }
+    .badge-red { background: #fde8e8; color: #9b3535; }
+    .badge-warn { background: #fef3dc; color: #7a5010; }
 
-/* Clinical Content Styles */
-.vitals-grid { display: flex; gap: 12px; flex-wrap: wrap; padding: 26px 28px; }
-.vital-card { flex: 1; min-width: 100px; background: #f4f9fd; border: 1px solid var(--border); border-radius: 14px; padding: 16px 12px; text-align: center; }
-.vital-val { font-size: 26px; font-family: 'Lora', serif; }
-.content-section { padding: 24px 28px; line-height: 1.6; font-size: 14px; }
-.content-section h3 { font-family: 'Lora'; font-weight: 600; margin-bottom: 12px; font-size: 16px; color: var(--navy); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
-.content-section p { margin-bottom: 12px; }
-.data-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
-.data-table th { text-align: left; font-size: 10px; text-transform: uppercase; color: var(--muted); padding-bottom: 8px; }
-.data-table td { padding: 10px 0; border-bottom: 1px solid #f0f6fb; }
-.note-entry { border-left: 3px solid var(--unc-light); padding: 10px 16px; margin-bottom: 16px; background: #f8fbfe; border-radius: 0 8px 8px 0; }
-.note-meta { font-size: 11px; font-weight: 600; color: var(--unc-dark); margin-bottom: 4px; }
-.discharge-btn { padding: 8px 16px; border-radius: 100px; border: none; background: #fee2e2; color: #b91c1c; font-weight: 700; font-size: 11px; cursor: pointer; }
-</style>
+    /* Dual-Row Tabs */
+    .tabs-wrapper { background: white; padding: 0 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .tabs-row { display: flex; flex-wrap: nowrap; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
+    .tabs-row::-webkit-scrollbar { display: none; }
+    .tab-btn { padding: 12px 16px; font-size: 13px; color: var(--muted); cursor: pointer; border: none; background: transparent; border-bottom: 2px solid transparent; white-space: nowrap; font-family: 'DM Sans'; transition: 0.2s; }
+    .tab-btn.active { color: var(--navy); border-bottom-color: var(--unc); font-weight: 600; }
+
+    /* Content Panels */
+    .panel-container { flex: 1; padding: 32px 28px; min-height: 400px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .vitals-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 32px; }
+    .vital-item { background: #fcfbf9; border: 1px solid var(--border); border-radius: 14px; padding: 18px; text-align: center; }
+    .vital-num { font-size: 28px; font-family: 'Lora'; font-weight: 500; display: block; }
+    .vital-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+
+    .clinical-section { margin-bottom: 32px; }
+    .clinical-section h3 { font-family: 'Lora'; font-size: 17px; color: var(--navy); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .clinical-section p { font-size: 14px; line-height: 1.7; color: #374151; white-space: pre-line; }
+
+    .lab-table { width: 100%; border-collapse: collapse; }
+    .lab-table th { text-align: left; font-size: 10px; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .lab-table td { padding: 12px 0; border-bottom: 1px solid #f0f6fb; font-size: 14px; }
+
+    .med-card { display: flex; align-items: center; gap: 12px; padding: 14px; background: #f9fbfd; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 10px; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .discharge-btn { background: #fee2e2; color: #b91c1c; border: none; padding: 8px 16px; border-radius: 100px; font-weight: 700; font-size: 11px; cursor: pointer; margin-left: auto; }
+  </style>
 </head>
 <body>
 
-<div id="page-login" class="page active">
-  <div class="login-card">
-    <div class="login-logo">Carta</div>
-    <p style="color:var(--muted); font-size:13px; margin-bottom:30px;">Physician-first electronic health record</p>
-    <button class="login-btn" onclick="navTo('page-main')">Sign In</button>
-    <button class="demo-btn" onclick="navTo('page-main')">View Interactive Demo</button>
+  <div id="page-login" class="page active">
+    <div class="login-card">
+      <div class="login-logo">Carta</div>
+      <p style="color:var(--muted); font-size:13px; margin-bottom:32px;">Clinical operating system for physicians</p>
+      <div style="text-align:left; margin-bottom:20px;">
+        <label style="display:block; font-size:11px; font-weight:600; color:var(--muted); margin-bottom:8px; text-transform:uppercase;">NPI / Identifier</label>
+        <input type="text" class="form-input" id="user-input" placeholder="npi_18472902">
+      </div>
+      <button class="login-btn" onclick="nav('page-main')">Sign In</button>
+      <button class="demo-btn" onclick="nav('page-main')">Launch Interactive Demo</button>
+    </div>
   </div>
-</div>
 
-<div id="page-main" class="page">
-  <nav class="topnav">
-    <span class="nav-logo">Carta</span>
-    <span style="font-size:12px; font-weight:600; color:var(--unc-dark); background:var(--unc-light); padding:4px 11px; border-radius:100px; margin-left:10px;">ER CENSUS</span>
-    <div style="flex:1"></div>
-    <div style="width:32px; height:32px; background:var(--unc); border-radius:10px; color:white; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; cursor:pointer;" onclick="navTo('page-login')">DR</div>
-  </nav>
-  <div style="padding: 24px 28px;">
-    <h2 style="font-family:'Lora'; margin-bottom:4px;">Active Arrivals</h2>
-    <table class="census-table">
-      <thead><tr><th>ESI</th><th>Patient</th><th>Room</th><th>Complaint</th><th>Vitals</th><th>Status</th><th></th></tr></thead>
-      <tbody id="census-active"></tbody>
-    </table>
+  <div id="page-main" class="page">
+    <nav class="topnav">
+      <span class="nav-logo">Carta</span>
+      <div style="width:1px; height:20px; background:var(--border); margin:0 10px;"></div>
+      <span style="font-size:12px; font-weight:600; color:var(--unc-dark); background:var(--unc-light); padding:4px 11px; border-radius:100px;">UNC MEMORIAL — ER</span>
+      <div style="flex:1"></div>
+      <div style="width:32px; height:32px; background:var(--navy); border-radius:10px; color:white; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; cursor:pointer;" onclick="nav('page-login')">DR</div>
+    </nav>
+    <div class="census-container">
+      <h2 style="font-family:'Lora'; font-size:24px; margin-bottom:4px;">Active Census</h2>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:24px;">Reviewing patients currently in workup or awaiting disposition.</p>
+      <table class="census-table">
+        <thead>
+          <tr><th>ESI</th><th>Patient Info</th><th>Room</th><th>Complaint</th><th>Vitals</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody id="census-active"></tbody>
+      </table>
 
-    <h2 style="font-family:'Lora'; margin-top:40px; color:var(--muted); font-size:18px;">Recently Discharged</h2>
-    <table class="census-table" style="opacity:0.6">
-      <tbody id="census-completed"></tbody>
-    </table>
+      <h2 style="font-family:'Lora'; font-size:20px; margin-top:48px; margin-bottom:4px; color:var(--muted)">Recently Completed</h2>
+      <table class="census-table" style="opacity:0.7">
+        <tbody id="census-completed"></tbody>
+      </table>
+    </div>
   </div>
-</div>
 
-<div id="page-chart" class="page">
-  <nav class="topnav">
-    <button class="open-btn" onclick="navTo('page-main')">← Back to Census</button>
-    <span class="nav-logo" style="margin-left:20px">Carta Chart</span>
-  </nav>
-  <div id="chart-content"></div>
-</div>
+  <div id="page-chart" class="page">
+    <nav class="topnav">
+      <button class="open-btn" onclick="nav('page-main')">← Back to Census</button>
+      <span class="nav-logo" style="margin-left:20px" id="chart-title-name">Carta Chart</span>
+    </nav>
+    <div class="chart-layout" id="chart-content"></div>
+  </div>
 
 <script>
-/* """ HIGH-FIDELITY CLINICAL DATABASE """ */
-const PATIENTS = [
-  {
-    id: 'p1', active: true, esi: 3, name: 'Sarah Chen', age: '62F', mrn: '0042817', room: '12', cc: 'Pneumonia (CAP)',
-    attending: 'Dr. Patel', admitted: '3/20', flags: ['PCN Allergy', 'DNR'],
-    vitals: { bp: '118/76', hr: '101', temp: '38.9', spo2: '96%', rr: '18' },
-    history: 'T2DM (A1c 8.2), HTN, HLD. Prior cholecystectomy (2018). Non-smoker. Lives with husband.',
-    physical: 'Lungs: Crackles noted in RLL. Dullness to percussion R base. Heart: Tachycardic, S1/S2 regular, no murmurs.',
-    ems: 'Called for worsening SOB and productive cough x4 days. Pt found sitting in tripod position. SpO2 91% on room air. 2L NC applied.',
-    er: 'ESI 3. CXR shows dense RLL opacity. Procalcitonin elevated. Started on CAP protocol (Ceftriaxone + Azithromycin).',
-    labs: [{t:'WBC', v:'14.2', r:'4-11'}, {t:'Procalcitonin', v:'1.8', r:'<0.25'}, {t:'Glucose', v:'182', r:'70-140'}],
-    viz: 'Chest X-Ray (3/23): Consolidation in the right lower lobe consistent with bacterial pneumonia.',
-    pathology: 'Sputum Gram Stain: Many WBCs, Gram-positive diplococci. Blood cultures x2: Pending.',
-    notes: 'Pt stable on 2L oxygen. Febrile to 38.9. Tolerating PO fluids. Awaiting hospitalist admission for IV antibiotics.',
-    meds: [{n:'Ceftriaxone', d:'1g IV q24h'}, {n:'Azithromycin', d:'500mg IV q24h'}, {n:'Metformin', d:'1000mg BID'}]
-  },
-  {
-    id: 'p2', active: true, esi: 2, name: 'Robert Nguyen', age: '58M', mrn: '0031042', room: 'T1', cc: 'Chest Pain (STEMI)',
-    attending: 'Dr. Torres', admitted: '3/23', flags: ['Cardiac', 'Stent'],
-    vitals: { bp: '92/58', hr: '114', temp: '36.8', spo2: '94%', rr: '22' },
-    history: 'CAD s/p DES to LAD (2020). HTN, HLD. Smoker (1ppd). Family hx of premature CAD.',
-    physical: 'Appearance: Diaphoretic, pale, clutching chest. Heart: Rapid S1/S2, new S4 heard at apex.',
-    ems: 'Field ECG: 4mm ST Elevation in II, III, aVF. ASA 324mg given. NTG x3 given without relief. STEMI alert called.',
-    er: 'Arrival time 17:10. Bilateral IV access. Heparin 5000u bolus given. Ticagrelor 180mg given. Cardiology bedside.',
-    labs: [{t:'Troponin I', v:'4.82', r:'<0.04'}, {t:'CK-MB', v:'24.1', r:'<5.0'}, {t:'Potassium', v:'3.4', r:'3.5-5.0'}],
-    viz: '12-Lead ECG: Convex ST-segment elevation in inferior leads with reciprocal depressions in I and aVL.',
-    pathology: 'N/A for acute cardiac protocol.',
-    notes: 'Patient moving to Cath Lab for primary PCI. Door-to-balloon time goal <60 mins.',
-    meds: [{n:'Heparin Drip', d:'12u/kg/hr'}, {n:'Ticagrelor', d:'180mg Once'}, {n:'Aspirin', d:'324mg Once'}]
-  },
-  {
-    id: 'p3', active: true, esi: 1, name: 'Marcus Miller', age: '26M', mrn: '0092110', room: 'T2', cc: 'Opioid Overdose',
-    attending: 'Dr. Torres', admitted: '3/23', flags: ['Critical', 'Fall Risk'],
-    vitals: { bp: '102/60', hr: '58', temp: '36.1', spo2: '86%', rr: '6' },
-    history: 'Opioid Use Disorder. Prior admissions for withdrawal. Depression.',
-    physical: 'Neuro: GCS 6 (E1, V2, M3). Pupils: 1mm pinpoint, non-reactive. Lungs: Shallow, infrequent respirations.',
-    ems: 'Found in park by bystander. Bag-valve-mask ventilation started. Naloxone 4mg nasal given x2 with minimal response.',
-    er: 'Arrival via ALS. Intubation equipment at bedside. Narcan 0.4mg IV given. RR improved to 14. GCS now 11.',
-    labs: [{t:'pH', v:'7.28', r:'7.35-7.45'}, {t:'pCO2', v:'58', r:'35-45'}, {t:'UDS', v:'+Opioid', r:'Neg'}],
-    viz: 'Portable CXR: No acute process, no aspiration pneumonia seen.',
-    pathology: 'Toxicology: Confirmed Fentanyl and Acetyl-fentanyl in serum.',
-    notes: 'Respiratory status stabilizing. Patient now alert but combative. Narcan drip considered if somnolence recurs.',
-    meds: [{n:'Naloxone', d:'0.4mg IV PRN'}, {n:'Normal Saline', d:'125ml/hr'}]
-  },
-  {
-    id: 'p4', active: true, esi: 3, name: 'Elena Rodriguez', age: '42F', mrn: '0061345', room: '24', cc: 'Broken Arm',
-    attending: 'Dr. Kim', admitted: '3/23', flags: ['None'],
-    vitals: { bp: '152/94', hr: '108', temp: '37.1', spo2: '100%', rr: '20' },
-    history: 'Asthma (intermittent). Prior carpal tunnel release (R). NKDA.',
-    physical: 'Extremity: Obvious "silver fork" deformity of R wrist. Skin intact. Neurovascularly intact distally.',
-    ems: 'Fall from 4ft step ladder while cleaning. Obvious deformity. Splinted with cardboard in field.',
-    er: 'X-ray confirmed Colles fracture. Orthopedics paged. Hematoma block with 10cc 1% Lidocaine performed.',
-    labs: [{t:'Hgb', v:'14.0', r:'12-16'}, {t:'WBC', v:'9.1', r:'4-11'}],
-    viz: 'X-Ray R Wrist: Transverse fracture of the distal radial metaphysis with dorsal displacement and angulation.',
-    pathology: 'N/A.',
-    notes: 'Reduction performed by Dr. Kim. Post-reduction film shows good alignment. Sugartong splint applied.',
-    meds: [{n:'Morphine', d:'4mg IV Once'}, {n:'Lidocaine 1%', d:'10ml Local'}]
-  },
-  {
-    id: 'p5', active: true, esi: 2, name: 'David Walsh', age: '74M', mrn: '0028817', room: '14', cc: 'Acute Stroke',
-    attending: 'Dr. Patel', admitted: '3/23', flags: ['Fall Risk', 'NPO'],
-    vitals: { bp: '190/110', hr: '84', temp: '36.9', spo2: '97%', rr: '16' },
-    history: 'Afib, HTN. Hx of non-compliance with Eliquis. Lives in assisted living.',
-    physical: 'Neuro: L facial droop, L arm 0/5, L leg 2/5 strength. NIHSS 14. Dysarthria noted.',
-    ems: 'LKW 14:30. Symptoms noted by nursing home staff during lunch. Stroke Code called by EMS in transit.',
-    er: 'CT Head negative for bleed. CTA shows R M1 segment occlusion. BP management with Labetalol initiated.',
-    labs: [{t:'INR', v:'1.1', r:'2-3'}, {t:'Glucose', v:'104', r:'70-140'}, {t:'Platelets', v:'210', r:'150-400'}],
-    viz: 'CT Head: No hemorrhage. CTA Head/Neck: Focal occlusion of the right middle cerebral artery.',
-    pathology: 'N/A.',
-    notes: 'TNK (Tenecteplase) administered at 15:45. Transporting to Neuro IR for mechanical thrombectomy.',
-    meds: [{n:'TNKase', d:'0.25mg/kg'}, {n:'Labetalol', d:'10mg IV q10m PRN BP'}]
+  /* """ MOCK CLINICAL DATA ENGINE """ */
+  const PATIENTS = [
+    {
+      id: 'p1', active: true, esi: 3, name: 'Sarah Chen', age: '62F', mrn: '0042817', room: '12', cc: 'Pneumonia (CAP)',
+      attending: 'Dr. Patel', admitted: '3/20/26', flags: ['PCN Allergy', 'DNR'],
+      vitals: { bp: '118/76', hr: '101', temp: '38.9', spo2: '96%', rr: '18' },
+      history: `HPI: Pt presents with 4-day history of productive cough (yellow sputum), worsening SOB, and subjective fevers.
+                PMH: Type 2 Diabetes (A1c 8.4), Hypertension, Hyperlipidemia.
+                PSH: Cholecystectomy (2018).
+                Social: Never smoker, lives with spouse in independent living.`,
+      physical: `General: Ill-appearing, mild respiratory distress.
+                 Lungs: Crackles noted in right lower lobe (RLL). Dullness to percussion at right base.
+                 CV: Tachycardic, regular rhythm. No murmurs/rubs.
+                 Skin: Warm, dry. No rashes.`,
+      ems: `Dispatch: Respiratory Distress.
+            On Scene: Pt found upright in tripod position. Initial SpO2 91% on RA.
+            Interventions: 2L Oxygen via NC applied (SpO2 improved to 96%). 18g IV in L AC.`,
+      er_notes: `Triage: ESI 3. 
+                 Workup: CXR, CBC, BMP, Procalcitonin ordered.
+                 Treatment: 1L NS bolus initiated. Ceftriaxone 1g IV and Azithromycin 500mg IV administered.
+                 Plan: Admit to Medicine for management of Community Acquired Pneumonia.`,
+      labs: [{t:'WBC', v:'14.2', r:'4.5-11.0', s:'H'}, {t:'Procalcitonin', v:'1.82', r:'<0.25', s:'H'}, {t:'Glucose', v:'188', r:'70-140', s:'H'}],
+      viz: `CXR: 2-view chest shows focal consolidation in the right lower lobe. Small right-sided pleural effusion noted. No cardiomegaly.`,
+      pathology: `Sputum Gram Stain: Many PMNs, moderate Gram-positive diplococci (consistent with S. pneumoniae). Blood cultures pending.`,
+      notes: `3/23 08:15 - Dr. Patel (Attending): Patient remains stable on 2L NC. WBC trending down slightly from arrival. Awaiting floor bed assignment.`,
+      meds: [{n:'Ceftriaxone', d:'1g IV q24h', c:'var(--unc)'}, {n:'Azithromycin', d:'500mg IV q24h', c:'var(--unc)'}, {n:'Metformin', d:'1000mg PO BID', c:'var(--ok)'}]
+    },
+    {
+      id: 'p2', active: true, esi: 2, name: 'Robert Nguyen', age: '58M', mrn: '0031042', room: 'T1', cc: 'Chest Pain (STEMI)',
+      attending: 'Dr. Torres', admitted: '3/23/26', flags: ['Cardiac', 'Full Code'],
+      vitals: { bp: '92/58', hr: '114', temp: '36.8', spo2: '94%', rr: '22' },
+      history: `HPI: Acute onset substernal chest pressure (10/10) radiating to left jaw, started while gardening 45 mins ago. 
+                PMH: CAD s/p DES to LAD (2020), HTN, Tobacco Use (1 ppd x 30 yrs).`,
+      physical: `General: Diaphoretic, appearing anxious and in acute pain.
+                 CV: Rapid regular rhythm. S3 present. Radial pulses 2+ bilateral.
+                 Lungs: Clear to auscultation bilaterally.`,
+      ems: `STEMI ALERT. Field 12-Lead: 4mm ST Elevation in leads II, III, aVF. 
+            ASA 324mg chewed. NTG 0.4mg SL x3. Fentanyl 50mcg IV given for pain.`,
+      er_notes: `Arrival: 17:15. Code STEMI activated.
+                 Interventions: Heparin 5000u IV bolus. Ticagrelor 180mg PO. 
+                 Disposition: Transferring to Cath Lab for primary PCI.`,
+      labs: [{t:'Troponin I', v:'6.40', r:'<0.04', s:'H'}, {t:'Potassium', v:'3.4', r:'3.5-5.0', s:'L'}, {t:'Creatinine', v:'1.1', r:'0.7-1.3', s:'N'}],
+      viz: `ECG (17:18): Acute ST-segment elevation MI involving the inferior wall with reciprocal changes in I and aVL.`,
+      pathology: `N/A for acute STEMI pathway.`,
+      notes: `17:35 - Dr. Torres: Consented for emergent cardiac catheterization. Cardiology bedside. To Cath Lab now.`,
+      meds: [{n:'Heparin Drip', d:'12u/kg/hr', c:'var(--danger)'}, {n:'Ticagrelor', d:'180mg Once', c:'var(--unc)'}]
+    },
+    {
+      id: 'p3', active: true, esi: 1, name: 'Marcus Miller', age: '26M', mrn: '0092110', room: 'T2', cc: 'Opioid Overdose',
+      attending: 'Dr. Torres', admitted: '3/23/26', flags: ['Critical', 'Fall Risk'],
+      vitals: { bp: '102/60', hr: '58', temp: '36.1', spo2: '86%', rr: '6' },
+      history: `HPI: Found unresponsive in parking lot by bystander. Drug paraphernalia nearby.
+                PMH: Opioid Use Disorder, Depression, Hepatitis C.
+                Social: Unhoused.`,
+      physical: `Neuro: GCS 6 (E1, V2, M3). Not following commands.
+                 Pupils: 1mm pinpoint, non-reactive.
+                 Skin: Cool, clammy. Multiple track marks on bilateral forearms.`,
+      ems: `Found in respiratory arrest. Bag-valve-mask ventilation initiated. 
+            Naloxone 4mg Nasal given x2 with minimal improvement in respiratory rate.`,
+      er_notes: `Arrived via ALS. Bagging continued at bedside. Narcan 0.4mg IV administered. 
+                 Pt became alert and combative. Attempted to leave AMA; currently being stabilized for observation.`,
+      labs: [{t:'pH', v:'7.26', r:'7.35-7.45', s:'L'}, {t:'pCO2', v:'62', r:'35-45', s:'H'}, {t:'UDS', v:'+Fentanyl', r:'Neg', s:'H'}],
+      viz: `CXR: Clear. No aspiration.
+            EKG: Sinus bradycardia, no QTc prolongation.`,
+      pathology: `Tox Screen: Confirmed Fentanyl and Xylazine in serum.`,
+      notes: `19:20 - Dr. Torres: Pt currently awake. Sitting up in bed. Close monitoring for recurrent somnolence.`,
+      meds: [{n:'Naloxone', d:'0.4mg IV PRN', c:'var(--danger)'}, {n:'IV Fluids', d:'125ml/hr NS', c:'var(--unc)'}]
+    },
+    {
+      id: 'p4', active: true, esi: 3, name: 'Elena Rodriguez', age: '42F', mrn: '0061345', room: '24', cc: 'Broken Arm',
+      attending: 'Dr. Kim', admitted: '3/23/26', flags: ['Pain', 'Ortho'],
+      vitals: { bp: '152/94', hr: '108', temp: '37.1', spo2: '100%', rr: '18' },
+      history: `HPI: Fell from 4-foot step ladder while cleaning. Landed on outstretched right hand (FOOSH).
+                PMH: Asthma, otherwise healthy. No prior fractures.`,
+      physical: `Extremity: Obvious "silver fork" deformity of the right wrist. Moderate swelling. 
+                 Neuro: Sensation intact to light touch in median/radial/ulnar distributions.
+                 Vascular: Radial pulse 2+, capillary refill <2s.`,
+      ems: `Self-transport to triage. Pt holding right arm against chest. Splinted with pillow in triage.`,
+      er_notes: `X-ray shows displaced distal radius fracture. Hematoma block performed with 10cc 1% Lidocaine. 
+                 Manual reduction performed by Dr. Kim with Ortho guidance. Sugartong splint applied.`,
+      labs: [{t:'Hgb', v:'13.8', r:'12-16', s:'N'}, {t:'WBC', v:'8.4', r:'4.5-11.0', s:'N'}],
+      viz: `X-Ray R Wrist: Transverse fracture of the distal radial metaphysis with dorsal displacement and angulation (Colles FX). Post-reduction film shows improved alignment.`,
+      pathology: `N/A.`,
+      notes: `20:05 - Dr. Kim: Patient tolerating splint well. Distal neurovascular status unchanged post-reduction. Discharge pending Ortho follow-up.`,
+      meds: [{n:'Morphine', d:'4mg IV Once', c:'var(--warn)'}, {n:'Oxycodone', d:'5mg PO Once', c:'var(--warn)'}]
+    },
+    {
+      id: 'p5', active: true, esi: 2, name: 'David Walsh', age: '74M', mrn: '0028817', room: '14', cc: 'Acute Stroke',
+      attending: 'Dr. Patel', admitted: '3/23/26', flags: ['Stroke Code', 'NPO'],
+      vitals: { bp: '190/110', hr: '84', temp: '36.9', spo2: '97%', rr: '16' },
+      history: `HPI: Pt noted by assisted living staff to have sudden onset left-sided weakness and slurred speech during lunch (13:15).
+                PMH: Atrial Fibrillation (non-compliant with Eliquis), Hypertension, PVD.`,
+      physical: `Neuro: NIHSS 14. Left facial droop. 0/5 strength in L arm, 2/5 in L leg. Slurred but fluent speech.
+                 CV: Irregularly irregular rhythm.`,
+      ems: `Stroke code activated in field. LKW confirmed 13:15. Blood glucose 104 in field. 18g IV in R AC.`,
+      er_notes: `Arrival 14:05. CT Head negative for acute bleed. CTA showed R MCA occlusion. 
+                 Tenecteplase (TNK) 0.25mg/kg bolus given at 14:35.`,
+      labs: [{t:'INR', v:'1.1', r:'2-3', s:'L'}, {t:'Platelets', v:'204', r:'150-400', s:'N'}, {t:'Glucose', v:'104', r:'70-140', s:'N'}],
+      viz: `CTA Head/Neck: Abrupt cutoff of the M1 segment of the right middle cerebral artery. No significant carotid stenosis.`,
+      pathology: `N/A.`,
+      notes: `15:10 - Dr. Patel: Patient currently in Neuro-IR suite for mechanical thrombectomy. BP being maintained <180/105.`,
+      meds: [{n:'TNKase', d:'Bolus Once', c:'var(--danger)'}, {n:'Labetalol', d:'10mg IV PRN', c:'var(--warn)'}]
+    }
+  ];
+
+  /* """ CORE LOGIC """ */
+  function nav(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    if(pageId === 'page-main') buildCensus();
+    window.scrollTo(0, 0);
   }
-];
 
-/* """ ROUTING & LOGIC """ */
-function navTo(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  if(id === 'page-main') buildCensus();
-}
+  function buildCensus() {
+    const activeBody = document.getElementById('census-active');
+    const completedBody = document.getElementById('census-completed');
+    
+    activeBody.innerHTML = PATIENTS.filter(p => p.active).map(p => `
+      <tr onclick="openChart('${p.id}')">
+        <td><div class="acuity-box esi-${p.esi}">${p.esi}</div></td>
+        <td><strong>${p.name}</strong><br><small>${p.age} · MRN ${p.mrn}</small></td>
+        <td><strong>${p.room}</strong></td>
+        <td>${p.cc}</td>
+        <td style="font-family:'DM Mono'">${p.vitals.bp} | ${p.vitals.hr}</td>
+        <td><span style="width:8px; height:8px; background:var(--warn); border-radius:50%; display:inline-block; margin-right:6px"></span> In Workup</td>
+        <td align="right"><button class="open-btn">View Chart →</button></td>
+      </tr>`).join('');
 
-function buildCensus() {
-  const activeBody = document.getElementById('census-active');
-  const completedBody = document.getElementById('census-completed');
-  
-  activeBody.innerHTML = PATIENTS.filter(p => p.active).map(p => `
-    <tr onclick="openChart('${p.id}')">
-      <td><div class="acuity-box esi-${p.esi}">${p.esi}</div></td>
-      <td><strong>${p.name}</strong><br><small>${p.age} · MRN ${p.mrn}</small></td>
-      <td><strong>${p.room}</strong></td>
-      <td>${p.cc}</td>
-      <td style="font-family:'DM Mono'">${p.vitals.bp} | ${p.vitals.hr}</td>
-      <td><span style="width:8px; height:8px; background:var(--warn); border-radius:50%; display:inline-block"></span> Workup</td>
-      <td align="right"><button class="open-btn">Open →</button></td>
-    </tr>`).join('');
-
-  completedBody.innerHTML = PATIENTS.filter(p => !p.active).map(p => `
-    <tr>
-      <td width="30"><div style="width:8px; height:8px; background:var(--muted); border-radius:50%"></div></td>
-      <td><strong>${p.name}</strong> (MRN ${p.mrn})</td>
-      <td>${p.cc}</td>
-      <td align="right" style="color:var(--muted); font-size:11px; font-weight:600;">SESSION CLOSED</td>
-    </tr>`).join('');
-}
-
-function openChart(pid) {
-  const p = PATIENTS.find(x => x.id === pid);
-  const host = document.getElementById('chart-content');
-  host.innerHTML = `
-    <div class="chart-card">
-      <div class="patient-row">
-        <div class="avatar">${p.name.split(' ').map(n=>n[0]).join('')}</div>
-        <div style="flex:1">
-          <div style="font-family:'Lora'; font-size:20px; font-weight:600;">${p.name}</div>
-          <div style="font-size:12px; color:var(--muted); margin-top:2px;">${p.age} · MRN ${p.mrn} · Attending: ${p.attending}</div>
-        </div>
-        <button class="discharge-btn" onclick="discharge('${p.id}')">DISCHARGE</button>
-      </div>
-
-      <div class="tabs-bar">
-        <button class="tab-btn active" data-target="vitals">Vitals</button>
-        <button class="tab-btn" data-target="history">History</button>
-        <button class="tab-btn" data-target="physical">Exam</button>
-        <button class="tab-btn" data-target="ems">EMS</button>
-        <button class="tab-btn" data-target="er">ER Notes</button>
-        <div class="tab-break"></div>
-        <button class="tab-btn" data-target="labs">Labs</button>
-        <button class="tab-btn" data-target="viz">Viz</button>
-        <button class="tab-btn" data-target="path">Path</button>
-        <button class="tab-btn" data-target="notes">Progress</button>
-        <button class="tab-btn" data-target="meds">Meds</button>
-      </div>
-
-      <div id="vitals" class="tab-panel active">
-        <div class="vitals-grid">
-          <div class="vital-card"><div class="vital-val">${p.vitals.bp}</div><small style="color:var(--muted); font-size:9px; font-weight:600;">BP MMHG</small></div>
-          <div class="vital-card"><div class="vital-val">${p.vitals.hr}</div><small style="color:var(--muted); font-size:9px; font-weight:600;">HR BPM</small></div>
-          <div class="vital-card"><div class="vital-val" style="color:var(--danger)">${p.vitals.temp}°</div><small style="color:var(--muted); font-size:9px; font-weight:600;">TEMP °C</small></div>
-          <div class="vital-card"><div class="vital-val">${p.vitals.spo2}</div><small style="color:var(--muted); font-size:9px; font-weight:600;">SPO2 %</small></div>
-        </div>
-        <div class="trends-section">
-          <div class="trend-card">
-            <div style="font-size:10px; font-weight:600; color:var(--unc); margin-bottom:12px; text-transform:uppercase">BP Trend (4H)</div>
-            <div style="font-size:12px; display:flex; align-items:center; margin-bottom:8px">Arrival <div class="bar-bg"><div class="bar-fill" style="width:80%"></div></div> ${p.vitals.bp}</div>
-          </div>
-          <div class="trend-card">
-             <div style="font-size:10px; font-weight:600; color:var(--unc); margin-bottom:12px; text-transform:uppercase">Temp Trend (4H)</div>
-             <div style="font-size:12px; display:flex; align-items:center">Arrival <div class="bar-bg"><div class="bar-fill" style="width:70%; background:var(--warn)"></div></div> ${p.vitals.temp}°</div>
-          </div>
-        </div>
-      </div>
-
-      <div id="history" class="tab-panel"><div class="content-section"><h3>Medical History</h3><p>${p.history}</p></div></div>
-      <div id="physical" class="tab-panel"><div class="content-section"><h3>Recent Physical Exam</h3><p>${p.physical}</p></div></div>
-      <div id="ems" class="tab-panel"><div class="content-section"><h3>EMS Run Sheet</h3><p>${p.ems}</p></div></div>
-      <div id="er" class="tab-panel"><div class="content-section"><h3>Emergency Dept Note</h3><p>${p.er}</p></div></div>
-      
-      <div id="labs" class="tab-panel"><div class="content-section"><h3>Laboratory Results</h3>
-        <table class="data-table"><thead><tr><th>Test</th><th>Result</th><th>Range</th></tr></thead>
-        <tbody>${p.labs.map(l=>`<tr><td>${l.t}</td><td><strong>${l.v}</strong></td><td>${l.r}</td></tr>`).join('')}</tbody></table>
-      </div></div>
-
-      <div id="viz" class="tab-panel"><div class="content-section"><h3>Radiology & Visualizations</h3><p>${p.viz}</p></div></div>
-      <div id="path" class="tab-panel"><div class="content-section"><h3>Pathology & Micro</h3><p>${p.pathology}</p></div></div>
-      
-      <div id="notes" class="tab-panel"><div class="content-section"><h3>Progress Notes</h3>
-        <div class="note-entry"><div class="note-meta">MD Progress · ${p.attending}</div><p>${p.notes}</p></div>
-      </div></div>
-      
-      <div id="meds" class="tab-panel"><div class="content-section"><h3>Active Medications</h3>
-        ${p.meds.map(m=>`<div class="med-pill"><div class="dot" style="background:var(--unc)"></div><div><strong>${m.n}</strong><br><small>${m.d}</small></div></div>`).join('')}
-      </div></div>
-    </div>`;
-
-  // Dynamic Tab Switching
-  const tabs = host.querySelectorAll('.tab-btn');
-  const panels = host.querySelectorAll('.tab-panel');
-  tabs.forEach(t => t.addEventListener('click', () => {
-    tabs.forEach(x => x.classList.remove('active'));
-    panels.forEach(x => x.classList.remove('active'));
-    t.classList.add('active');
-    host.querySelector('#' + t.dataset.target).classList.add('active');
-  }));
-
-  navTo('page-chart');
-}
-
-function discharge(id) {
-  if(confirm("Finalize discharge and move to completed?")) {
-    const p = PATIENTS.find(x => x.id === id);
-    p.active = false;
-    navTo('page-main');
+    completedBody.innerHTML = PATIENTS.filter(p => !p.active).map(p => `
+      <tr>
+        <td width="30"></td>
+        <td><strong>${p.name}</strong> (MRN ${p.mrn})</td>
+        <td>DISCHARGED</td>
+        <td>${p.cc}</td>
+        <td align="right" colspan="3"><small style="color:var(--muted); font-weight:600">ENCOUNTER CLOSED</small></td>
+      </tr>`).join('');
   }
-}
 
-buildCensus();
+  function openChart(pid) {
+    const p = PATIENTS.find(x => x.id === pid);
+    document.getElementById('chart-title-name').textContent = `Chart — ${p.name}`;
+    const host = document.getElementById('chart-content');
+    
+    host.innerHTML = `
+      <div class="chart-card">
+        <div class="patient-header">
+          <div class="avatar-circle">${p.name.split(' ').map(n=>n[0]).join('')}</div>
+          <div class="header-info">
+            <h2>${p.name}</h2>
+            <p style="font-size:12px; color:var(--muted); margin-top:2px;">${p.age} · MRN ${p.mrn} · Attending: ${p.attending} · Admitted ${p.admitted}</p>
+          </div>
+          <div style="margin-left:auto; display:flex; flex-direction:column; align-items:flex-end; gap:8px">
+            <button class="discharge-btn" onclick="discharge('${p.id}')">DISCHARGE PATIENT</button>
+            <div style="display:flex">${p.flags.map(f=>`<span class="badge-pill ${f==='DNR'?'badge-warn':'badge-red'}">${f}</span>`).join('')}</div>
+          </div>
+        </div>
+
+        <div class="tabs-wrapper">
+          <div class="tabs-row">
+            <button class="tab-btn active" data-id="vitals">Vitals</button>
+            <button class="tab-btn" data-id="history">History</button>
+            <button class="tab-btn" data-id="physical">Physical</button>
+            <button class="tab-btn" data-id="ems">EMS Notes</button>
+            <button class="tab-btn" data-id="er">ER Notes</button>
+          </div>
+          <div class="tab-break"></div>
+          <div class="tabs-row">
+            <button class="tab-btn" data-id="labs">Labs</button>
+            <button class="tab-btn" data-id="viz">Visualizations</button>
+            <button class="tab-btn" data-id="path">Pathology</button>
+            <button class="tab-btn" data-id="notes">Progress Notes</button>
+            <button class="tab-btn" data-id="meds">Medications</button>
+          </div>
+        </div>
+
+        <div class="panel-container">
+          <div id="vitals" class="tab-panel active">
+            <div class="vitals-row">
+              <div class="vital-item"><span class="vital-num">${p.vitals.bp}</span><span class="vital-lbl">BP mmHg</span></div>
+              <div class="vital-item"><span class="vital-num" style="color:${parseInt(p.vitals.hr)>100?'var(--danger)':'var(--text)'}">${p.vitals.hr}</span><span class="vital-lbl">HR bpm</span></div>
+              <div class="vital-item"><span class="vital-num" style="color:var(--danger)">${p.vitals.temp}°</span><span class="vital-lbl">Temp °C</span></div>
+              <div class="vital-item"><span class="vital-num">${p.vitals.spo2}</span><span class="vital-lbl">SpO2 %</span></div>
+              <div class="vital-item"><span class="vital-num">${p.vitals.rr}</span><span class="vital-lbl">RR /min</span></div>
+            </div>
+            <div class="trends-section">
+              <div class="trend-card">
+                <div style="font-size:10px; font-weight:600; color:var(--unc); margin-bottom:12px; text-transform:uppercase">BP Trend (4H)</div>
+                <div style="font-size:12px; display:flex; align-items:center; margin-bottom:8px">Arrival <div class="bar-bg"><div class="bar-fill" style="width:75%"></div></div> ${p.vitals.bp}</div>
+              </div>
+              <div class="trend-card">
+                <div style="font-size:10px; font-weight:600; color:var(--unc); margin-bottom:12px; text-transform:uppercase">Temp Trend (4H)</div>
+                <div style="font-size:12px; display:flex; align-items:center">Arrival <div class="bar-bg"><div class="bar-fill" style="width:85%; background:var(--danger)"></div></div> ${p.vitals.temp}°</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="history" class="tab-panel"><div class="clinical-section"><h3>Medical History & HPI</h3><p>${p.history}</p></div></div>
+          <div id="physical" class="tab-panel"><div class="clinical-section"><h3>Physical Examination</h3><p>${p.physical}</p></div></div>
+          <div id="ems" class="tab-panel"><div class="clinical-section"><h3>EMS Pre-hospital Report</h3><p>${p.ems}</p></div></div>
+          <div id="er" class="tab-panel"><div class="clinical-section"><h3>Emergency Dept Course</h3><p>${p.er_notes}</p></div></div>
+          
+          <div id="labs" class="tab-panel"><div class="clinical-section"><h3>Laboratory Results</h3>
+            <table class="lab-table"><thead><tr><th>Test</th><th>Result</th><th>Reference</th><th>Status</th></tr></thead>
+            <tbody>${p.labs.map(l=>`<tr><td>${l.t}</td><td><strong>${l.v}</strong></td><td>${l.r}</td><td style="color:${l.s==='N'?'var(--ok)':'var(--danger)'}">${l.s}</td></tr>`).join('')}</tbody></table>
+          </div></div>
+
+          <div id="viz" class="tab-panel"><div class="clinical-section"><h3>Imaging & Radiology</h3><p>${p.viz}</p></div></div>
+          <div id="path" class="tab-panel"><div class="clinical-section"><h3>Microbiology & Path</h3><p>${p.pathology}</p></div></div>
+          
+          <div id="notes" class="tab-panel"><div class="clinical-section"><h3>Attending Progress Notes</h3>
+            <div class="note-entry"><div class="note-meta">ADMISSION NOTE · ${p.attending}</div><p>${p.notes}</p></div>
+          </div></div>
+          
+          <div id="meds" class="tab-panel"><div class="clinical-section"><h3>Active Medications</h3>
+            ${p.meds.map(m=>`<div class="med-card"><div class="status-dot" style="background:${m.c}"></div><div><strong style="font-size:14px">${m.n}</strong><br><small style="color:var(--muted)">${m.d}</small></div></div>`).join('')}
+          </div></div>
+        </div>
+      </div>`;
+
+    // WIRE TAB EVENTS
+    const tabs = host.querySelectorAll('.tab-btn');
+    const panels = host.querySelectorAll('.tab-panel');
+    tabs.forEach(t => t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.remove('active'));
+      panels.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      host.querySelector('#' + t.dataset.id).classList.add('active');
+    }));
+
+    nav('page-chart');
+  }
+
+  function discharge(id) {
+    if(confirm("Confirm discharge? Patient will be moved to completed list.")) {
+      const p = PATIENTS.find(x => x.id === id);
+      p.active = false;
+      nav('page-main');
+    }
+  }
+
+  buildCensus();
 </script>
 </body>
 </html>
