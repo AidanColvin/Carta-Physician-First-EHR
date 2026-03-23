@@ -99,59 +99,6 @@ Dark mode uses UNC Navy `#0B1829` as the base with Carolina Blue `#4B9CD3` as th
 
 ---
 
-## UI layouts
-
-Three layout options are provided. Teams choose one per deployment context.
-
-### Option A — Sidebar + tab grid (recommended default)
-
-```
-┌─────────────┬─────────────────────────────────────┐
-│  Patient    │  Patient header + allergy flags      │
-│  list       ├─────────────────────────────────────┤
-│  sidebar    │  Tab grid (5×2, always fully visible)│
-│             ├─────────────────────────────────────┤
-│             │  Active tab content                  │
-└─────────────┴─────────────────────────────────────┘
-```
-
-Best for: attendings rounding on multiple patients. The sidebar makes switching patients instant without losing your place in the chart.
-
-### Option B — Top nav chips + full-width tab grid
-
-```
-┌──────────────────────────────────────────────────┐
-│  Carta logo         Patient chips (top nav)       │
-├──────────────────────────────────────────────────┤
-│  Patient header + allergy/status flags            │
-├──────────────────────────────────────────────────┤
-│  Tab grid (5×2, full width)                      │
-├──────────────────────────────────────────────────┤
-│  Active tab content                               │
-└──────────────────────────────────────────────────┘
-```
-
-Best for: iPad / tablet use, procedure rooms, large monitors. More content area per tab since no sidebar.
-
-### Option C — Dark mode, vertical nav (night shift / ICU)
-
-```
-┌──────────────────────────────────────────────────┐
-│  Carta                     Dr. Name · Date        │
-├────────────┬─────────────────────────────────────┤
-│  Patient   │                                      │
-│  summary   │  Active tab content                  │
-│  + flags   │                                      │
-│            │                                      │
-│  Vertical  │                                      │
-│  tab nav   │                                      │
-└────────────┴─────────────────────────────────────┘
-```
-
-Best for: ICU, night shift, low-light environments. High contrast on dark backgrounds, clinical status colors tuned for legibility under dim room lighting.
-
----
-
 ## Chart tabs
 
 All ten tabs are always visible. No scrolling. No overflow menus.
