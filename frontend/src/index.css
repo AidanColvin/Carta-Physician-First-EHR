@@ -1,0 +1,242 @@
+/* """
+Global styles for Carta EHR.
+Implements the Apple-inspired Warm Ivory design system.
+""" */
+:root {
+  --unc: #4B9CD3;
+  --unc-light: #d6eaf7;
+  --unc-mid: #a8d0ec;
+  --unc-dark: #2a6fa8;
+  --bg: #f9fbfd;
+  --white: #ffffff;
+  --border: #e4eff7;
+  --text: #1a1a1a;
+  --muted: #8a9aaa;
+  --warn: #c67c00;
+  --danger: #c0392b;
+  --radius: 18px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.card {
+  max-width: 860px;
+  margin: 32px auto;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(75,156,211,.08), 0 20px 60px rgba(75,156,211,.10);
+  overflow: hidden;
+}
+
+.header {
+  padding: 20px 28px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-family: 'Lora', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.patient-row {
+  padding: 20px 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #f4f9fd;
+  border-bottom: 1px solid var(--border);
+}
+
+.avatar {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--unc-mid), var(--unc));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 600; color: white;
+  flex-shrink: 0;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.patient-info { flex: 1; }
+
+.patient-name {
+  font-size: 18px; font-weight: 600; color: var(--text);
+  letter-spacing: -0.02em; font-family: 'Lora', serif;
+}
+
+.patient-meta {
+  font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.7;
+}
+
+.badges { display: flex; gap: 7px; flex-wrap: wrap; align-items: flex-start; justify-content: flex-end; }
+.badge-pcn { background: #fde8e8; color: #9b3535; font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 100px; white-space: nowrap; }
+.badge-dnr { background: #fef3dc; color: #7a5010; font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 100px; }
+.badge-cap { background: #e1f5eb; color: #1a5c38; font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 100px; }
+
+.tabs-bar {
+  display: flex;
+  flex-wrap: wrap;
+  background: var(--white);
+  padding: 0 20px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.tab-break {
+  width: 100%;
+  height: 0;
+  border-top: 1px solid var(--border);
+}
+
+.tab-btn {
+  padding: 11px 15px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  font-family: 'DM Sans', sans-serif;
+  transition: color 0.15s, border-color 0.15s;
+  margin-bottom: -1px;
+  flex-shrink: 0;
+}
+
+.tab-btn:hover:not(.active) { color: #444; }
+.tab-btn.active {
+  color: var(--text);
+  border-bottom-color: var(--unc);
+  font-weight: 600;
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.vitals-section { padding: 26px 28px 22px; }
+.vitals-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+.vital-card {
+  flex: 1; min-width: 100px;
+  background: #f4f9fd;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 12px;
+  text-align: center;
+  transition: box-shadow 0.15s;
+}
+.vital-card:hover { box-shadow: 0 4px 16px rgba(75,156,211,.12); }
+.vital-val {
+  font-size: 26px; font-weight: 400; color: var(--text);
+  font-family: 'Lora', serif; letter-spacing: -0.03em; line-height: 1;
+}
+.vital-val.warn { color: var(--warn); }
+.vital-val.danger { color: var(--danger); }
+.vital-label {
+  font-size: 10.5px; color: var(--muted); margin-top: 7px;
+  text-transform: uppercase; letter-spacing: 0.07em;
+}
+
+.trends-section {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  padding: 0 28px 28px;
+}
+.trend-card {
+  background: #f4f9fd;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px 20px;
+}
+.trend-title {
+  font-size: 10px; font-weight: 600; letter-spacing: .13em; 
+  text-transform: uppercase; color: var(--unc); margin-bottom: 16px;
+}
+.trend-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.trend-row:last-child { margin-bottom: 0; }
+.trend-date { font-size: 11.5px; color: var(--muted); width: 56px; flex-shrink: 0; }
+.bar-bg { flex: 1; height: 7px; background: #deedf7; border-radius: 100px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 100px; transition: width 0.6s cubic-bezier(.4,0,.2,1); }
+.fill-blue { background: var(--unc); }
+.fill-gold { background: #c9820a; }
+.fill-red { background: #c0392b; }
+.fill-amber { background: #d97706; }
+.trend-val { font-size: 12px; font-weight: 600; color: #333; width: 54px; text-align: right; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
+
+.placeholder-panel { padding: 60px 28px; text-align: center; }
+.placeholder-icon {
+  width: 52px; height: 52px; background: var(--unc-light);
+  border-radius: 16px; display: flex; align-items: center; 
+  justify-content: center; margin: 0 auto 16px; font-size: 22px;
+}
+.placeholder-title {
+  font-size: 16px; font-weight: 600; color: var(--text);
+  font-family: 'Lora', serif; margin-bottom: 6px;
+}
+.placeholder-sub {
+  font-size: 13px; color: var(--muted); line-height: 1.6;
+  max-width: 320px; margin: 0 auto;
+}
+
+.labs-section { padding: 24px 28px 32px; }
+.labs-section h3 { font-family: 'Lora', serif; font-weight: 400; font-size: 16px; color: var(--text); margin-bottom: 18px; }
+.labs-table { width: 100%; border-collapse: collapse; }
+.labs-table th {
+  text-align: left; font-size: 10.5px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--unc);
+  padding: 0 12px 10px; border-bottom: 1px solid var(--border);
+}
+.labs-table td {
+  padding: 12px; font-size: 13px; color: var(--text);
+  border-bottom: 1px solid #f0f6fb;
+}
+.labs-table tr:last-child td { border-bottom: none; }
+.labs-table tr:hover td { background: #f4f9fd; }
+.labs-table .val-high { color: var(--danger); font-weight: 600; }
+.labs-table .val-low { color: var(--warn); font-weight: 600; }
+.labs-table .val-normal { color: #2e8b57; font-weight: 600; }
+.lab-flag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 100px; margin-left: 6px; }
+.flag-h { background: #fde8e8; color: #9b3535; }
+.flag-l { background: #fef3dc; color: #7a5010; }
+.flag-n { background: #e1f5eb; color: #1a5c38; }
+
+.meds-section { padding: 24px 28px 32px; }
+.meds-section h3 { font-family: 'Lora', serif; font-weight: 400; font-size: 16px; color: var(--text); margin-bottom: 18px; }
+.med-card {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 16px; border-radius: 12px;
+  background: #f4f9fd; border: 1px solid var(--border);
+  margin-bottom: 10px;
+}
+.med-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+.med-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.med-detail { font-size: 12px; color: var(--muted); }
+
+.notes-section { padding: 24px 28px 32px; }
+.notes-section h3 { font-family: 'Lora', serif; font-weight: 400; font-size: 16px; color: var(--text); margin-bottom: 18px; }
+.note-entry {
+  border-left: 3px solid var(--unc-light); padding: 12px 16px;
+  margin-bottom: 14px; border-radius: 0 10px 10px 0; background: #f8fbfe;
+}
+.note-entry.today { border-left-color: var(--unc); }
+.note-meta { font-size: 11px; color: var(--muted); margin-bottom: 6px; font-weight: 500; letter-spacing: .03em; }
+.note-text { font-size: 13.5px; color: var(--text); line-height: 1.7; }
+
+@media (max-width: 600px) {
+  .trends-section { grid-template-columns: 1fr; }
+  .vitals-grid .vital-card { min-width: 80px; }
+  .patient-row { flex-wrap: wrap; }
+  .badges { justify-content: flex-start; width: 100%; }
+}
