@@ -83,7 +83,13 @@
     .login-btn { width: 100%; padding: 13px; border-radius: 10px; border: none; background: var(--navy); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; transition: background .18s, transform .1s; letter-spacing: .01em; }
     .login-btn:hover { background: #1e3d6b; }
     .login-btn:active { transform: scale(.99); }
-    .login-footer { margin-top: 20px; font-size: 11px; color: var(--muted); text-align: center; line-height: 1.6; }
+
+    /* New Demo Button Styles */
+    .demo-btn { width: 100%; padding: 13px; border-radius: 10px; border: 1.5px solid var(--unc); background: var(--white); color: var(--unc-dark); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 12px; transition: all .18s; letter-spacing: .01em; }
+    .demo-btn:hover { background: var(--unc-light); }
+    .demo-btn:active { transform: scale(.99); }
+
+    .login-footer { margin-top: 24px; font-size: 11px; color: var(--muted); text-align: center; line-height: 1.6; }
 
     /* ═══════════════════════════════
        MAIN SHELL (Census)
@@ -287,6 +293,7 @@
     </div>
 
     <button class="login-btn" onclick="doLogin()">Sign in to Carta</button>
+    <button class="demo-btn" onclick="doDemo()">View Interactive Demo</button>
 
     <div class="login-footer">
       Protected health information — HIPAA-compliant.<br>
@@ -417,6 +424,14 @@ function doLogin() {
   document.getElementById('nav-avatar').textContent = initials;
   document.getElementById('nav-dept-label').textContent = 'ER';
 
+  showPage('main');
+  buildCensus();
+}
+
+// Bypasses login validation for immediate preview
+function doDemo() {
+  document.getElementById('nav-avatar').textContent = 'DR';
+  document.getElementById('nav-dept-label').textContent = 'ER';
   showPage('main');
   buildCensus();
 }
