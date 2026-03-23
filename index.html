@@ -6,17 +6,13 @@
   <title>Carta EHR</title>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    /* """
-    Global Styles & Design Tokens
-    Implements the Apple-inspired Warm Ivory and Carolina Blue palette.
-    """ */
     :root {
       --unc:       #4B9CD3;
       --unc-light: #d6eaf7;
       --unc-mid:   #a8d0ec;
       --unc-dark:  #2a6fa8;
       --navy:      #13294B;
-      --bg:        #fcfbf9; /* Warm Ivory Background */
+      --bg:        #fcfbf9;
       --white:     #ffffff;
       --border:    #e4eff7;
       --text:      #111827;
@@ -29,251 +25,61 @@
       --ok-bg:     #e1f5eb;
       --radius:    18px;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--bg); min-height: 100vh; }
-
-    /* ──── PAGE ROUTING ──── */
     .page { display: none; min-height: 100vh; }
     .page.active { display: flex; }
-
-    /* ═══════════════════════════════
-       LOGIN PAGE
-    ═══════════════════════════════ */
-    #page-login {
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(160deg, #e8f4fc 0%, #fcfbf9 50%, #d6eaf7 100%);
-      position: relative;
-      overflow: hidden;
-    }
-    #page-login::before {
-      content: ''; position: absolute; top: -120px; right: -120px; width: 420px; height: 420px;
-      background: radial-gradient(circle, rgba(75,156,211,.15) 0%, transparent 70%); border-radius: 50%;
-    }
-    #page-login::after {
-      content: ''; position: absolute; bottom: -80px; left: -80px; width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(19,41,75,.08) 0%, transparent 70%); border-radius: 50%;
-    }
-
-    .login-card {
-      background: var(--white);
-      border-radius: 24px;
-      box-shadow: 0 2px 8px rgba(75,156,211,.08), 0 32px 80px rgba(75,156,211,.14);
-      padding: 48px 44px 40px;
-      width: 420px;
-      max-width: calc(100vw - 32px);
-      position: relative; z-index: 1;
-      animation: fadeUp .5s ease both;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
+    #page-login { flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(160deg, #e8f4fc 0%, #fcfbf9 50%, #d6eaf7 100%); position: relative; overflow: hidden; }
+    .login-card { background: var(--white); border-radius: 24px; box-shadow: 0 2px 8px rgba(75,156,211,.08), 0 32px 80px rgba(75,156,211,.14); padding: 48px 44px 40px; width: 420px; max-width: calc(100vw - 32px); position: relative; z-index: 1; animation: fadeUp .5s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .login-logo { font-family: 'Lora', serif; font-size: 28px; font-weight: 500; color: var(--text); letter-spacing: -0.02em; margin-bottom: 4px; }
     .login-tagline { font-size: 13px; color: var(--muted); margin-bottom: 36px; }
-
     .form-group { margin-bottom: 18px; }
     .form-label { display: block; font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-    .form-input { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1.5px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); background: #f8fbfe; transition: border-color .18s, box-shadow .18s; outline: none; }
-    .form-input:focus { border-color: var(--unc); box-shadow: 0 0 0 3px rgba(75,156,211,.12); background: var(--white); }
-
-    .login-btn { width: 100%; padding: 13px; border-radius: 10px; border: none; background: var(--navy); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; transition: background .18s, transform .1s; letter-spacing: .01em; }
-    .login-btn:hover { background: #1e3d6b; }
-    .login-btn:active { transform: scale(.99); }
-
-    /* New Demo Button Styles */
-    .demo-btn { width: 100%; padding: 13px; border-radius: 10px; border: 1.5px solid var(--unc); background: var(--white); color: var(--unc-dark); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 12px; transition: all .18s; letter-spacing: .01em; }
-    .demo-btn:hover { background: var(--unc-light); }
-    .demo-btn:active { transform: scale(.99); }
-
-    .login-footer { margin-top: 24px; font-size: 11px; color: var(--muted); text-align: center; line-height: 1.6; }
-
-    /* ═══════════════════════════════
-       MAIN SHELL (Census)
-    ═══════════════════════════════ */
+    .form-input { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1.5px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); background: #f8fbfe; outline: none; }
+    .login-btn { width: 100%; padding: 13px; border-radius: 10px; border: none; background: var(--navy); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+    .demo-btn { width: 100%; padding: 13px; border-radius: 10px; border: 1.5px solid var(--unc); background: var(--white); color: var(--unc-dark); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 12px; }
     #page-main { flex-direction: column; background: var(--bg); }
-
-    .topnav { height: 56px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 24px; position: sticky; top: 0; z-index: 100; flex-shrink: 0; }
-    .nav-logo { font-family: 'Lora', serif; font-size: 20px; font-weight: 500; color: var(--text); letter-spacing: -0.01em; flex-shrink: 0; }
+    .topnav { height: 56px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 24px; position: sticky; top: 0; z-index: 100; }
+    .nav-logo { font-family: 'Lora', serif; font-size: 20px; font-weight: 500; color: var(--text); flex-shrink: 0; }
     .nav-divider { width: 1px; height: 20px; background: var(--border); }
-    .nav-dept { font-size: 12px; font-weight: 600; color: var(--unc-dark); letter-spacing: .06em; text-transform: uppercase; background: var(--unc-light); padding: 4px 11px; border-radius: 100px; flex-shrink: 0; }
+    .nav-dept { font-size: 12px; font-weight: 600; color: var(--unc-dark); background: var(--unc-light); padding: 4px 11px; border-radius: 100px; }
     .nav-links { display: flex; gap: 4px; flex: 1; }
-    .nav-link { padding: 6px 14px; border-radius: 8px; font-size: 13.5px; font-weight: 500; color: var(--muted); cursor: pointer; transition: background .15s, color .15s; border: none; background: transparent; font-family: 'DM Sans', sans-serif; }
-    .nav-link:hover { background: #f0f6fb; color: var(--text); }
+    .nav-link { padding: 6px 14px; border-radius: 8px; font-size: 13.5px; font-weight: 500; color: var(--muted); cursor: pointer; border: none; background: transparent; font-family: 'DM Sans', sans-serif; }
     .nav-link.active { background: var(--unc-light); color: var(--unc-dark); font-weight: 600; }
-
-    .nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-    .nav-time { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); letter-spacing: .04em; }
-    .nav-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, var(--unc-mid), var(--unc)); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-
-    .main-body { flex: 1; display: flex; flex-direction: column; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-time { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
+    .nav-avatar { width: 32px; height: 32px; border-radius: 10px; background: linear-gradient(135deg, var(--unc-mid), var(--unc)); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; cursor: pointer; }
     .census-header { padding: 24px 28px 0; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-    .census-title { font-family: 'Lora', serif; font-size: 22px; font-weight: 500; color: var(--text); letter-spacing: -0.02em; }
-    .census-sub { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
-
-    .stat-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+    .census-title { font-family: 'Lora', serif; font-size: 22px; font-weight: 500; color: var(--text); }
+    .stat-pills { display: flex; gap: 10px; }
     .stat-pill { display: flex; flex-direction: column; align-items: center; padding: 10px 18px; border-radius: 12px; border: 1px solid var(--border); background: var(--white); min-width: 72px; }
-    .stat-pill-n { font-family: 'Lora', serif; font-size: 22px; font-weight: 400; line-height: 1; color: var(--text); }
-    .stat-pill-n.red { color: var(--danger); }
-    .stat-pill-n.amber { color: var(--warn); }
-    .stat-pill-n.blue { color: var(--unc); }
-    .stat-pill-l { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-top: 5px; white-space: nowrap; }
-
-    .filter-bar { padding: 16px 28px 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .filter-chip { padding: 6px 14px; border-radius: 100px; font-size: 12.5px; font-weight: 500; border: 1.5px solid var(--border); background: var(--white); color: var(--muted); cursor: pointer; transition: all .15s; font-family: 'DM Sans', sans-serif; }
-    .filter-chip:hover { border-color: var(--unc-mid); color: var(--text); }
-    .filter-chip.active { background: var(--unc-light); border-color: var(--unc); color: var(--unc-dark); font-weight: 600; }
-    .filter-chip.red-chip.active { background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
-
-    .search-wrap { margin-left: auto; position: relative; }
-    .search-input { padding: 7px 14px 7px 34px; border-radius: 100px; border: 1.5px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text); background: var(--white); width: 200px; outline: none; transition: border-color .18s, width .25s; }
-    .search-input:focus { border-color: var(--unc); width: 240px; }
-    .search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 13px; pointer-events: none; }
-
-    .census-table-wrap { padding: 0 28px 32px; overflow-x: auto; }
+    .stat-pill-n { font-family: 'Lora', serif; font-size: 22px; color: var(--text); }
+    .stat-pill-l { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-top: 5px; }
+    .census-table-wrap { padding: 16px 28px 32px; overflow-x: auto; }
     .census-table { width: 100%; border-collapse: collapse; min-width: 760px; }
-    .census-table thead tr { border-bottom: 1px solid var(--border); }
-    .census-table th { padding: 10px 12px; text-align: left; font-size: 10.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--unc); white-space: nowrap; }
-    .census-table tbody tr { border-bottom: 1px solid #eef5fb; cursor: pointer; transition: background .12s; }
-    .census-table tbody tr:hover { background: var(--white); }
-    .census-table tbody tr:last-child { border-bottom: none; }
-    .census-table td { padding: 14px 12px; font-size: 13.5px; color: var(--text); vertical-align: middle; }
-
-    .pt-name-cell { display: flex; align-items: center; gap: 10px; }
-    .pt-avatar-sm { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--unc-mid), var(--unc)); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: white; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
-    .pt-name { font-weight: 600; font-size: 14px; color: var(--text); line-height: 1.2; }
-    .pt-sub  { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
-
-    .acuity { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; font-family: 'DM Mono', monospace; flex-shrink: 0; }
-    .esi-1 { background: #fde8e8; color: #9b3535; }
-    .esi-2 { background: #fde8e8; color: #c0392b; }
+    .census-table th { padding: 10px 12px; text-align: left; font-size: 10.5px; font-weight: 600; text-transform: uppercase; color: var(--unc); border-bottom: 1px solid var(--border); }
+    .census-table td { padding: 14px 12px; font-size: 13.5px; border-bottom: 1px solid #eef5fb; }
+    .acuity { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; font-family: 'DM Mono', monospace; }
+    .esi-1, .esi-2 { background: #fde8e8; color: #c0392b; }
     .esi-3 { background: var(--warn-bg); color: #7a5010; }
-    .esi-4 { background: #e1f5eb; color: var(--ok); }
-    .esi-5 { background: #eef5fb; color: var(--unc-dark); }
-
-    .status-row { display: flex; align-items: center; gap: 7px; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .dot-red    { background: var(--danger); box-shadow: 0 0 0 2px rgba(192,57,43,.2); }
-    .dot-amber  { background: #e8a020; }
-    .dot-green  { background: #2e8b57; }
-    .dot-blue   { background: var(--unc); }
-    .status-txt { font-size: 12.5px; color: var(--text); }
-
-    .flag-row { display: flex; gap: 5px; flex-wrap: wrap; }
-    .flag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 100px; white-space: nowrap; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+    .dot-red { background: var(--danger); }
+    .dot-amber { background: #e8a020; }
+    .flag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 100px; margin-right: 4px; }
     .flag-allergy { background: var(--danger-bg); color: #9b3535; }
-    .flag-dnr     { background: var(--warn-bg); color: #7a5010; }
-    .flag-iso     { background: #f0e8fe; color: #5c2d91; }
-    .flag-fall    { background: #fff3cd; color: #7a5010; }
-
-    .vital-inline { font-family: 'DM Mono', monospace; font-size: 12.5px; color: var(--text); }
-    .vital-inline.warn  { color: var(--warn); font-weight: 600; }
-    .vital-inline.crit  { color: var(--danger); font-weight: 600; }
-
-    .time-cell { font-family: 'DM Mono', monospace; font-size: 12.5px; color: var(--muted); }
-    .time-cell.long { color: var(--warn); }
-    .time-cell.xlong { color: var(--danger); }
-
-    .open-btn { padding: 6px 14px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: var(--unc-dark); cursor: pointer; transition: all .15s; white-space: nowrap; }
-    .open-btn:hover { background: var(--unc-light); border-color: var(--unc); }
-
-    .census-section-label { padding: 12px 28px 6px; font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--unc); }
-
-    /* ═══════════════════════════════
-       CHART PAGE (Apple-Inspired)
-    ═══════════════════════════════ */
+    .vital-inline { font-family: 'DM Mono', monospace; font-size: 12.5px; }
+    .vital-inline.warn { color: var(--warn); font-weight: 600; }
+    .open-btn { padding: 6px 14px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--white); font-size: 12px; font-weight: 600; color: var(--unc-dark); cursor: pointer; }
     #page-chart { flex-direction: column; background: var(--bg); }
-    .chart-topbar { height: 56px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 16px; position: sticky; top: 0; z-index: 100; }
-    .back-btn { padding: 6px 14px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; transition: background .15s; }
-    .back-btn:hover { background: #f0f6fb; }
-    
-    .chart-card { max-width: 900px; margin: 32px auto 40px; background: var(--white); border-radius: var(--radius); box-shadow: 0 2px 8px rgba(75,156,211,.08), 0 20px 60px rgba(75,156,211,.10); overflow: hidden; }
-    
+    .chart-topbar { height: 56px; background: var(--white); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; }
+    .chart-card { max-width: 900px; margin: 32px auto; background: var(--white); border-radius: var(--radius); box-shadow: 0 20px 60px rgba(75,156,211,.10); overflow: hidden; }
     .c-patient-row { padding: 20px 28px; display: flex; align-items: flex-start; gap: 16px; background: #f4f9fd; border-bottom: 1px solid var(--border); }
-    .c-avatar { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, var(--unc-mid), var(--unc)); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: white; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
-    .c-name { font-family: 'Lora', serif; font-size: 18px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); }
-    .c-meta { font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.7; }
-    
-    .c-badges { display: flex; gap: 7px; flex-wrap: wrap; align-items: flex-start; justify-content: flex-end; margin-left: auto; }
-    .badge { font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 100px; white-space: nowrap; }
-    .badge-red { background: var(--danger-bg); color: #9b3535; }
-    .badge-amber { background: var(--warn-bg); color: #7a5010; }
-    .badge-green { background: var(--ok-bg); color: var(--ok); }
-
-    .c-tabs { display: flex; flex-wrap: wrap; padding: 0 20px; border-bottom: 1px solid var(--border); background: var(--white); }
-    .tab-break2 { width: 100%; height: 0; border-top: 1px solid var(--border); }
-    .tab-btn { padding: 11px 15px; font-size: 13px; font-weight: 400; color: var(--muted); cursor: pointer; white-space: nowrap; border: none; background: transparent; border-bottom: 2px solid transparent; font-family: 'DM Sans', sans-serif; transition: color .15s, border-color .15s; margin-bottom: -1px; flex-shrink: 0; }
-    .tab-btn:hover:not(.active) { color: #444; }
-    .tab-btn.active { color: var(--text); border-bottom-color: var(--unc); font-weight: 600; }
-    
-    .tab-panel { display: none; background: var(--white); }
+    .c-tabs { display: flex; flex-wrap: wrap; padding: 0 20px; border-bottom: 1px solid var(--border); }
+    .tab-btn { padding: 11px 15px; font-size: 13px; cursor: pointer; border: none; background: transparent; border-bottom: 2px solid transparent; }
+    .tab-btn.active { border-bottom-color: var(--unc); font-weight: 600; color: var(--text); }
+    .tab-panel { display: none; padding: 24px 28px; }
     .tab-panel.active { display: block; }
-
-    .vitals-section { padding: 26px 28px 22px; }
-    .vitals-grid { display: flex; gap: 12px; flex-wrap: wrap; }
-    .vital-card { flex: 1; min-width: 100px; background: #fcfbf9; border: 1px solid var(--border); border-radius: 14px; padding: 16px 12px; text-align: center; }
-    .vital-val { font-size: 26px; font-weight: 400; color: var(--text); font-family: 'Lora', serif; letter-spacing: -0.03em; line-height: 1; }
-    .vital-val.warn { color: var(--warn); }
-    .vital-val.danger { color: var(--danger); }
-    .vital-label { font-size: 10.5px; color: var(--muted); margin-top: 7px; text-transform: uppercase; letter-spacing: 0.07em; }
-
-    .trends-section { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 0 28px 28px; }
-    .trend-card { background: #fcfbf9; border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px 20px; }
-    .trend-title { font-size: 10px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; color: var(--unc); margin-bottom: 16px; }
-    .trend-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .trend-row:last-child { margin-bottom: 0; }
-    .trend-date { font-size: 11.5px; color: var(--muted); width: 60px; flex-shrink: 0; }
-    .bar-bg { flex: 1; height: 7px; background: #deedf7; border-radius: 100px; overflow: hidden; }
-    .bar-fill { height: 100%; border-radius: 100px; }
-    .fill-blue { background: var(--unc); }
-    .fill-gold { background: #c9820a; }
-    .fill-red  { background: var(--danger); }
-    .trend-val { font-size: 12px; font-weight: 600; color: #333; width: 54px; text-align: right; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
-
-    .placeholder-panel { padding: 60px 28px; text-align: center; }
-    .placeholder-icon { width: 52px; height: 52px; background: var(--unc-light); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 22px; }
-    .placeholder-title { font-size: 16px; font-weight: 600; color: var(--text); font-family: 'Lora', serif; margin-bottom: 6px; }
-    .placeholder-sub { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 320px; margin: 0 auto; }
-
-    .labs-section { padding: 24px 28px 32px; }
-    .labs-section h3 { font-family: 'Lora', serif; font-weight: 400; font-size: 16px; color: var(--text); margin-bottom: 18px; }
-    .labs-table { width: 100%; border-collapse: collapse; }
-    .labs-table th { text-align: left; font-size: 10.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--unc); padding: 0 12px 10px; border-bottom: 1px solid var(--border); }
-    .labs-table td { padding: 12px; font-size: 13px; color: var(--text); border-bottom: 1px solid #f0f6fb; }
-    .labs-table tr:last-child td { border-bottom: none; }
-    .val-high { color: var(--danger); font-weight: 600; }
-    .val-low  { color: var(--warn); font-weight: 600; }
-    .val-normal { color: #2e8b57; font-weight: 600; }
-    .lab-flag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 100px; margin-left: 6px; }
-    .flag-h { background: var(--danger-bg); color: #9b3535; }
-    .flag-l { background: var(--warn-bg); color: #7a5010; }
-    .flag-n { background: var(--ok-bg); color: var(--ok); }
-
-    .meds-section { padding: 24px 28px 32px; }
-    .meds-section h3 { font-family: 'Lora', serif; font-weight: 400; font-size: 16px; color: var(--text); margin-bottom: 18px; }
-    .med-card { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-radius: 12px; background: #fcfbf9; border: 1px solid var(--border); margin-bottom: 10px; }
-    .med-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
-    .med-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-    .med-detail { font-size: 12px; color: var(--muted); }
-
-    .notes-section { padding: 24px 28px 32px; }
-    .notes-section h3 { font-family: 'Lora', serif; font-weight: 400; font-size: 16px; color: var(--text); margin-bottom: 18px; }
-    .note-entry { border-left: 3px solid var(--unc-light); padding: 12px 16px; margin-bottom: 14px; border-radius: 0 10px 10px 0; background: #f8fbfe; }
-    .note-entry.today { border-left-color: var(--unc); }
-    .note-meta { font-size: 11px; color: var(--muted); margin-bottom: 6px; font-weight: 500; letter-spacing: .03em; }
-    .note-text { font-size: 13.5px; color: var(--text); line-height: 1.7; }
-
-    @media (max-width: 640px) {
-      .login-card { padding: 36px 28px 32px; }
-      .census-header { padding: 16px 16px 0; }
-      .filter-bar { padding: 12px 16px 10px; }
-      .census-section-label { padding: 10px 16px 4px; }
-      .census-table-wrap { padding: 0 16px 24px; }
-      .topnav { padding: 0 16px; }
-    }
   </style>
 </head>
 <body>
@@ -282,23 +88,16 @@
   <div class="login-card">
     <div class="login-logo">Carta</div>
     <div class="login-tagline">Physician-first electronic health record</div>
-
     <div class="form-group">
       <label class="form-label">NPI or Username</label>
-      <input class="form-input" id="login-user" type="text" placeholder="npi@unc.edu" autocomplete="username">
+      <input class="form-input" id="login-user" type="text" placeholder="npi@unc.edu">
     </div>
     <div class="form-group">
       <label class="form-label">Password</label>
-      <input class="form-input" id="login-pass" type="password" placeholder="••••••••" autocomplete="current-password">
+      <input class="form-input" id="login-pass" type="password" placeholder="••••••••">
     </div>
-
     <button class="login-btn" onclick="doLogin()">Sign in to Carta</button>
     <button class="demo-btn" onclick="doDemo()">View Interactive Demo</button>
-
-    <div class="login-footer">
-      Protected health information — HIPAA-compliant.<br>
-      Unauthorized access is monitored and prosecuted.
-    </div>
   </div>
 </div>
 
@@ -306,370 +105,96 @@
   <nav class="topnav">
     <span class="nav-logo">Carta</span>
     <div class="nav-divider"></div>
-    <span class="nav-dept" id="nav-dept-label">ER</span>
-
+    <span class="nav-dept">ER</span>
     <div class="nav-links">
-      <button class="nav-link active" onclick="showView('census')">Census</button>
-      <button class="nav-link" onclick="showView('tasks')">Tasks</button>
-      <button class="nav-link" onclick="showView('results')">Results</button>
-      <button class="nav-link" onclick="showView('orders')">Orders</button>
+      <button class="nav-link active">Census</button>
+      <button class="nav-link">Tasks</button>
     </div>
-
     <div class="nav-right">
-      <span class="nav-time" id="nav-clock">—</span>
-      <div class="nav-avatar" id="nav-avatar" title="Logout" onclick="doLogout()">DR</div>
+      <span class="nav-time" id="nav-clock">00:00 AM</span>
+      <div class="nav-avatar" onclick="doLogout()">DR</div>
     </div>
   </nav>
-
-  <div class="main-body">
-
-    <div id="view-census">
-      <div class="census-header">
-        <div>
-          <div class="census-title" id="census-title">Emergency Department Census</div>
-          <div class="census-sub" id="census-sub">Monday, March 23, 2026 · 34 patients on board</div>
-        </div>
-        <div class="stat-pills">
-          <div class="stat-pill"><span class="stat-pill-n">34</span><span class="stat-pill-l">Total</span></div>
-          <div class="stat-pill"><span class="stat-pill-n red">4</span><span class="stat-pill-l">Critical</span></div>
-          <div class="stat-pill"><span class="stat-pill-n amber">11</span><span class="stat-pill-l">Pending labs</span></div>
-          <div class="stat-pill"><span class="stat-pill-n blue">7</span><span class="stat-pill-l">Pending img</span></div>
-          <div class="stat-pill"><span class="stat-pill-n">6</span><span class="stat-pill-l">Awaiting bed</span></div>
-        </div>
-      </div>
-
-      <div class="filter-bar">
-        <button class="filter-chip active" onclick="setFilter(this,'all')">All patients</button>
-        <button class="filter-chip red-chip" onclick="setFilter(this,'critical')">🔴 Critical</button>
-        <button class="filter-chip" onclick="setFilter(this,'mine')">My patients</button>
-        <button class="filter-chip" onclick="setFilter(this,'pending')">Pending results</button>
-        <div class="search-wrap">
-          <span class="search-icon">⌕</span>
-          <input class="search-input" type="text" placeholder="Search patients…" oninput="filterSearch(this.value)">
-        </div>
-      </div>
-
-      <div class="census-section-label">🔴 Critical / ESI 1–2</div>
-      <div class="census-table-wrap">
-        <table class="census-table" id="census-critical">
-          <thead>
-            <tr><th>ESI</th><th>Patient</th><th>Room</th><th>Chief Complaint</th><th>Vitals</th><th>Status</th><th>Flags</th><th>Time in ED</th><th></th></tr>
-          </thead>
-          <tbody id="tbody-critical"></tbody>
-        </table>
-      </div>
-
-      <div class="census-section-label">Active — ESI 3</div>
-      <div class="census-table-wrap">
-        <table class="census-table">
-          <thead>
-            <tr><th>ESI</th><th>Patient</th><th>Room</th><th>Chief Complaint</th><th>Vitals</th><th>Status</th><th>Flags</th><th>Time in ED</th><th></th></tr>
-          </thead>
-          <tbody id="tbody-active"></tbody>
-        </table>
-      </div>
-
-    </div><div id="view-tasks" style="display:none; padding:60px 28px; text-align:center;">
-      <div style="font-family:'Lora',serif;font-size:18px;margin-bottom:8px;color:var(--text);">Tasks</div>
-      <div style="font-size:13px;color:var(--muted);">Order signatures, pending cosigns, and care tasks will appear here.</div>
+  <div class="census-header">
+    <div>
+      <div class="census-title">Emergency Department Census</div>
     </div>
-    <div id="view-results" style="display:none; padding:60px 28px; text-align:center;">
-      <div style="font-family:'Lora',serif;font-size:18px;margin-bottom:8px;color:var(--text);">Pending Results</div>
-      <div style="font-size:13px;color:var(--muted);">Unreviewed labs, imaging reads, and culture results will appear here.</div>
+    <div class="stat-pills">
+      <div class="stat-pill"><span class="stat-pill-n">34</span><span class="stat-pill-l">Total</span></div>
+      <div class="stat-pill"><span class="stat-pill-n" style="color:var(--danger)">4</span><span class="stat-pill-l">Critical</span></div>
     </div>
-    <div id="view-orders" style="display:none; padding:60px 28px; text-align:center;">
-      <div style="font-family:'Lora',serif;font-size:18px;margin-bottom:8px;color:var(--text);">Order Entry</div>
-      <div style="font-size:13px;color:var(--muted);">Lab, imaging, and medication orders will appear here.</div>
-    </div>
-
-  </div></div>
+  </div>
+  <div class="census-table-wrap">
+    <table class="census-table">
+      <thead>
+        <tr><th>ESI</th><th>Patient</th><th>Room</th><th>Chief Complaint</th><th>Vitals</th><th>Status</th><th>Time</th><th></th></tr>
+      </thead>
+      <tbody id="census-body"></tbody>
+    </table>
+  </div>
+</div>
 
 <div id="page-chart" class="page">
-  <div id="chart-host" style="width: 100%;"></div>
+  <div class="chart-topbar">
+    <button class="back-btn" onclick="showPage('main')">← Back to Census</button>
+  </div>
+  <div class="chart-card" id="chart-content"></div>
 </div>
 
 <script>
-/* """
-Carta Logic Controller
-Handles routing, rendering mock data, and building the dynamic Apple-inspired patient chart.
-""" */
+  const PATIENTS = [
+    { id:'p1', esi:2, name:'Robert Nguyen', age:'58M', mrn:'0031042', room:'T1', cc:'Chest pain', bp:'88/54', hr:'118', status:'dot-red', statusTxt:'Cath Lab Pending', time:'0:22' },
+    { id:'p5', esi:3, name:'Sarah Chen', age:'62F', mrn:'0042817', room:'12', cc:'Cough / Fever', bp:'118/76', hr:'101', status:'dot-amber', statusTxt:'Admit Pending', time:'4:32' }
+  ];
 
-/* ══════════════ STATE & CLOCK ══════════════ */
-let currentDept = 'er';
+  function updateClock() {
+    document.getElementById('nav-clock').textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  }
+  setInterval(updateClock, 1000);
 
-function updateClock() {
-  const now = new Date();
-  const t = now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:true });
-  const el = document.getElementById('nav-clock');
-  if (el) el.textContent = t;
-}
-setInterval(updateClock, 1000);
-updateClock();
-
-/* ══════════════ LOGIN / ROUTING ══════════════ */
-function doLogin() {
-  const u = document.getElementById('login-user').value.trim();
-  const p = document.getElementById('login-pass').value;
-  if (!u || !p) {
-    const inp = document.getElementById(!u ? 'login-user' : 'login-pass');
-    inp.style.borderColor = 'var(--danger)';
-    inp.style.boxShadow = '0 0 0 3px rgba(192,57,43,.12)';
-    setTimeout(() => { inp.style.borderColor=''; inp.style.boxShadow=''; }, 2000);
-    return;
+  function showPage(p) {
+    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+    document.getElementById('page-' + p).classList.add('active');
   }
 
-  // derive initials from username
-  const parts = u.replace(/@.*$/,'').split(/[\._]/);
-  const initials = parts.slice(0,2).map(s=>s[0]?.toUpperCase()||'').join('') || 'DR';
-  document.getElementById('nav-avatar').textContent = initials;
-  document.getElementById('nav-dept-label').textContent = 'ER';
+  function doLogin() { if(document.getElementById('login-user').value) showPage('main'); }
+  function doDemo() { buildCensus(); showPage('main'); }
+  function doLogout() { showPage('login'); }
 
-  showPage('main');
-  buildCensus();
-}
+  function buildCensus() {
+    document.getElementById('census-body').innerHTML = PATIENTS.map(p => `
+      <tr onclick="openChart('${p.id}')">
+        <td><div class="acuity esi-${p.esi}">${p.esi}</div></td>
+        <td><strong>${p.name}</strong><br><small>${p.age} · ${p.mrn}</small></td>
+        <td>${p.room}</td>
+        <td>${p.cc}</td>
+        <td><span class="vital-inline">${p.bp}</span> | <span class="vital-inline">${p.hr}</span></td>
+        <td><span class="status-dot ${p.status}"></span>${p.statusTxt}</td>
+        <td>${p.time}</td>
+        <td><button class="open-btn">Open →</button></td>
+      </tr>
+    `).join('');
+  }
 
-// Bypasses login validation for immediate preview
-function doDemo() {
-  document.getElementById('nav-avatar').textContent = 'DR';
-  document.getElementById('nav-dept-label').textContent = 'ER';
-  showPage('main');
-  buildCensus();
-}
-
-function doLogout() {
-  showPage('login');
-  document.getElementById('login-user').value = '';
-  document.getElementById('login-pass').value = '';
-}
-
-function showPage(p) {
-  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-  document.getElementById('page-' + p).classList.add('active');
-  window.scrollTo(0, 0);
-}
-
-function showView(v) {
-  document.querySelectorAll('[id^=view-]').forEach(el => el.style.display = 'none');
-  document.getElementById('view-' + v).style.display = 'block';
-  document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-}
-
-function filterSearch(v) {
-  const rows = document.querySelectorAll('.census-table tbody tr');
-  rows.forEach(r => {
-    r.style.display = r.textContent.toLowerCase().includes(v.toLowerCase()) ? '' : 'none';
-  });
-}
-
-function setFilter(btn, f) {
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-/* ══════════════ PATIENT DATA ══════════════ */
-const PATIENTS = [
-  { id:'p1', esi:1, name:'Robert Nguyen', age:'58M', mrn:'0031042', room:'T1', cc:'Chest pain — STEMI activation', bp:'88/54', hr:'118', temp:'37.1', spo2:'91%', bpClass:'crit', hrClass:'crit', spo2Class:'crit', status:'dot-red', statusTxt:'STEMI — cath lab pending', flags:['DNR'], time:'0:22', timeClass:'', attending:'Dr. J. Torres' },
-  { id:'p2', esi:2, name:'Maria Gutierrez', age:'71F', mrn:'0044218', room:'T3', cc:'Altered mental status — sepsis', bp:'96/60', hr:'124', temp:'38.9', spo2:'94%', bpClass:'crit', hrClass:'crit', spo2Class:'warn', status:'dot-red', statusTxt:'Sepsis — antibiotics started', flags:['PCN allergy','ISO'], time:'1:45', timeClass:'long', attending:'Dr. S. Patel' },
-  { id:'p5', esi:3, name:'Sarah Chen', age:'62F', mrn:'0042817', room:'12', cc:'Productive cough / fever — CAP', bp:'118/76', hr:'101', temp:'38.9', spo2:'96%', bpClass:'', hrClass:'warn', spo2Class:'', status:'dot-amber', statusTxt:'Admitted — awaiting floor bed', flags:['PCN allergy','DNR'], time:'4:32', timeClass:'long', attending:'Dr. S. Patel' },
-  { id:'p6', esi:3, name:'Thomas Reid', age:'55M', mrn:'0055102', room:'14', cc:'Abdominal pain — r/o appendicitis', bp:'128/82', hr:'94', temp:'37.8', spo2:'99%', bpClass:'', hrClass:'', spo2Class:'', status:'dot-amber', statusTxt:'CT abd/pelvis — pending read', flags:[], time:'2:10', timeClass:'', attending:'Dr. J. Torres' }
-];
-
-/* ══════════════ BUILD CENSUS ══════════════ */
-function buildCensus() {
-  renderRows('tbody-critical', PATIENTS.filter(p => p.esi <= 2));
-  renderRows('tbody-active', PATIENTS.filter(p => p.esi === 3));
-}
-
-function esiClass(n) { return ['','esi-1','esi-2','esi-3','esi-4','esi-5'][n] || 'esi-5'; }
-function initials(name) { return name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase(); }
-
-function flagHTML(flags) {
-  if (!flags.length) return '<span style="color:var(--muted);font-size:12px;">—</span>';
-  return flags.map(f => {
-    let cls = 'flag-allergy';
-    if (f==='DNR') cls='flag-dnr';
-    if (f==='ISO') cls='flag-iso';
-    if (f==='Fall risk') cls='flag-fall';
-    return `<span class="flag ${cls}">${f}</span>`;
-  }).join('');
-}
-
-function vitalsHTML(p) {
-  const bpC = p.bpClass === 'crit' ? 'crit' : (p.bpClass === 'warn' ? 'warn' : '');
-  const hrC = p.hrClass === 'crit' ? 'crit' : (p.hrClass === 'warn' ? 'warn' : '');
-  const spo2C = p.spo2Class=== 'crit' ? 'crit' : (p.spo2Class=== 'warn' ? 'warn' : '');
-  return `<span class="vital-inline ${bpC}">${p.bp}</span>&nbsp;<span style="color:var(--muted);font-size:11px;">BP</span>&ensp;<span class="vital-inline ${hrC}">${p.hr}</span>&nbsp;<span style="color:var(--muted);font-size:11px;">HR</span>&ensp;<span class="vital-inline ${spo2C}">${p.spo2}</span>&nbsp;<span style="color:var(--muted);font-size:11px;">SpO₂</span>`;
-}
-
-function renderRows(tbodyId, patients) {
-  const tbody = document.getElementById(tbodyId);
-  if (!tbody) return;
-  tbody.innerHTML = patients.map(p => `
-    <tr onclick="openChart('${p.id}')">
-      <td><div class="acuity ${esiClass(p.esi)}">${p.esi}</div></td>
-      <td>
-        <div class="pt-name-cell">
-          <div class="pt-avatar-sm">${initials(p.name)}</div>
-          <div><div class="pt-name">${p.name}</div><div class="pt-sub">${p.age} · MRN ${p.mrn}</div></div>
-        </div>
-      </td>
-      <td><strong style="font-family:'DM Mono',monospace;font-size:13px;">${p.room}</strong></td>
-      <td style="max-width:200px;font-size:13px;color:var(--text);">${p.cc}</td>
-      <td>${vitalsHTML(p)}</td>
-      <td><div class="status-row"><div class="status-dot ${p.status}"></div><span class="status-txt">${p.statusTxt}</span></div></td>
-      <td><div class="flag-row">${flagHTML(p.flags)}</div></td>
-      <td><span class="time-cell ${p.timeClass}">${p.time}</span></td>
-      <td><button class="open-btn" onclick="event.stopPropagation();openChart('${p.id}')">Open chart →</button></td>
-    </tr>
-  `).join('');
-}
-
-/* ══════════════ OPEN CHART ══════════════ */
-function openChart(pid) {
-  const p = PATIENTS.find(x => x.id === pid);
-  if (!p) return;
-
-  document.getElementById('chart-host').innerHTML = buildChartHTML(p);
-  showPage('chart');
-
-  // Wire up tabs inside the newly generated chart HTML
-  const host = document.getElementById('chart-host');
-  host.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-      host.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-      host.querySelectorAll('.tab-panel').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-      host.querySelector('#tab-' + target).classList.add('active');
-    });
-  });
-}
-
-function buildChartHTML(p) {
-  return `
-  <div class="chart-topbar">
-    <button class="back-btn" onclick="showPage('main');">← Back to census</button>
-    <span style="font-size:13px;color:var(--muted);">Chart — ${p.name}</span>
-    <span style="margin-left:auto;font-size:12px;color:var(--muted);">Room ${p.room} · Attending: ${p.attending}</span>
-  </div>
-
-  <div style="padding:0 16px;">
-    <div class="chart-card">
-      
+  function openChart(id) {
+    const p = PATIENTS.find(x => x.id === id);
+    document.getElementById('chart-content').innerHTML = `
       <div class="c-patient-row">
-        <div class="c-avatar">${initials(p.name)}</div>
-        <div>
-          <div class="c-name">${p.name}</div>
-          <div class="c-meta">${p.age} · MRN ${p.mrn} · Admitted 3/20/26</div>
-          <div class="c-meta">Attending: ${p.attending} · ${p.cc}</div>
-        </div>
-        <div class="c-badges">
-          ${p.flags.map(f => {
-            const cls = f==='DNR'?'badge-amber':f==='ISO'?'badge-amber':'badge-red';
-            return \`<span class="badge \${cls}">\${f}</span>\`;
-          }).join('')}
-          <span class="badge badge-green">ESI ${p.esi}</span>
-        </div>
+        <div><div class="c-name">${p.name}</div><div style="color:var(--muted)">MRN ${p.mrn} · ${p.cc}</div></div>
       </div>
-
       <div class="c-tabs">
-        <button class="tab-btn active" data-tab="vitals">Vitals</button>
-        <button class="tab-btn" data-tab="history">History</button>
-        <button class="tab-btn" data-tab="physical">Physical</button>
-        <button class="tab-btn" data-tab="ems">EMS Notes</button>
-        <button class="tab-btn" data-tab="er">ER Notes</button>
-        <div class="tab-break2"></div>
-        <button class="tab-btn" data-tab="labs">Labs</button>
-        <button class="tab-btn" data-tab="viz">Visualizations</button>
-        <button class="tab-btn" data-tab="path">Pathology</button>
-        <button class="tab-btn" data-tab="progress">Progress Notes</button>
-        <button class="tab-btn" data-tab="meds">Medications</button>
+        <button class="tab-btn active">Vitals</button>
+        <button class="tab-btn">Labs</button>
+        <button class="tab-btn">Notes</button>
       </div>
-
-      <div class="tab-panel active" id="tab-vitals">
-        <div class="vitals-section">
-          <div class="vitals-grid">
-            <div class="vital-card"><div class="vital-val ${p.bpClass==='crit'?'danger':p.bpClass==='warn'?'warn':''}">${p.bp}</div><div class="vital-label">BP mmHg</div></div>
-            <div class="vital-card"><div class="vital-val ${p.hrClass==='crit'?'danger':p.hrClass==='warn'?'warn':''}">${p.hr}</div><div class="vital-label">HR bpm</div></div>
-            <div class="vital-card"><div class="vital-val ${parseFloat(p.temp)>=39?'danger':parseFloat(p.temp)>=38?'warn':''}">${p.temp}°</div><div class="vital-label">Temp °C</div></div>
-            <div class="vital-card"><div class="vital-val ${p.spo2Class==='crit'?'danger':p.spo2Class==='warn'?'warn':''}">${p.spo2}</div><div class="vital-label">SpO₂</div></div>
-            <div class="vital-card"><div class="vital-val">18</div><div class="vital-label">RR /min</div></div>
-          </div>
-        </div>
-        <div class="trends-section">
-          <div class="trend-card">
-            <div class="trend-title">BP Trend</div>
-            <div class="trend-row"><span class="trend-date">3/20</span><div class="bar-bg"><div class="bar-fill fill-blue" style="width:82%"></div></div><span class="trend-val">${p.bp}</span></div>
-            <div class="trend-row"><span class="trend-date">3/21</span><div class="bar-bg"><div class="bar-fill fill-gold" style="width:78%"></div></div><span class="trend-val">${p.bp}</span></div>
-            <div class="trend-row"><span class="trend-date">3/22</span><div class="bar-bg"><div class="bar-fill fill-blue" style="width:80%"></div></div><span class="trend-val">${p.bp}</span></div>
-            <div class="trend-row"><span class="trend-date">3/23</span><div class="bar-bg"><div class="bar-fill fill-blue" style="width:81%"></div></div><span class="trend-val">${p.bp}</span></div>
-          </div>
-          <div class="trend-card">
-            <div class="trend-title">HR Trend</div>
-            <div class="trend-row"><span class="trend-date">3/20</span><div class="bar-bg"><div class="bar-fill ${parseInt(p.hr)>100?'fill-red':'fill-blue'}" style="width:${Math.min(parseInt(p.hr)/150*100,100)}%"></div></div><span class="trend-val">${p.hr}</span></div>
-            <div class="trend-row"><span class="trend-date">3/21</span><div class="bar-bg"><div class="bar-fill fill-gold" style="width:72%"></div></div><span class="trend-val">${Math.max(parseInt(p.hr)-8,60)}</span></div>
-            <div class="trend-row"><span class="trend-date">3/22</span><div class="bar-bg"><div class="bar-fill fill-blue" style="width:68%"></div></div><span class="trend-val">${Math.max(parseInt(p.hr)-14,60)}</span></div>
-            <div class="trend-row"><span class="trend-date">3/23</span><div class="bar-bg"><div class="bar-fill ${parseInt(p.hr)>100?'fill-red':'fill-blue'}" style="width:${Math.min(parseInt(p.hr)/150*100,100)}%"></div></div><span class="trend-val">${p.hr}</span></div>
-          </div>
-        </div>
+      <div class="tab-panel active">
+        <h3>Current Vitals</h3>
+        <p>BP: ${p.bp} | HR: ${p.hr} | Temp: 38.9°C</p>
       </div>
-
-      ${['history','physical','ems','er','viz','path'].map(t => \`
-      <div class="tab-panel" id="tab-\${t}">
-        <div class="placeholder-panel">
-          <div class="placeholder-icon">\${{history:'📋',physical:'🩺',ems:'🚑',er:'🏥',viz:'📊',path:'🔬'}[t]}</div>
-          <div class="placeholder-title">\${{history:'Medical History',physical:'Physical Exam',ems:'EMS Notes',er:'ER Notes',viz:'Visualizations',path:'Pathology'}[t]}</div>
-          <div class="placeholder-sub">This section will populate from the live FHIR feed.</div>
-        </div>
-      </div>\`).join('')}
-
-      <div class="tab-panel" id="tab-labs">
-        <div class="labs-section">
-          <h3>Laboratory Results — 3/23/26</h3>
-          <table class="labs-table">
-            <thead><tr><th>Test</th><th>Result</th><th>Reference</th><th>Status</th></tr></thead>
-            <tbody>
-              <tr><td>WBC</td><td class="val-high">14.2 K/µL <span class="lab-flag flag-h">H</span></td><td>4.5 – 11.0</td><td>Elevated</td></tr>
-              <tr><td>Hemoglobin</td><td class="val-normal">12.8 g/dL <span class="lab-flag flag-n">N</span></td><td>12.0 – 16.0</td><td>Normal</td></tr>
-              <tr><td>Platelets</td><td class="val-normal">228 K/µL <span class="lab-flag flag-n">N</span></td><td>150 – 400</td><td>Normal</td></tr>
-              <tr><td>Sodium</td><td class="val-normal">138 mEq/L <span class="lab-flag flag-n">N</span></td><td>136 – 145</td><td>Normal</td></tr>
-              <tr><td>Potassium</td><td class="val-low">3.2 mEq/L <span class="lab-flag flag-l">L</span></td><td>3.5 – 5.0</td><td>Low</td></tr>
-              <tr><td>Creatinine</td><td class="val-normal">0.9 mg/dL <span class="lab-flag flag-n">N</span></td><td>0.6 – 1.2</td><td>Normal</td></tr>
-              <tr><td>Glucose</td><td class="val-high">182 mg/dL <span class="lab-flag flag-h">H</span></td><td>70 – 140</td><td>Elevated</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="tab-panel" id="tab-progress">
-        <div class="notes-section">
-          <h3>Progress Notes</h3>
-          <div class="note-entry today">
-            <div class="note-meta">3/23/26 · 07:40 · ${p.attending} · Attending</div>
-            <div class="note-text">${p.name}, ${p.age}, presenting with ${p.cc.toLowerCase()}. ${p.statusTxt}. Will reassess this afternoon pending additional results and clinical trajectory.</div>
-          </div>
-          <div class="note-entry">
-            <div class="note-meta">3/22/26 · 20:15 · Dr. A. Kim · Resident</div>
-            <div class="note-text">Evening check: patient hemodynamically stable. No acute changes overnight. Continues on current management plan.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-panel" id="tab-meds">
-        <div class="meds-section">
-          <h3>Active Medications</h3>
-          <div class="med-card"><div class="med-dot" style="background:var(--unc)"></div><div><div class="med-name">Ceftriaxone 1g IV</div><div class="med-detail">Every 24h · Started 3/20/26 · Infectious coverage</div></div></div>
-          <div class="med-card"><div class="med-dot" style="background:var(--unc)"></div><div><div class="med-name">Azithromycin 500mg IV</div><div class="med-detail">Every 24h · Atypical coverage</div></div></div>
-          <div class="med-card"><div class="med-dot" style="background:#c9820a"></div><div><div class="med-name">Acetaminophen 650mg PO</div><div class="med-detail">Q6h PRN fever > 38.3°C</div></div></div>
-          <div class="med-card"><div class="med-dot" style="background:#2e8b57"></div><div><div class="med-name">Metformin 1000mg PO</div><div class="med-detail">BID with meals · Chronic — T2DM</div></div></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  `;
-}
+    `;
+    showPage('chart');
+  }
+  buildCensus();
 </script>
 </body>
 </html>
